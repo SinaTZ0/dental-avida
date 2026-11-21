@@ -41,6 +41,21 @@ export const Line: Story = {
   args: { variant: "line" },
 };
 
+export const Guide: Story = {
+  render: () => (
+    <div className="max-w-sm bg-consultation-paper">
+      <Tabs variant="guide" defaultValue="upcoming">
+        <TabsList variant="guide" className="w-full">
+          <TabsTrigger value="upcoming">رویدادهای پیش رو</TabsTrigger>
+          <TabsTrigger value="past">گذشته</TabsTrigger>
+        </TabsList>
+        <TabsContent value="upcoming">همایش ملی هوش مصنوعی، ۲۴ مهر</TabsContent>
+        <TabsContent value="past">۱۲ رویداد در ماه گذشته</TabsContent>
+      </Tabs>
+    </div>
+  ),
+};
+
 export const Vertical: Story = {
   render: (args) => (
     <Tabs defaultValue="profile" orientation="vertical" className="max-w-md">

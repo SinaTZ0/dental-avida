@@ -7,6 +7,15 @@ const twTabsStyles = defineStyles({
   layout: "group/tabs flex gap-2 data-horizontal:flex-col",
 });
 
+const twRootVariant = defineStyles({
+  default: {},
+  guide: {
+    layout: "gap-0",
+    geometry: "p-3 md:p-5 min-[60rem]:ps-16",
+    appearance: "bg-transparent",
+  },
+});
+
 /*===== List Styles =====*/
 
 const twListStyles = defineStyles({
@@ -19,6 +28,11 @@ const twListStyles = defineStyles({
 const twVariant = defineStyles({
   default: {
     appearance: "bg-muted",
+  },
+  guide: {
+    layout: "relative gap-1",
+    geometry: "rounded-none border-b p-0",
+    appearance: "border-brand-jade/30 bg-transparent",
   },
   line: {
     layout: "gap-1",
@@ -35,7 +49,7 @@ const twTriggerStyles = defineStyles({
   geometryIcon: "has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
   typography: "text-nav whitespace-nowrap",
   appearance: "border-transparent text-muted-foreground",
-  interaction: "transition-colors duration-150",
+  interaction: "motion-safe:transition-colors motion-safe:duration-150",
   hover: "hover:text-brand-text",
   focus:
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
@@ -43,6 +57,8 @@ const twTriggerStyles = defineStyles({
     "disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none aria-disabled:opacity-45",
   state:
     "data-active:bg-card data-active:text-foreground group-data-[variant=default]/tabs-list:data-active:border-brand-text group-data-[variant=default]/tabs-list:data-active:shadow-sm",
+  stateGuide:
+    "group-data-[variant=guide]/tabs-list:rounded-none group-data-[variant=guide]/tabs-list:text-body-sm group-data-[variant=guide]/tabs-list:sm:text-body group-data-[variant=guide]/tabs-list:data-active:bg-transparent group-data-[variant=guide]/tabs-list:data-active:font-bold group-data-[variant=guide]/tabs-list:data-active:text-brand-jade",
   // The line variant drops the active fill and shows the current-nav marker instead: `brand-text` over a gold
   // underline (`after:`).
   stateLine:
@@ -50,6 +66,15 @@ const twTriggerStyles = defineStyles({
   stateIndicator:
     "after:bg-gold after:absolute after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-inset-e-1 group-data-vertical/tabs:after:w-0.5",
   icon: "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+});
+
+/*===== Guide Indicator =====*/
+
+const twGuideIndicatorStyles = defineStyles({
+  layout: "pointer-events-none absolute start-(--active-tab-left) -bottom-px rtl:start-(--active-tab-right)",
+  geometry: "h-0.75 w-(--active-tab-width) rounded-full",
+  appearance: "bg-brand-jade",
+  motion: "motion-safe:transition-[inset-inline-start,width] motion-safe:duration-250 motion-safe:ease-out",
 });
 
 /*===== Content Styles =====*/
@@ -63,7 +88,12 @@ const twContentStyles = defineStyles({
 
 /*===== Class Composition =====*/
 
-const tabsClasses = joinStyles(twTabsStyles);
+const tabsVariants = cva(joinStyles(twTabsStyles), {
+  variants: {
+    variant: composeStyles(twRootVariant),
+  },
+  defaultVariants: { variant: "default" },
+});
 
 const tabsListVariants = cva(joinStyles(twListStyles), {
   variants: {
@@ -73,6 +103,7 @@ const tabsListVariants = cva(joinStyles(twListStyles), {
 });
 
 const tabsTriggerClasses = joinStyles(twTriggerStyles);
+const tabsGuideIndicatorClasses = joinStyles(twGuideIndicatorStyles);
 const tabsContentClasses = joinStyles(twContentStyles);
 
-export { tabsClasses, tabsListVariants, tabsTriggerClasses, tabsContentClasses, twVariant };
+export { tabsVariants, tabsListVariants, tabsTriggerClasses, tabsContentClasses, tabsGuideIndicatorClasses, twVariant };

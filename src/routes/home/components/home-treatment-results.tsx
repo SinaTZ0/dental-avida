@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, ArrowRightIcon, CheckIcon, GemIcon, ScanLineIcon, SparklesIcon } from "lucide-react";
+import { CheckIcon, GemIcon, ScanLineIcon, SparklesIcon } from "lucide-react";
 import { type CSSProperties, useState } from "react";
 
 import { Button } from "#/components/primitive/button/button";
@@ -46,57 +46,49 @@ export function HomeTreatmentResults() {
   const [selected, setSelected] = useState(0);
   const example = examples[selected]!;
 
-  function move(offset: number) {
-    setSelected((current) => (current + offset + examples.length) % examples.length);
-  }
-
   return (
-    <section aria-labelledby="treatment-results-title" className="home-section bg-hero-surface porcelain-grain">
+    <section
+      aria-labelledby="treatment-results-title"
+      className="home-section home-results bg-hero-surface porcelain-grain"
+    >
       <div className="home-shell home-results-shell">
-        <div className="home-results-heading">
-          <h2 id="treatment-results-title" className="text-section">
-            {m.home_results_title()}
-          </h2>
-          <p className="mt-2 text-body-lg text-muted-foreground">{m.home_results_intro()}</p>
-        </div>
-
-        <div className="home-results-layout">
-          <fieldset className="home-results-treatments min-w-0">
-            <legend className="sr-only">{m.home_results_treatments()}</legend>
-            <div className="home-results-choices">
-              {examples.map(({ id, title, icon: Icon }, index) => (
-                <Button
-                  key={id}
-                  variant="choice"
-                  size="choice"
-                  aria-pressed={index === selected}
-                  onClick={() => setSelected(index)}
-                >
-                  <Icon aria-hidden />
-                  {title()}
-                  {index === selected && <CheckIcon className="ms-auto hidden size-4 md:block" aria-hidden />}
-                </Button>
-              ))}
+        <figure>
+          <div className="home-results-layout">
+            <div className="home-results-selector">
+              <div>
+                <h2 id="treatment-results-title" className="text-h2">
+                  {m.home_results_title()}
+                </h2>
+                <p className="home-results-intro mt-1 text-body text-brand-surface-muted">{m.home_results_intro()}</p>
+              </div>
+              <fieldset className="min-w-0">
+                <legend className="sr-only">{m.home_results_treatments()}</legend>
+                <div className="home-results-choices">
+                  {examples.map(({ id, title, icon: Icon }, index) => (
+                    <Button
+                      key={id}
+                      variant="choice"
+                      size="choice"
+                      aria-pressed={index === selected}
+                      onClick={() => setSelected(index)}
+                    >
+                      <Icon data-icon="choice" aria-hidden />
+                      {title()}
+                      {index === selected && <CheckIcon className="ms-auto hidden size-4 md:block" aria-hidden />}
+                    </Button>
+                  ))}
+                </div>
+              </fieldset>
             </div>
-          </fieldset>
-          <figure className="home-results-figure min-w-0">
             <TreatmentComparison key={example.id} example={example} />
-            <figcaption className="mt-3 text-body-sm text-muted-foreground">
-              <span className="sr-only" aria-live="polite">
-                {example.change()}
-              </span>
-              {m.home_results_illustration()}
-            </figcaption>
-          </figure>
-          <div className="home-results-arrows">
-            <Button variant="outline" size="icon-lg" aria-label={m.home_results_previous()} onClick={() => move(-1)}>
-              <ArrowRightIcon aria-hidden className="size-5 ltr:rotate-180" />
-            </Button>
-            <Button variant="outline" size="icon-lg" aria-label={m.home_results_next()} onClick={() => move(1)}>
-              <ArrowLeftIcon aria-hidden className="size-5 ltr:rotate-180" />
-            </Button>
           </div>
-        </div>
+          <figcaption className="home-results-caption">
+            <span aria-live="polite" className="text-body font-medium">
+              {example.change()}
+            </span>
+            <span className="text-body-sm text-muted-foreground">{m.home_results_illustration()}</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

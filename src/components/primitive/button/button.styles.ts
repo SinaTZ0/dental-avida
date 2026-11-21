@@ -43,6 +43,14 @@ const twVariant = defineStyles({
     hover: "hover:bg-accent",
     state: "aria-expanded:bg-accent",
   },
+  consultation: {
+    appearance: "bg-consultation-button text-consultation-deep",
+    hover: "hover:bg-consultation-mint",
+  },
+  "consultation-outline": {
+    appearance: "bg-transparent text-foreground inset-ring-1 inset-ring-brand-jade",
+    hover: "hover:bg-brand-jade-surface",
+  },
   secondary: {
     appearance: "bg-secondary text-secondary-foreground",
     hover: "hover:bg-accent",
@@ -54,10 +62,12 @@ const twVariant = defineStyles({
     state: "aria-expanded:bg-accent",
   },
   choice: {
-    appearance: "border-input bg-card text-foreground",
-    hover: "hover:bg-accent",
+    appearance: "bg-transparent text-brand-surface-foreground",
+    hover: "hover:bg-brand-surface-foreground/10",
+    focus: "focus-visible:outline-brand-surface-foreground",
     state:
-      "aria-pressed:border-brand-surface-line aria-pressed:bg-brand-surface aria-pressed:font-bold aria-pressed:text-brand-surface-foreground aria-pressed:hover:bg-brand-surface",
+      "aria-pressed:bg-consultation-button aria-pressed:font-bold aria-pressed:text-consultation-deep aria-pressed:hover:bg-consultation-button",
+    icon: "[&_svg[data-icon=choice]]:box-content [&_svg[data-icon=choice]]:size-4 [&_svg[data-icon=choice]]:rounded-full [&_svg[data-icon=choice]]:bg-brand-surface-foreground/10 [&_svg[data-icon=choice]]:p-1.5 [&_svg[data-icon=choice]]:text-consultation-mint aria-pressed:[&_svg[data-icon=choice]]:bg-brand-jade-surface aria-pressed:[&_svg[data-icon=choice]]:text-brand-jade",
   },
   destructive: {
     appearance: "bg-destructive-surface text-destructive",
@@ -100,6 +110,12 @@ const twSize = defineStyles({
     geometry: "h-12 rounded-md px-6",
     geometryIcon: "has-data-[icon=inline-end]:pe-5 has-data-[icon=inline-start]:ps-5",
   },
+  pill: {
+    layout: "gap-1.5",
+    geometry: "rounded-full px-3",
+    typography: "text-body-sm font-semibold",
+    icon: "[&_svg:not([class*='size-'])]:size-4",
+  },
   hero: {
     layout: "gap-2",
     geometry: "h-12 rounded-full px-6",
@@ -107,7 +123,8 @@ const twSize = defineStyles({
   },
   choice: {
     layout: "flex-col gap-1 md:flex-row md:justify-start md:gap-3",
-    geometry: "min-h-16 rounded-md px-1 py-2 md:min-h-14 md:px-4",
+    geometry: "min-h-16 rounded-md px-1 py-2 md:min-h-14 md:px-3",
+    typography: "text-body-sm md:text-button",
   },
   "icon-xs": {
     geometry: "rounded-sm",

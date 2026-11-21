@@ -159,6 +159,10 @@
   --color-brand-surface: var(--brand-surface);
   --color-brand-surface-foreground: var(--brand-surface-foreground);
   --color-brand-surface-muted: var(--brand-surface-muted);
+  --color-consultation-paper: var(--consultation-paper);
+  --color-consultation-deep: var(--consultation-deep);
+  --color-consultation-mint: var(--consultation-mint);
+  --color-consultation-button: var(--consultation-button);
   --color-highlight: var(--highlight);
   --color-highlight-hover: var(--highlight-hover);
   --color-highlight-foreground: var(--highlight-foreground);
@@ -219,8 +223,15 @@
   --hero-line: #92b8d7;
   --brand-surface: #123653;
   --brand-surface-foreground: #f1f8ff;
+  --brand-surface-gold: #f4cd72;
   --brand-surface-muted: #bed5e7;
   --brand-surface-line: #6890ad;
+  --consultation-paper: #faf7f3;
+  --consultation-note: #fffdf9;
+  --consultation-deep: #124c56;
+  --consultation-teal: #20616a;
+  --consultation-mint: #9acfc4;
+  --consultation-button: #f5fbfa;
   --highlight: #124c79;
   --highlight-hover: #0c375a;
   --highlight-foreground: #fff;
@@ -284,6 +295,11 @@
   --brand-surface-foreground: #f1f8ff;
   --brand-surface-muted: #bed5e7;
   --brand-surface-line: #6588a2;
+  --consultation-paper: #192f39;
+  --consultation-note: #203940;
+  --consultation-deep: #103d46;
+  --consultation-teal: #18535c;
+  --consultation-mint: #6aa99f;
   --highlight: #b6dcfa;
   --highlight-hover: #d2eaff;
   --highlight-foreground: #122e48;

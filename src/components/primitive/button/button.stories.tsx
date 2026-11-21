@@ -1,5 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ArrowLeftIcon, CalendarIcon, GemIcon, PlusIcon, SparklesIcon } from "lucide-react";
+import {
+  ArrowLeftIcon,
+  CalendarIcon,
+  CircleHelpIcon,
+  GemIcon,
+  MessagesSquareIcon,
+  PlusIcon,
+  SparklesIcon,
+} from "lucide-react";
 
 import { Input } from "#/components/primitive/input/input";
 import { m } from "#/paraglide/messages";
@@ -98,15 +106,30 @@ export const HomepageAction: Story = {
   ),
 };
 
+export const ConsultationActions: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap gap-3">
+      <Button {...args} variant="consultation" size="pill">
+        <MessagesSquareIcon aria-hidden />
+        {m.home_consultation_banner_action()}
+      </Button>
+      <Button {...args} variant="consultation-outline" size="pill">
+        <CircleHelpIcon aria-hidden />
+        {m.home_consultation_faq_action()}
+      </Button>
+    </div>
+  ),
+};
+
 export const Choices: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 rounded-lg bg-consultation-deep p-3">
       <Button {...args} variant="choice" size="choice" aria-pressed>
-        <GemIcon aria-hidden />
+        <GemIcon data-icon="choice" aria-hidden />
         {m.home_results_veneers()}
       </Button>
       <Button {...args} variant="choice" size="choice" aria-pressed={false}>
-        <SparklesIcon aria-hidden />
+        <SparklesIcon data-icon="choice" aria-hidden />
         {m.home_results_whitening()}
       </Button>
     </div>

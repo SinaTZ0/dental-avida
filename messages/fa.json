@@ -6,6 +6,23 @@
   "common_skip_to_content": "پرش به محتوای اصلی",
   "common_language": "زبان",
   "common_new_tab": "(در زبانه تازه باز می‌شود)",
+  "common_carousel": "نمایش چرخشی",
+  "common_carousel_slide": "اسلاید",
+  "common_carousel_previous": "اسلاید قبلی",
+  "common_carousel_next": "اسلاید بعدی",
+  "common_carousel_pause": "توقف نمایش خودکار",
+  "common_carousel_play": "شروع نمایش خودکار",
+  "common_carousel_position": [
+    {
+      "declarations": [
+        "input current",
+        "input total",
+        "local currentText = current: number",
+        "local totalText = total: number"
+      ],
+      "match": { "": "{currentText} از {totalText}" }
+    }
+  ],
   "common_captcha_failed": "بررسی امنیتی انجام نشد. دوباره ارسال کنید.",
   "common_error_network": "ارتباط با سرور برقرار نشد. اتصال اینترنت را بررسی کنید و دوباره امتحان کنید.",
   "common_error_signed_out": "از حساب خارج شده‌اید. صفحه را تازه کنید و دوباره وارد شوید.",
@@ -33,12 +50,44 @@
   "nav_visit": "ویزیت اول",
   "nav_questions": "پرسش‌های متداول",
   "site_footer_description": "مراقبت از دندان‌ها و لثه‌ها برای تمام خانواده.",
+  "site_contact_title": "تماس و مراجعه",
+  "site_contact_address": "نشانی مطب",
+  "site_contact_directions": "مسیریابی تا مطب",
+  "site_contact_phone": "تلفن پذیرش",
+  "site_contact_hours": "ساعت کاری",
+  "site_contact_unavailable": "هنوز اعلام نشده",
   "home_hero_title": "مراقبت امروز،",
   "home_hero_emphasis": "لبخند فردا",
   "home_hero_intro": "از معاینهٔ دوره‌ای تا درمان، برای سلامت دندان‌ها و لثه‌های شما در کنارتان هستیم.",
   "home_hero_image_alt": "تصویرسازی از مراجعه‌کننده‌ای خندان روی صندلی دندان‌پزشکی",
   "home_view_services": "مشاهدهٔ خدمات",
   "home_plan_visit": "راهنمای اولین ویزیت",
+  "home_appointment_plan": "برنامه‌ریزی مراجعه",
+  "home_appointment_title": "برای مراجعه برنامه‌ریزی کنید",
+  "home_appointment_online": "نوبت آنلاین",
+  "home_appointment_online_description": "زمان‌های موجود را در سامانهٔ نوبت‌دهی ببینید و نوبت خود را رزرو کنید.",
+  "home_appointment_phone": "نوبت‌گیری تلفنی",
+  "home_appointment_phone_description": "برای هماهنگی زمان مراجعه با پذیرش تماس بگیرید.",
+  "home_appointment_unavailable": "نوبت‌دهی آنلاین فعلاً در دسترس نیست.",
+  "home_appointment_call": "تماس با پذیرش",
+  "home_reviews_title": "نظر مراجعه‌کنندگان",
+  "home_reviews_link": "خواندن نظرها",
+  "home_reviews_samples": "نمونه‌هایی از نظر مراجعه‌کنندگان",
+  "home_reviews_sample_explanation": "پیش از معاینه فرصت داشتم سؤال‌هایم را بپرسم. توضیح مراحل کمک کرد با آرامش بیشتری ویزیت را شروع کنم.",
+  "home_reviews_sample_options": "گزینه‌های درمان را مرحله‌به‌مرحله توضیح دادند و برای تصمیم‌گیری به من فرصت دادند.",
+  "home_reviews_sample_child_visit": "برای اولین ویزیت فرزندم وقت گذاشتند تا با محیط آشنا شود و با آرامش روی صندلی بنشیند.",
+  "home_reviews_rating": [
+    {
+      "declarations": ["input score", "local scoreText = score: number"],
+      "match": { "": "{scoreText} از ۵" }
+    }
+  ],
+  "home_reviews_count": [
+    {
+      "declarations": ["input count", "local countText = count: number"],
+      "match": { "": "بر اساس {countText} نظر" }
+    }
+  ],
   "home_services_title": "خدمات دندان‌پزشکی",
   "home_services_intro": "از معاینهٔ دوره‌ای تا بررسی گزینه‌های ترمیم و زیبایی، ببینید برای هر نیاز چه موضوعاتی را می‌توانید با دندان‌پزشک مطرح کنید.",
   "home_services_start_title": "نمی‌دانید از کجا شروع کنید؟",
@@ -64,8 +113,6 @@
   "home_results_implants_change": "جای خالی یک دندان با دندان جایگزین پر شده است.",
   "home_results_veneers_change": "شکل و لبهٔ دندان‌های جلو یکنواخت‌تر شده است.",
   "home_results_whitening_change": "رنگ دندان‌ها روشن‌تر شده و شکل آن‌ها تغییر نکرده است.",
-  "home_results_previous": "نمونهٔ قبلی",
-  "home_results_next": "نمونهٔ بعدی",
   "home_results_before": "قبل از درمان",
   "home_results_after": "بعد از درمان",
   "home_results_comparison": "مقایسهٔ قبل و بعد از {treatment}",
@@ -109,7 +156,13 @@
   "home_consultation_cosmetic_outcome": "با توجه به وضعیت دندان‌هایم، چه تغییری در رنگ یا فرم آن‌ها ممکن است؟",
   "home_consultation_cosmetic_care": "نتیجه معمولاً چقدر ماندگار است و چطور از آن مراقبت کنم؟",
   "home_consultation_image_alt": "دندان‌پزشکی در حال گفت‌وگو با مراجعه‌کننده",
-  "home_consultation_image_caption": "تصویرسازی از گفت‌وگوی پیش از معاینه",
+  "home_consultation_banner_label": "راهنمای مشاوره و پرسش‌های متداول",
+  "home_consultation_banner_title": "مشاورهٔ تخصصی با آرامش و اطمینان",
+  "home_consultation_banner_intro": "پیش از شروع درمان، دربارهٔ گزینه‌های درمانی و مراحل آن با دندان‌پزشک گفت‌وگو کنید.",
+  "home_consultation_banner_action": "راهنمای مشاوره",
+  "home_consultation_faq_title": "پیش از ویزیت چه بدانم؟",
+  "home_consultation_faq_intro": "پاسخ سؤال‌های رایج پیش از مراجعه به دندان‌پزشکی را بخوانید.",
+  "home_consultation_faq_action": "مشاهدهٔ پرسش‌های متداول",
   "home_child_visit_title": "همراه کودک به مطب می‌آیید؟",
   "home_child_visit_link": "راهنمای اولین ویزیت کودک",
   "home_child_visit_intro": "در اولین ویزیت، کودک با محیط مطب آشنا می‌شود و شما می‌توانید دربارهٔ مراقبت از دندان‌هایش سؤال کنید.",

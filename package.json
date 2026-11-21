@@ -65,6 +65,8 @@
     "cn": "^0.5.2",
     "drizzle-orm": "1.0.0-rc.5",
     "effect": "4.1.4",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "jotai": "^3.0.2",
     "lucide-react": "^1.72.0",
     "nodemailer": "^10.5.0",

@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
   BabyIcon,
@@ -17,16 +18,24 @@ import {
 
 import { buttonVariants } from "#/components/primitive/button/button.styles";
 import { formatNumber } from "#/lib/locale";
-import { homeSections } from "#/lib/site";
+import { clinicDetails, homeSections } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 import patient720 from "#/routes/home/assets/patient-720.webp";
 import patient from "#/routes/home/assets/patient.webp";
 import treatmentRoom720 from "#/routes/home/assets/treatment-room-720.webp";
 import treatmentRoom from "#/routes/home/assets/treatment-room.webp";
 
+import { HomeConsultationGuide } from "#/routes/home/components/home-visit-guides";
+
 /*===== Hero =====*/
 
 export function HomeHero() {
+  const appointmentLabel = clinicDetails.bookingUrl
+    ? m.home_appointment_online
+    : clinicDetails.phone
+      ? m.home_appointment_phone
+      : m.home_appointment_plan;
+
   return (
     <section
       aria-labelledby="hero-title"
@@ -40,10 +49,14 @@ export function HomeHero() {
           <span className="home-smile home-hero-smile" aria-hidden />
           <p className="home-hero-intro mt-5 max-w-md text-body-lg text-muted-foreground">{m.home_hero_intro()}</p>
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
-            <a href={`#${homeSections.visit}`} className={buttonVariants({ variant: "highlight", size: "hero" })}>
+            <Link
+              to="/"
+              hash={homeSections.appointments}
+              className={buttonVariants({ variant: "highlight", size: "hero" })}
+            >
               <CalendarDaysIcon data-icon="inline-start" aria-hidden />
-              {m.home_plan_visit()}
-            </a>
+              {appointmentLabel()}
+            </Link>
             <a href={`#${homeSections.services}`} className="home-text-link">
               {m.home_view_services()}
               <ArrowLeftIcon aria-hidden className="size-4 ltr:rotate-180" />
@@ -115,10 +128,11 @@ export function HomeServices() {
       <ul className="home-treatments" role="list">
         {treatments.map(({ id, icon: Icon, title, description }) => (
           <li key={id} className="home-treatment">
-            <Icon className="size-7 shrink-0 text-brand-text" aria-hidden />
+            <span aria-hidden className="home-treatment-photo" />
+            <Icon className="home-treatment-icon size-7 shrink-0" aria-hidden />
             <div>
               <h3 className="text-h3">{title()}</h3>
-              <p className="mt-1 text-body text-muted-foreground">{description()}</p>
+              <p className="home-treatment-description mt-1 text-body">{description()}</p>
               {id === "children" && (
                 <a href={`#${homeSections.childVisit}`} className="home-text-link mt-1">
                   {m.home_child_visit_link()}
@@ -254,6 +268,7 @@ export function HomeVisit() {
           </div>
         ))}
       </div>
+      <HomeConsultationGuide />
     </section>
   );
 }

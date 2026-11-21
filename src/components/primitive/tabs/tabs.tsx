@@ -1,16 +1,24 @@
 import { Tabs as TabsPrimitive } from "@base-ui/react/tabs";
 import { type VariantProps } from "class-variance-authority";
 import { cn } from "#/lib/utils";
-import { tabsClasses, tabsContentClasses, tabsListVariants, tabsTriggerClasses } from "./tabs.styles";
+import {
+  tabsContentClasses,
+  tabsGuideIndicatorClasses,
+  tabsListVariants,
+  tabsTriggerClasses,
+  tabsVariants,
+} from "./tabs.styles";
 
 /*===== Tabs =====*/
 
-function Tabs({ className, orientation = "horizontal", ...props }: TabsPrimitive.Root.Props) {
+type TabsProps = TabsPrimitive.Root.Props & VariantProps<typeof tabsVariants>;
+
+function Tabs({ className, orientation = "horizontal", variant, ...props }: TabsProps) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
       data-orientation={orientation}
-      className={cn(tabsClasses, className)}
+      className={cn(tabsVariants({ variant }), className)}
       {...props}
     />
   );
@@ -20,14 +28,17 @@ function Tabs({ className, orientation = "horizontal", ...props }: TabsPrimitive
 
 export type TabsListProps = TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>;
 
-function TabsList({ className, variant = "default", ...props }: TabsListProps) {
+function TabsList({ children, className, variant = "default", ...props }: TabsListProps) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
       data-variant={variant}
       className={cn(tabsListVariants({ variant }), className)}
       {...props}
-    />
+    >
+      {children}
+      {variant === "guide" && <TabsPrimitive.Indicator className={tabsGuideIndicatorClasses} />}
+    </TabsPrimitive.List>
   );
 }
 

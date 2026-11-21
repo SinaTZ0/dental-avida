@@ -3,12 +3,32 @@ import { m } from "#/paraglide/messages";
 /*===== Homepage Navigation =====*/
 
 export const homeSections = {
+  appointments: "appointments",
   services: "services",
   practice: "practice",
   visit: "visit",
   childVisit: "child-visit",
   questions: "questions",
 } as const;
+
+/*===== Clinic Details =====*/
+
+type ClinicDetails = {
+  location: { address: () => string; mapUrl?: string } | null;
+  phone: { number: string; label: () => string } | null;
+  hours: (() => string) | null;
+  bookingUrl: string | null;
+  reviews: { url: string; rating?: { score: number; count: number } } | null;
+};
+
+/** Published clinic details. Keep unknown values empty until the clinic confirms them. */
+export const clinicDetails: ClinicDetails = {
+  location: null,
+  phone: null,
+  hours: null,
+  bookingUrl: null,
+  reviews: null,
+};
 
 /*===== Site =====*/
 // Browser-safe identity values for page titles and link previews. The site's name and default description are the
