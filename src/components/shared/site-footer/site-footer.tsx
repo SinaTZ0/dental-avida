@@ -14,7 +14,7 @@ const footerSections = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-brand-surface text-brand-surface-foreground">
+    <footer className="bg-brand-surface porcelain-grain text-brand-surface-foreground">
       <div className="mx-auto flex max-w-site flex-wrap items-center justify-between gap-x-10 gap-y-4 px-4 py-9 sm:px-6 sm:py-12">
         <div>
           <p className="text-h3">{m.site_name()}</p>
@@ -27,7 +27,7 @@ export function SiteFooter() {
                 <Link
                   to="/"
                   hash={hash}
-                  className="inline-flex min-h-10 items-center rounded-sm text-nav underline-offset-4 hover:underline focus-visible:outline-brand-surface-foreground"
+                  className="inline-flex min-h-10 items-center rounded-sm text-nav underline decoration-transparent underline-offset-4 transition-colors duration-150 hover:decoration-current focus-visible:outline-brand-surface-foreground motion-reduce:transition-none"
                 >
                   {label()}
                 </Link>

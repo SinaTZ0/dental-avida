@@ -28,7 +28,10 @@ import treatmentRoom from "#/routes/home/assets/treatment-room.webp";
 
 export function HomeHero() {
   return (
-    <section aria-labelledby="hero-title" className="home-hero relative isolate overflow-hidden bg-hero-surface">
+    <section
+      aria-labelledby="hero-title"
+      className="home-hero relative isolate overflow-hidden bg-hero-surface porcelain-grain"
+    >
       <div className="home-hero-inner mx-auto flex max-w-site items-center px-4 sm:px-6">
         <div className="home-hero-copy relative z-10">
           <p className="home-hero-label">{m.site_name()}</p>
@@ -121,7 +124,7 @@ export function HomeServices() {
         ))}
       </ul>
 
-      <div className="home-services-prompt">
+      <div className="home-services-prompt porcelain-grain">
         <div>
           <h3 className="text-h3">{m.home_services_start_title()}</h3>
           <p className="mt-1 text-body text-muted-foreground">{m.home_services_start_body()}</p>
@@ -139,18 +142,22 @@ export function HomeServices() {
 
 export function HomePractice() {
   return (
-    <section id={homeSections.practice} aria-labelledby="practice-title" className="home-section bg-muted">
+    <section
+      id={homeSections.practice}
+      aria-labelledby="practice-title"
+      className="home-section bg-brand-surface porcelain-grain text-brand-surface-foreground"
+    >
       <div className="home-shell home-practice">
         <div className="home-practice-copy">
           <h2 id="practice-title" className="text-section">
             {m.home_practice_title()}
           </h2>
-          <p className="mt-4 text-body-lg text-muted-foreground">{m.home_practice_intro()}</p>
+          <p className="mt-4 text-body-lg text-brand-surface-muted">{m.home_practice_intro()}</p>
           <div className="home-practice-note">
-            <HeartHandshakeIcon className="mt-1 size-6 shrink-0 text-brand-text" aria-hidden />
+            <HeartHandshakeIcon className="mt-1 size-6 shrink-0 text-brand-surface-muted" aria-hidden />
             <div>
               <h3 className="text-h3">{m.home_practice_reassurance_title()}</h3>
-              <p className="mt-1 text-body text-muted-foreground">{m.home_practice_reassurance()}</p>
+              <p className="mt-1 text-body text-brand-surface-muted">{m.home_practice_reassurance()}</p>
             </div>
           </div>
         </div>
@@ -166,7 +173,9 @@ export function HomePractice() {
             alt={m.home_practice_image_alt()}
             className="home-practice-photo"
           />
-          <figcaption className="mt-2 text-caption text-muted-foreground">{m.home_practice_image_caption()}</figcaption>
+          <figcaption className="mt-2 text-caption text-brand-surface-muted">
+            {m.home_practice_image_caption()}
+          </figcaption>
         </figure>
       </div>
     </section>
@@ -224,7 +233,7 @@ export function HomeVisit() {
         ))}
       </ol>
 
-      <div className="home-visit-preparation">
+      <div className="home-visit-preparation porcelain-grain">
         {visitPreparation.map(({ icon: Icon, title, items }) => (
           <div key={title()}>
             <h3 className="flex items-start gap-3 text-h3">
@@ -256,7 +265,11 @@ const questions = [
 
 export function HomeQuestions() {
   return (
-    <section id={homeSections.questions} aria-labelledby="questions-title" className="home-section bg-muted">
+    <section
+      id={homeSections.questions}
+      aria-labelledby="questions-title"
+      className="home-section bg-muted porcelain-grain"
+    >
       <div className="home-shell home-questions">
         <div>
           <h2 id="questions-title" className="text-section">
@@ -269,8 +282,10 @@ export function HomeQuestions() {
             <details key={question()} className="group">
               <summary className="home-question text-h3">
                 <span>{question()}</span>
-                <PlusIcon aria-hidden className="size-5 shrink-0 text-brand-text group-open:hidden" />
-                <MinusIcon aria-hidden className="hidden size-5 shrink-0 text-brand-text group-open:block" />
+                <span className="home-question-indicator" aria-hidden>
+                  <PlusIcon className="size-4 group-open:hidden" />
+                  <MinusIcon className="hidden size-4 group-open:block" />
+                </span>
               </summary>
               <p className="max-w-2xl pe-8 pb-5 text-body-lg text-muted-foreground">{answer()}</p>
             </details>

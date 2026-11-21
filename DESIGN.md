@@ -16,14 +16,16 @@ colors:
   highlight-foreground-dark: "#122e48"
   brand-text: "#1b629b"
   brand-text-dark: "#9cd0f9"
-  hero-surface: "#eaf4fc"
+  hero-surface: "#e3eef9"
   hero-surface-dark: "#172d40"
-  hero-line: "#a7c9e5"
+  hero-line: "#92b8d7"
   hero-line-dark: "#4e7592"
   brand-surface: "#123653"
-  brand-surface-dark: "#122b40"
+  brand-surface-dark: "#15354f"
   brand-surface-foreground: "#f1f8ff"
   brand-surface-muted: "#bed5e7"
+  brand-surface-line: "#6890ad"
+  brand-surface-line-dark: "#6588a2"
   background: "#fff"
   background-dark: "#10202e"
   card: "#fff"
@@ -153,7 +155,7 @@ components:
 
 ## Overview
 
-Avida Dental uses a blue palette and generous Persian line spacing. The full-width homepage hero blends a daylight patient portrait into a blue surface. Ruled lists and pale surfaces make services and visit information easy to scan.
+Avida Dental uses a blue palette and generous Persian line spacing. The full-width homepage hero blends a daylight patient portrait into a blue surface. A navy practice section provides contrast between the white service directory and first-visit guide. Fine porcelain grain gives the blue surfaces a matte finish.
 
 Use the shared styles and primitives across the site. The compositions and responsive layouts described for the homepage apply to that route. [Shared tokens](src/styles.css), [homepage styles](src/routes/home/home.css), [app identity](docs/frontend/app-identity.md).
 
@@ -163,7 +165,7 @@ Use the shared styles and primitives across the site. The compositions and respo
 
 - Use `primary` for standard in-app actions and `highlight` for the main action on light or dark neutral surfaces. Each has its own hover fill and foreground.
 - Use `brand-text` for links, outline icons, and the second line of the hero title.
-- Use `hero-surface` behind the patient portrait and `hero-line` along the curve below it. Pair `brand-surface` with `brand-surface-foreground` in the footer and use `brand-surface-muted` for supporting footer text.
+- Use `hero-surface` behind the patient portrait and `hero-line` along the curve below it. Use `brand-surface`, `brand-surface-foreground`, and `brand-surface-muted` for the practice section and footer. Use `brand-surface-line` for rules on the navy surface.
 
 ### Neutral
 
@@ -187,7 +189,7 @@ The hero spans the full viewport. From 48rem, the portrait fades behind the intr
 
 ## Elevation & Depth
 
-The homepage separates content with fills, image crops, and 1px rules. The card primitive adds a hairline and a soft resting shadow. Linked cards deepen the shadow and take an accent wash on hover and keyboard focus.
+The homepage separates content with fills, image crops, and fine rules. Apply the `porcelain-grain` utility to the colored hero, practice, FAQ, preparation, and footer surfaces. The card primitive adds a hairline and a soft resting shadow. Linked cards deepen the shadow and take an accent wash on hover and keyboard focus.
 
 ## Shapes
 
@@ -201,11 +203,13 @@ The button primitive uses a 1.5px edge and a 2px focus outline with a 2px offset
 
 ### Text fields, badges, and navigation
 
-Text fields use the card surface, a defined control edge, and a visible focus outline. Compact badges use the accent wash with brand-colored text. Navigation uses muted text at rest, stronger text on hover or focus, and a thin primary underline for the current page.
+Text fields use the card surface, a defined control edge, and a visible focus outline. Compact badges use the accent wash with brand-colored text. Navigation uses muted text at rest, stronger text on hover or focus, and a thin primary underline. The underline uses a softer tint on hover.
 
 ### Homepage lists
 
-Service descriptions pair an outline icon with an item heading and muted body copy. The icons have a stroke width of 1.5. Horizontal rules divide rows, and inline separators appear in multi-column layouts. Native question disclosures use a plus when closed and a minus when open. The numbered visit steps use the accent wash at rest and briefly take the primary fill when reached through the page anchor and motion is allowed.
+Service descriptions pair an outline icon with an item heading and muted body copy. The icons have a stroke width of 1.5. Horizontal rules divide rows, and inline separators appear in multi-column layouts. Native question disclosures show an outlined plus when closed and a filled minus when open. Where the browser supports intrinsic-size transitions, the answer opens in 220ms. The numbered visit steps use the accent wash at rest and briefly take the primary fill when reached through the page anchor.
+
+The hero copy rises 5px as the portrait settles on entry. Section headings move 3px when they enter the viewport in browsers that support scroll-driven animation. Both effects honor reduced motion.
 
 ## Do's and Don'ts
 

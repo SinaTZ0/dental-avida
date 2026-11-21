@@ -14,6 +14,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@utility porcelain-grain {
+  background-image: url("./assets/porcelain-grain.webp");
+}
+
 /*===== Type =====*/
 
 @theme {
@@ -186,11 +190,12 @@
   --ring: #336998;
 
   --brand-text: #1b629b;
-  --hero-surface: #eaf4fc;
-  --hero-line: #a7c9e5;
+  --hero-surface: #e3eef9;
+  --hero-line: #92b8d7;
   --brand-surface: #123653;
   --brand-surface-foreground: #f1f8ff;
   --brand-surface-muted: #bed5e7;
+  --brand-surface-line: #6890ad;
   --highlight: #124c79;
   --highlight-hover: #0c375a;
   --highlight-foreground: #fff;
@@ -248,9 +253,10 @@
   --brand-text: #9cd0f9;
   --hero-surface: #172d40;
   --hero-line: #4e7592;
-  --brand-surface: #122b40;
+  --brand-surface: #15354f;
   --brand-surface-foreground: #f1f8ff;
   --brand-surface-muted: #bed5e7;
+  --brand-surface-line: #6588a2;
   --highlight: #b6dcfa;
   --highlight-hover: #d2eaff;
   --highlight-foreground: #122e48;

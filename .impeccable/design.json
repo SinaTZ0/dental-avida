@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-21T17:42:01.590Z",
+  "generatedAt": "2026-11-21T17:54:17.392Z",
   "title": "Design System: Avida Dental",
   "extensions": {
     "colorMeta": {
@@ -22,11 +22,11 @@
       },
       "brand-surface": {
         "role": "primary",
-        "displayName": "Deep blue footer"
+        "displayName": "Practice and footer navy"
       },
       "brand-surface-dark": {
         "role": "primary",
-        "displayName": "Deep blue footer in dark mode"
+        "displayName": "Practice and footer navy in dark mode"
       },
       "foreground": {
         "role": "neutral",
@@ -116,6 +116,21 @@
         "name": "home-visit-arrival",
         "value": "700ms cubic-bezier(0.16, 1, 0.3, 1)",
         "purpose": "The numbered first-visit steps briefly take the primary fill when the section is targeted, with 80ms and 160ms delays on the second and third steps."
+      },
+      {
+        "name": "home-hero-copy-in",
+        "value": "480ms cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The hero copy rises 5px from its already-visible starting position."
+      },
+      {
+        "name": "home-hero-photo-in",
+        "value": "650ms ease-out",
+        "purpose": "The patient portrait settles on entry."
+      },
+      {
+        "name": "home-disclosure",
+        "value": "220ms cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "The native FAQ answer animates its block size in browsers that support intrinsic-size transitions."
       }
     ],
     "breakpoints": [
@@ -203,12 +218,12 @@
       "kind": "custom",
       "refersTo": "home-question",
       "description": "A ruled question with a native disclosure and plus or minus icon.",
-      "html": "<details dir=\"rtl\" class=\"ds-question\"><summary>اگر ندانم چه خدمتی لازم دارم، چه کنم؟<svg aria-hidden=\"true\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M5 12h14\"/><path class=\"ds-question-plus\" d=\"M12 5v14\"/></svg></summary><p>معاینهٔ اولیه نقطهٔ شروع مناسبی است. بعد از معاینه، دندان‌پزشک توضیح می‌دهد چه گزینه‌هایی برای شما مطرح است و آیا بررسی بیشتری لازم است.</p></details>",
-      "css": ".ds-question { border-block: 1px solid var(--border, #d1e0ed); color: var(--foreground, #132d49); } .ds-question summary { display: flex; box-sizing: border-box; min-block-size: 3.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.875rem; cursor: pointer; list-style: none; font: 600 1.125rem/1.875rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-question summary::-webkit-details-marker { display: none; } .ds-question summary:hover, .ds-question[open] summary, .ds-question summary svg { color: var(--brand-text, #1b629b); } .ds-question summary svg { flex-shrink: 0; } .ds-question summary:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 3px; } .ds-question[open] .ds-question-plus { display: none; } .ds-question p { margin: 0; text-align: justify; text-align-last: start; padding-inline-end: 2rem; padding-block-end: 1.25rem; color: var(--muted-foreground, #466178); font: 1rem/1.75rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); }"
+      "html": "<details dir=\"rtl\" class=\"ds-question\"><summary>اگر ندانم چه خدمتی لازم دارم، چه کنم؟<span class=\"ds-question-indicator\" aria-hidden=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M5 12h14\"/><path class=\"ds-question-plus\" d=\"M12 5v14\"/></svg></span></summary><p>معاینهٔ اولیه نقطهٔ شروع مناسبی است. بعد از معاینه، دندان‌پزشک توضیح می‌دهد چه گزینه‌هایی برای شما مطرح است و آیا بررسی بیشتری لازم است.</p></details>",
+      "css": ".ds-question { border-block: 1px solid var(--border, #d1e0ed); color: var(--foreground, #132d49); } .ds-question summary { display: flex; box-sizing: border-box; min-block-size: 3.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.875rem; cursor: pointer; list-style: none; font: 600 1.125rem/1.875rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-question summary::-webkit-details-marker { display: none; } .ds-question summary:hover, .ds-question[open] summary { color: var(--brand-text, #1b629b); } .ds-question summary svg { flex-shrink: 0; } .ds-question summary:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 3px; } .ds-question[open] .ds-question-plus { display: none; } .ds-question p { margin: 0; text-align: justify; text-align-last: start; padding-inline-end: 2rem; padding-block-end: 1.25rem; color: var(--muted-foreground, #466178); font: 1rem/1.75rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-question-indicator { display: grid; place-items: center; flex: none; inline-size: 2rem; aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--hero-line, #92b8d7); background: var(--background, #fff); color: var(--brand-text, #1b629b); } .ds-question[open] .ds-question-indicator { color: var(--primary-foreground, #fff); background: var(--primary, #1c608e); border-color: var(--primary, #1c608e); }"
     }
   ],
   "narrative": {
-    "overview": "Avida Dental uses a blue palette and generous Persian line spacing. The full-width homepage hero blends a daylight patient portrait into a blue surface. Ruled lists and pale surfaces make services and visit information easy to scan.",
+    "overview": "Avida Dental uses a blue palette and generous Persian line spacing. The full-width homepage hero blends a daylight patient portrait into a blue surface. A navy practice section provides contrast between the white service directory and first-visit guide. Fine porcelain grain gives the blue surfaces a matte finish.",
     "dos": [
       "Do use semantic color tokens so surfaces and controls adapt to both themes.",
       "Do show a visible keyboard focus outline on controls and links.",

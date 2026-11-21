@@ -6,7 +6,7 @@ Scope: `src/routes/home/`. Mode: Persuade. The audience is Persian-speaking visi
 
 **THESIS.** The patient portrait and first-visit action introduce the clinic. The guide below explains how to prepare for the conversation.
 
-**OWN-WORLD.** A daylight patient portrait fades into a blue field. Powder-blue surfaces, unboxed outline icons, and thin rules carry the same language below the fold.
+**OWN-WORLD.** A daylight patient portrait fades into a blue field. Porcelain grain, a navy practice section, and thin rules carry the same language below the fold.
 
 **STORY.** Visitors identify a relevant service, see how the practice listens, and know what to bring and what to ask at the first visit.
 

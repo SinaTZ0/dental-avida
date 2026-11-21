@@ -15,7 +15,7 @@
 
 The Avida wordmark pairs the clinic name with a thin tooth outline. Deep blue anchors headings and the footer. Photography uses soft light, with deliberate cropping around faces and illustrated clinic imagery identified in its caption.
 
-The homepage opens with the Blue Horizon hero. A daylight patient portrait fades into the blue introduction, with a curved edge leading into the service directory. The service directory, visit sequence, and questions use rules and spacing to establish hierarchy. Use a card when the content needs its own surface and actions.
+The homepage opens with the Blue Horizon hero. A daylight patient portrait fades into the blue introduction, with a curved edge leading into the service directory. The navy practice section separates services from the first-visit guide. Fine porcelain grain adds texture to the blue surfaces. The service directory, visit sequence, and questions use rules and spacing to establish hierarchy. Use a card when the content needs its own surface and actions.
 
 ## Theme
 
