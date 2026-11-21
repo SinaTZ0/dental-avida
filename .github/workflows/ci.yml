@@ -1,0 +1,69 @@
+# Runs what `pnpm check` runs locally, plus the browser tests and the two Go tools' own checks, on every push to `main`
+# and every pull request. The integration and browser tests need the database and the image store, so the job starts
+# both and applies the migrations.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      # The version in package.json's `packageManager`.
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: cp .env.example .env
+      # The database and the image store of `compose.dev.yaml`, with the media bucket created: what `.env.example`
+      # points at, so CI tests against the same services as a development machine.
+      - run: pnpm services
+      - run: pnpm db:migrate
+      - run: pnpm check
+      # Builds the app and tests the production server in a real browser, so no separate `pnpm build` step.
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+  go:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tool: [error-viewer, deploy]
+    defaults:
+      run:
+        working-directory: tools/${{ matrix.tool }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: tools/${{ matrix.tool }}/go.mod
+          cache-dependency-path: tools/${{ matrix.tool }}/go.sum
+      - run: go vet ./...
+      - run: go test ./...
+
+  # The committed deploy binary must be built from the committed source (`tools/deploy/build.sh`), for a commit made
+  # without the pre-commit hook.
+  deploy-binary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - run: bash tools/deploy/build.sh --check

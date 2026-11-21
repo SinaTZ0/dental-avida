@@ -1,0 +1,74 @@
+# Development services only: Postgres, SeaweedFS (S3-compatible image storage, docs/backend/media.md) and Mailpit (the
+# mailbox every email goes to, docs/backend/mail.md). The app runs
+# on the host with `pnpm dev`, and the error viewer (tools/error-viewer, docs/backend/logging.md) with `pnpm errors`.
+# Start with `pnpm services`, which also creates the media bucket (`deploy/init-storage.mjs`); the values match
+# `.env.example`.
+
+# Pinned so the volumes keep their names even when the folder is renamed.
+name: dental-avida-dev
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: app
+    ports:
+      # The host only: these have development passwords (or none), so the local network must not reach them.
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d app"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  # S3 without authentication: fine on a development machine, never in production (`compose.prod.yaml` adds identities).
+  # Each bucket claims several volumes up front, and the volume count is derived from free disk / volume size. With the
+  # default 30 GB volumes a laptop runs out after two or three buckets ("No writable volumes"), so volumes stay small.
+  # `weed server` also reserves each volume's full size on disk when it creates it (7 × 1 GB for a bucket holding a few
+  # images), whatever its help says; volumePreallocate=false makes them grow as they're written.
+  seaweedfs:
+    image: chrislusf/seaweedfs:3.99
+    command: server -dir=/data -s3 -s3.port=8333 -master.volumeSizeLimitMB=1024 -master.volumePreallocate=false
+    ports:
+      - "127.0.0.1:8333:8333"
+    volumes:
+      - seaweedfs:/data
+
+  # Accepts every email the app sends, without login, and delivers none: read them at http://localhost:8025. The browser
+  # tests read sign-up and reset links from its API (`e2e/mailbox.ts`). Emails are kept in memory, so a restart clears
+  # them.
+  mailpit:
+    image: axllent/mailpit:v1.33
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+    healthcheck:
+      test: ["CMD", "/mailpit", "readyz"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  # Traces, metrics and logs over OTLP (docs/backend/logging.md → OpenTelemetry). Optional, so a plain
+  # `pnpm services` doesn't start it: `docker compose -f compose.dev.yaml --profile observability up -d`, then set
+  # OTEL_EXPORTER_OTLP_ENDPOINT and OTEL_EXPORTER_OTLP_HEADERS in `.env` (see `.env.example`). Its UI is
+  # http://localhost:5080, signed in with the address and password below.
+  openobserve:
+    image: public.ecr.aws/zinclabs/openobserve:v1.1.2
+    profiles: ["observability"]
+    environment:
+      ZO_ROOT_USER_EMAIL: dev@example.com
+      ZO_ROOT_USER_PASSWORD: Dev-pass-1
+      ZO_DATA_DIR: /data
+    ports:
+      - "127.0.0.1:5080:5080"
+    volumes:
+      - openobserve:/data
+
+volumes:
+  pgdata:
+  seaweedfs:
+  openobserve:

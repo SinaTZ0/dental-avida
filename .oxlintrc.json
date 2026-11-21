@@ -1,0 +1,102 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y", "vitest"],
+  "jsPlugins": ["@shadcn/lint"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "settings": {
+    "shadcn": {
+      "ui": "#/components/primitive",
+      "note": "Move the look into the primitive (a variant or its base style), the layout onto the parent, or a new token into src/styles.css (docs/frontend/components.md#lint-rules). Don't hide it in a wrapper element."
+    }
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    // `_tag` is how Effect tells errors and other tagged values apart.
+    "no-underscore-dangle": ["warn", { "allow": ["_tag"] }],
+    // `@effect/vitest`'s tests: an Effect run with the test's layers (docs/backend/architecture.md → Testing).
+    "vitest/no-standalone-expect": ["error", { "additionalTestBlockFunctions": ["it.effect", "it.live"] }],
+    "import/no-unassigned-import": [
+      "warn",
+      {
+        "allow": ["**/*.css", "**/load-env.server"]
+      }
+    ],
+    "shadcn/no-restyle": [
+      "error",
+      {
+        "allow": ["layout"]
+      }
+    ],
+    "shadcn/no-raw-colors": "error",
+    "shadcn/no-arbitrary-values": "error",
+    "shadcn/no-inline-styles": "error",
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "cn",
+            "message": "Import cn from #/lib/utils: it knows the app's type styles (docs/frontend/components.md)."
+          },
+          { "name": "zod", "message": "Schemas are Effect Schema (`Schema` from effect, `#/lib/schema`)." },
+          {
+            "name": "pino",
+            "message": "Log with Effect.log*, or createLogger from #/server/observability/log.server."
+          },
+          {
+            "name": "pg-boss",
+            "message": "Jobs run on Effect's persisted queue: defineJob from #/server/jobs.server."
+          },
+          { "name": "dotenv", "message": "Settings come from AppConfig (#/server/config.server)." },
+          { "name": "@effect/schema", "message": "Effect v4 has Schema in effect: import { Schema } from \"effect\"." },
+          { "name": "@effect/platform", "message": "Effect v4 has these in effect: effect/http and friends." },
+          { "name": "@effect/sql", "message": "Effect v4 has these in effect: effect/sql. The app's database is Db." }
+        ]
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/components/primitive/**"],
+      "rules": {
+        "shadcn/no-restyle": "off"
+      }
+    },
+    {
+      "files": ["src/mail/templates/**"],
+      "rules": {
+        "shadcn/no-inline-styles": "off",
+        "shadcn/no-raw-colors": "off"
+      }
+    },
+    {
+      "files": ["src/lib/utils.ts"],
+      "rules": {
+        "no-restricted-imports": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "skills/",
+    ".output/",
+    ".tanstack/",
+    ".nitro/",
+    "src/routeTree.gen.ts",
+    "src/paraglide/",
+    "project.inlang/cache/",
+    "playwright-report/",
+    "test-results/",
+    "storybook-static/",
+    "src/components/ui/",
+    "tools/error-viewer/static/htmx.min.js",
+    "docs/frontend/reference/",
+    "target/"
+  ]
+}

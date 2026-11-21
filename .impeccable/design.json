@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T17:42:01.590Z",
+  "title": "Design System: Avida Dental",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Practice blue"
+      },
+      "primary-dark": {
+        "role": "primary",
+        "displayName": "Light practice blue"
+      },
+      "highlight": {
+        "role": "primary",
+        "displayName": "Deep action blue"
+      },
+      "highlight-dark": {
+        "role": "primary",
+        "displayName": "Pale action blue"
+      },
+      "brand-surface": {
+        "role": "primary",
+        "displayName": "Deep blue footer"
+      },
+      "brand-surface-dark": {
+        "role": "primary",
+        "displayName": "Deep blue footer in dark mode"
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Ink blue"
+      },
+      "foreground-dark": {
+        "role": "neutral",
+        "displayName": "Pale blue text"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Powder blue surface"
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "Muted dark blue surface"
+      },
+      "hero-surface": {
+        "role": "neutral",
+        "displayName": "Blue hero surface"
+      },
+      "hero-surface-dark": {
+        "role": "neutral",
+        "displayName": "Hero surface in dark mode"
+      }
+    },
+    "typographyMeta": {
+      "hero": {
+        "displayName": "Hero",
+        "purpose": "Homepage introduction heading."
+      },
+      "section": {
+        "displayName": "Section heading",
+        "purpose": "Major homepage section titles."
+      },
+      "h3": {
+        "displayName": "Item heading",
+        "purpose": "Service names, first-visit steps, and question labels."
+      },
+      "body-lg": {
+        "displayName": "Large body",
+        "purpose": "Introductions and answers on the homepage."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions and field text."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Image provenance labels and compact badges."
+      }
+    },
+    "shadows": [
+      {
+        "name": "elevation-sm",
+        "value": "0 1px 2px #0000000a, 0 2px 8px -2px #0000000d",
+        "purpose": "Card shadow at rest in the light theme."
+      },
+      {
+        "name": "elevation-md",
+        "value": "0 1px 2px #0000000a, 0 12px 28px -12px #00000029",
+        "purpose": "Card shadow on hover or focus in the light theme."
+      },
+      {
+        "name": "elevation-sm-dark",
+        "value": "0 1px 2px #00000059, 0 2px 8px -2px #00000040",
+        "purpose": "Card shadow at rest in the dark theme."
+      },
+      {
+        "name": "elevation-md-dark",
+        "value": "0 1px 2px #00000059, 0 14px 30px -12px #00000080",
+        "purpose": "Card shadow on hover or focus in the dark theme."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-transition",
+        "value": "150ms ease-out",
+        "purpose": "Button color changes, press movement, and trailing arrow movement."
+      },
+      {
+        "name": "navigation-transition",
+        "value": "200ms ease-out",
+        "purpose": "Forward and back page transitions."
+      },
+      {
+        "name": "home-visit-arrival",
+        "value": "700ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The numbered first-visit steps briefly take the primary fill when the section is targeted, with 80ms and 160ms delays on the second and third steps."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "shared-mobile-headings",
+        "value": "600px"
+      },
+      {
+        "name": "home-wide-gutters-and-two-service-columns",
+        "value": "40rem"
+      },
+      {
+        "name": "home-hero-and-section-layout",
+        "value": "48rem"
+      },
+      {
+        "name": "home-preparation-columns",
+        "value": "54rem"
+      },
+      {
+        "name": "home-three-service-columns",
+        "value": "60rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Default button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Primary fill for in-app actions.",
+      "html": "<button dir=\"rtl\" type=\"button\" class=\"ds-button-default\">ذخیره</button>",
+      "css": ".ds-button-default { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 2.75rem; padding-inline: 1.25rem; border: 1.5px solid transparent; border-radius: var(--radius-md, 0.625rem); background: var(--primary, #1c608e); background-clip: padding-box; color: var(--primary-foreground, #fff); font: 600 0.8125rem/1.375rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); text-decoration: none; white-space: nowrap; cursor: pointer; } .ds-button-default:hover { background-color: var(--primary-hover, #16496e); } .ds-button-default:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 2px; } .ds-button-default:disabled { opacity: 0.45; pointer-events: none; } @media (prefers-reduced-motion: no-preference) { .ds-button-default { transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, translate 150ms ease-out; } .ds-button-default:active:not(:disabled) { translate: 0 1px; } }"
+    },
+    {
+      "name": "Highlight button",
+      "kind": "button",
+      "refersTo": "button-highlight",
+      "description": "Main action on neutral surfaces.",
+      "html": "<button dir=\"rtl\" type=\"button\" class=\"ds-button-highlight\">راهنمای اولین ویزیت</button>",
+      "css": ".ds-button-highlight { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 2.75rem; padding-inline: 1.25rem; border: 1.5px solid transparent; border-radius: var(--radius-md, 0.625rem); background: var(--highlight, #124c79); background-clip: padding-box; color: var(--highlight-foreground, #fff); font: 600 0.8125rem/1.375rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); text-decoration: none; white-space: nowrap; cursor: pointer; } .ds-button-highlight:hover { background-color: var(--highlight-hover, #0c375a); } .ds-button-highlight:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 2px; } .ds-button-highlight:disabled { opacity: 0.45; pointer-events: none; } @media (prefers-reduced-motion: no-preference) { .ds-button-highlight { transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, translate 150ms ease-out; } .ds-button-highlight:active:not(:disabled) { translate: 0 1px; } }"
+    },
+    {
+      "name": "Outline button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary action with a defined control edge.",
+      "html": "<button dir=\"rtl\" type=\"button\" class=\"ds-button-outline\">مشاهدهٔ خدمات</button>",
+      "css": ".ds-button-outline { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 2.75rem; padding-inline: 1.25rem; border: 1.5px solid var(--input, #7188a0); border-radius: var(--radius-md, 0.625rem); background: transparent; background-clip: padding-box; color: var(--foreground, #132d49); font: 600 0.8125rem/1.375rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); text-decoration: none; white-space: nowrap; cursor: pointer; } .ds-button-outline:hover { background-color: var(--accent, #e2eff9); } .ds-button-outline:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 2px; } .ds-button-outline:disabled { opacity: 0.45; pointer-events: none; } @media (prefers-reduced-motion: no-preference) { .ds-button-outline { transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, translate 150ms ease-out; } .ds-button-outline:active:not(:disabled) { translate: 0 1px; } }"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "text-input",
+      "description": "Text input with a 1.5px edge and shared keyboard focus ring.",
+      "html": "<input dir=\"rtl\" class=\"ds-input\" type=\"text\" aria-label=\"نام و نام خانوادگی\" placeholder=\"نام و نام خانوادگی\">",
+      "css": ".ds-input { box-sizing: border-box; width: 100%; height: 2.75rem; padding: 0.25rem 1rem; border: 1.5px solid var(--input, #7188a0); border-radius: var(--radius-sm, 0.5rem); background: var(--card, #fff); color: var(--foreground, #132d49); font: 0.9375rem/1.625rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-input::placeholder { color: var(--muted-foreground, #466178); } .ds-input:hover { border-color: var(--muted-foreground, #466178); } .ds-input:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 2px; } @media (prefers-reduced-motion: no-preference) { .ds-input { transition: color 150ms, background-color 150ms, border-color 150ms; } }"
+    },
+    {
+      "name": "Site navigation",
+      "kind": "nav",
+      "refersTo": "navigation-link",
+      "description": "Muted links with a primary underline on the current page.",
+      "html": "<nav dir=\"rtl\" class=\"ds-nav\" aria-label=\"منوی اصلی\"><a class=\"ds-nav-link\" href=\"#services\">خدمات</a><a class=\"ds-nav-link\" href=\"#visit\">ویزیت اول</a><a class=\"ds-nav-link\" href=\"/notes\" aria-current=\"page\">یادداشت‌ها</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; column-gap: 0.5rem; border-block-start: 1px solid var(--border, #d1e0ed); background: var(--card, #fff); } .ds-nav-link { position: relative; display: inline-flex; min-height: 2.5rem; align-items: center; padding-inline: 0.375rem; font: 500 0.8125rem/1.375rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); color: var(--muted-foreground, #466178); text-decoration: none; } .ds-nav-link:is(:hover, :focus-visible, [aria-current=page]) { color: var(--foreground, #132d49); } .ds-nav-link:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: -2px; } .ds-nav-link[aria-current=page]::after { position: absolute; inset-inline: 0.375rem; inset-block-end: 0; height: 2px; border-radius: 9999px; background: var(--primary, #1c608e); content: \"\"; } @media (width >= 40rem) { .ds-nav { column-gap: 1rem; } } @media (width >= 64rem) { .ds-nav { border-block-start: 0; } .ds-nav-link { height: 4.5rem; } } @media (prefers-reduced-motion: no-preference) { .ds-nav-link { transition: color 150ms; } }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Compact label with the accent wash and brand text.",
+      "html": "<span dir=\"rtl\" class=\"ds-badge\">پیشگیری</span>",
+      "css": ".ds-badge { box-sizing: border-box; display: inline-flex; align-items: center; height: 1.5rem; padding: 0.125rem 0.75rem; border: 1px solid transparent; border-radius: 9999px; background: var(--accent, #e2eff9); color: var(--brand-text, #1b629b); font: 500 0.75rem/1.25rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); white-space: nowrap; }"
+    },
+    {
+      "name": "Linked card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "An independent surface that gains a deeper shadow on hover or focus.",
+      "html": "<a dir=\"rtl\" class=\"ds-card\" href=\"#services\"><strong class=\"ds-card-title\">معاینه و پیشگیری</strong><span class=\"ds-card-body\">معاینهٔ دندان‌ها و لثه‌ها، جرم‌گیری و مرور عادت‌های مراقبت روزانه.</span></a>",
+      "css": ".ds-card { display: grid; gap: 0.25rem; padding: 1.25rem; border-radius: var(--radius-lg, 1.125rem); background: var(--card, #fff); box-shadow: 0 0 0 1px var(--border, #d1e0ed), var(--elevation-sm, 0 1px 2px #0000000a, 0 2px 8px -2px #0000000d); color: var(--foreground, #132d49); text-decoration: none; } .ds-card-title { font: 600 1.125rem/1.875rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-card-body { color: var(--muted-foreground, #466178); font: 0.8125rem/1.375rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-card:is(:hover, :focus-visible) { background: color-mix(in oklab, var(--accent, #e2eff9) 40%, var(--card, #fff)); box-shadow: 0 0 0 1px var(--border, #d1e0ed), var(--elevation-md, 0 1px 2px #0000000a, 0 12px 28px -12px #00000029); } .ds-card:is(:hover, :focus-visible) .ds-card-title { color: var(--brand-text, #1b629b); } .ds-card:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 2px; } @media (prefers-reduced-motion: no-preference) { .ds-card { transition: background-color 200ms ease-out, box-shadow 200ms ease-out; } .ds-card-title { transition: color 150ms ease-out; } }"
+    },
+    {
+      "name": "Homepage question",
+      "kind": "custom",
+      "refersTo": "home-question",
+      "description": "A ruled question with a native disclosure and plus or minus icon.",
+      "html": "<details dir=\"rtl\" class=\"ds-question\"><summary>اگر ندانم چه خدمتی لازم دارم، چه کنم؟<svg aria-hidden=\"true\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M5 12h14\"/><path class=\"ds-question-plus\" d=\"M12 5v14\"/></svg></summary><p>معاینهٔ اولیه نقطهٔ شروع مناسبی است. بعد از معاینه، دندان‌پزشک توضیح می‌دهد چه گزینه‌هایی برای شما مطرح است و آیا بررسی بیشتری لازم است.</p></details>",
+      "css": ".ds-question { border-block: 1px solid var(--border, #d1e0ed); color: var(--foreground, #132d49); } .ds-question summary { display: flex; box-sizing: border-box; min-block-size: 3.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 0.875rem; cursor: pointer; list-style: none; font: 600 1.125rem/1.875rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); } .ds-question summary::-webkit-details-marker { display: none; } .ds-question summary:hover, .ds-question[open] summary, .ds-question summary svg { color: var(--brand-text, #1b629b); } .ds-question summary svg { flex-shrink: 0; } .ds-question summary:focus-visible { outline: 2px solid var(--ring, #336998); outline-offset: 3px; } .ds-question[open] .ds-question-plus { display: none; } .ds-question p { margin: 0; text-align: justify; text-align-last: start; padding-inline-end: 2rem; padding-block-end: 1.25rem; color: var(--muted-foreground, #466178); font: 1rem/1.75rem var(--font-sans, \"Vazirmatn Variable\", \"Segoe UI\", Tahoma, system-ui, sans-serif); }"
+    }
+  ],
+  "narrative": {
+    "overview": "Avida Dental uses a blue palette and generous Persian line spacing. The full-width homepage hero blends a daylight patient portrait into a blue surface. Ruled lists and pale surfaces make services and visit information easy to scan.",
+    "dos": [
+      "Do use semantic color tokens so surfaces and controls adapt to both themes.",
+      "Do show a visible keyboard focus outline on controls and links.",
+      "Do identify illustrative images in captions or alternative text.",
+      "Do respect reduced-motion preferences for button movement, page transitions, and visit-step animation."
+    ]
+  }
+}
