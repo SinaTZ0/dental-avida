@@ -5,6 +5,7 @@ import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 import { HomeHero, HomePractice, HomeQuestions, HomeServices, HomeVisit } from "#/routes/home/components/home-content";
 import { HomeTreatmentResults } from "#/routes/home/components/home-treatment-results";
+import { HomeChildVisit, HomeConsultationGuide } from "#/routes/home/components/home-visit-guides";
 import "#/routes/home/home.css";
 
 /*===== Route =====*/
@@ -34,6 +35,8 @@ function Home() {
       <HomeTreatmentResults />
       <HomePractice />
       <HomeVisit />
+      <HomeConsultationGuide />
+      <HomeChildVisit />
       <HomeQuestions />
     </>
   );

@@ -34,10 +34,10 @@ export function HomeHero() {
     >
       <div className="home-hero-inner mx-auto flex max-w-site items-center px-4 sm:px-6">
         <div className="home-hero-copy relative z-10">
-          <p className="home-hero-label">{m.site_name()}</p>
-          <h1 id="hero-title" className="mt-4 text-hero">
-            {m.home_hero_title()} <span className="block text-brand-text">{m.home_hero_emphasis()}</span>
+          <h1 id="hero-title" className="text-hero">
+            {m.home_hero_title()} <span className="block">{m.home_hero_emphasis()}</span>
           </h1>
+          <span className="home-smile home-hero-smile" aria-hidden />
           <p className="home-hero-intro mt-5 max-w-md text-body-lg text-muted-foreground">{m.home_hero_intro()}</p>
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
             <a href={`#${homeSections.visit}`} className={buttonVariants({ variant: "highlight", size: "hero" })}>
@@ -119,6 +119,12 @@ export function HomeServices() {
             <div>
               <h3 className="text-h3">{title()}</h3>
               <p className="mt-1 text-body text-muted-foreground">{description()}</p>
+              {id === "children" && (
+                <a href={`#${homeSections.childVisit}`} className="home-text-link mt-1">
+                  {m.home_child_visit_link()}
+                  <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+                </a>
+              )}
             </div>
           </li>
         ))}

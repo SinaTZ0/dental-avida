@@ -41,7 +41,8 @@ const twTriggerStyles = defineStyles({
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
   disabled:
     "disabled:pointer-events-none disabled:opacity-45 aria-disabled:pointer-events-none aria-disabled:opacity-45",
-  state: "data-active:bg-card data-active:text-foreground group-data-[variant=default]/tabs-list:data-active:shadow-sm",
+  state:
+    "data-active:bg-card data-active:text-foreground group-data-[variant=default]/tabs-list:data-active:border-brand-text group-data-[variant=default]/tabs-list:data-active:shadow-sm",
   // The line variant drops the active fill and shows the current-nav marker instead: `brand-text` over a gold
   // underline (`after:`).
   stateLine:
@@ -56,7 +57,8 @@ const twTriggerStyles = defineStyles({
 const twContentStyles = defineStyles({
   layout: "flex-1",
   typography: "text-body-sm",
-  focus: "outline-none",
+  focus:
+    "outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
 });
 
 /*===== Class Composition =====*/

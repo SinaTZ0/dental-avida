@@ -75,6 +75,26 @@
   /* Layout: `max-w-site` is the 1200px content width */
   --container-site: 75rem;
   --spacing-target: 2.75rem;
+  --spacing-site-desktop-header: 5rem;
+  --spacing-site-mobile-nav: 4.5rem;
+}
+
+/* The page can scroll past its footer and bring focused controls above the fixed mobile navigation. */
+:root {
+  --site-mobile-nav-safe-area: env(safe-area-inset-bottom, 0px);
+  --site-mobile-nav-inset: calc(var(--spacing-site-mobile-nav) + var(--site-mobile-nav-safe-area) + 1px);
+}
+
+@media (width < 48rem) {
+  :root:has([data-site-layout]) {
+    scroll-padding-block-end: var(--site-mobile-nav-inset);
+  }
+}
+
+@media (width >= 48rem) {
+  :root:has([data-site-layout]) {
+    scroll-padding-block-start: calc(var(--spacing-site-desktop-header) + 1px);
+  }
 }
 
 /* Under 600px the three largest styles drop one step. Overriding the variables here, instead of pairing breakpoint
@@ -133,6 +153,8 @@
 
   /*------ Brand roles ------*/
   --color-brand-text: var(--brand-text);
+  --color-brand-jade: var(--brand-jade);
+  --color-brand-jade-surface: var(--brand-jade-surface);
   --color-hero-surface: var(--hero-surface);
   --color-brand-surface: var(--brand-surface);
   --color-brand-surface-foreground: var(--brand-surface-foreground);
@@ -191,6 +213,8 @@
   --ring: #336998;
 
   --brand-text: #1b629b;
+  --brand-jade: #28766a;
+  --brand-jade-surface: #dcefea;
   --hero-surface: #e3eef9;
   --hero-line: #92b8d7;
   --brand-surface: #123653;
@@ -252,6 +276,8 @@
   --ring: #a3cff4;
 
   --brand-text: #9cd0f9;
+  --brand-jade: #90d4c5;
+  --brand-jade-surface: #193a3b;
   --hero-surface: #172d40;
   --hero-line: #4e7592;
   --brand-surface: #15354f;

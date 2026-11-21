@@ -17,6 +17,8 @@ The Avida wordmark pairs the clinic name with a thin tooth outline. Deep blue an
 
 The homepage opens with the Blue Horizon hero. A daylight patient portrait fades into the blue introduction, with a curved edge leading into the service directory. The navy practice section separates services from the first-visit guide. Fine porcelain grain adds texture to the blue surfaces. The service directory, visit sequence, and questions use rules and spacing to establish hierarchy. Use a card when the content needs its own surface and actions.
 
+A jade smile stroke sits below the hero headline and appears again in the family visit guide. The same accent marks conversation prompts in the illustrated consultation guide. The family guide pairs a pale jade surface with a vertical sequence of steps before, during, and at the end of the visit.
+
 ## Theme
 
 - Use the theme's Tailwind classes (`bg-primary`, `text-muted-foreground`, `text-h2`…), never raw hex or the Tailwind

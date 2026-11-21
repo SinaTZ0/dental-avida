@@ -6,6 +6,7 @@ export const homeSections = {
   services: "services",
   practice: "practice",
   visit: "visit",
+  childVisit: "child-visit",
   questions: "questions",
 } as const;
 

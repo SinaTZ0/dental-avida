@@ -16,6 +16,10 @@ colors:
   highlight-foreground-dark: "#122e48"
   brand-text: "#1b629b"
   brand-text-dark: "#9cd0f9"
+  brand-jade: "#28766a"
+  brand-jade-dark: "#90d4c5"
+  brand-jade-surface: "#dcefea"
+  brand-jade-surface-dark: "#193a3b"
   hero-surface: "#e3eef9"
   hero-surface-dark: "#172d40"
   hero-line: "#92b8d7"
@@ -164,7 +168,7 @@ Use the shared styles and primitives across the site. The compositions and respo
 ### Primary
 
 - Use `primary` for standard in-app actions and `highlight` for the main action on light or dark neutral surfaces. Each has its own hover fill and foreground.
-- Use `brand-text` for links, outline icons, and the second line of the hero title.
+- Use `brand-text` for links and outline icons. Use `brand-jade` for the smile stroke beneath the hero title, the consultation prompts, and the family visit timeline. Use `brand-jade-surface` behind the family visit guide.
 - Use `hero-surface` behind the patient portrait and `hero-line` along the curve below it. Use `brand-surface`, `brand-surface-foreground`, and `brand-surface-muted` for the practice section and footer. Use `brand-surface-line` for rules on the navy surface.
 
 ### Neutral
@@ -203,13 +207,13 @@ The button primitive uses a 1.5px edge and a 2px focus outline with a 2px offset
 
 ### Text fields, badges, and navigation
 
-Text fields use the card surface, a defined control edge, and a visible focus outline. Compact badges use the accent wash with brand-colored text. Navigation uses muted text at rest, stronger text on hover or focus, and a thin primary underline. The underline uses a softer tint on hover.
+Text fields use the card surface, a defined control edge, and a visible focus outline. Compact badges use the accent wash with brand-colored text. The header sets the tooth mark on a pale blue tile and highlights the first-visit link with the jade surface. Other navigation links use muted text at rest. On desktop, hover adds the accent wash and the current destination has an underline. The desktop header hides on downward scroll and reappears on upward scroll or keyboard focus. On phones, the four main links sit in a fixed bottom bar with icons and Persian labels. The current destination has a tinted icon background, or an outline when the first-visit link is current.
 
 ### Homepage lists
 
 Service descriptions pair an outline icon with an item heading and muted body copy. The icons have a stroke width of 1.5. Horizontal rules divide rows, and inline separators appear in multi-column layouts. Native question disclosures show an outlined plus when closed and a filled minus when open. Where the browser supports intrinsic-size transitions, the answer opens in 220ms. The numbered visit steps use the accent wash at rest and briefly take the primary fill when reached through the page anchor.
 
-The hero copy rises 5px as the portrait settles on entry. Section headings move 3px when they enter the viewport in browsers that support scroll-driven animation. Both effects honor reduced motion.
+The hero copy rises 5px as the portrait settles on entry. The jade smile stroke appears just after the headline. Both effects honor reduced motion.
 
 ## Do's and Don'ts
 
