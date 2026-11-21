@@ -116,7 +116,11 @@ const treatments = [
 
 export function HomeServices() {
   return (
-    <section id={homeSections.services} aria-labelledby="services-title" className="home-section home-shell">
+    <section
+      id={homeSections.services}
+      aria-labelledby="services-title"
+      className="home-section home-shell home-services"
+    >
       <div className="home-section-heading">
         <h2 id="services-title" className="text-section">
           {m.home_services_title()}

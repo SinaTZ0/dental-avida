@@ -32,8 +32,8 @@ function Home() {
   return (
     <>
       <HomeHero />
-      <HomeAppointments />
       <HomeServices />
+      <HomeAppointments />
       <HomeTreatmentResults />
       <HomePractice />
       <HomeVisit />

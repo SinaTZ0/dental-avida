@@ -190,11 +190,9 @@
 /*===== Appointments and patient reviews =====*/
 
 .home-appointments {
-  position: relative;
-  z-index: 2;
   display: grid;
   gap: 0.75rem;
-  margin-block: 0 0.5rem;
+  margin-block-end: clamp(2rem, 4vw, 3rem);
   scroll-margin-block-start: 1rem;
 }
 
@@ -371,11 +369,14 @@
 @media (width >= 48rem) {
   .home-appointments {
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-    margin-block-start: -1rem;
   }
 }
 
 /*===== Service directory =====*/
+
+.home-services {
+  padding-block-end: clamp(2.5rem, 4vw, 4.5rem);
+}
 
 .home-treatments {
   --treatment-inset: clamp(1rem, 2.4vw, 2rem);
