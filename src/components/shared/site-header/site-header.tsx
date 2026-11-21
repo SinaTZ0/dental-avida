@@ -133,7 +133,7 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
         desktopHeaderHidden && "md:-translate-y-full",
       )}
     >
-      <div className="mx-auto flex max-w-site flex-wrap items-center justify-between gap-x-2 px-4 sm:px-6 md:grid md:min-h-site-desktop-header md:grid-cols-3">
+      <div className="mx-auto flex max-w-site-wide flex-wrap items-center justify-between gap-x-2 px-4 sm:px-6 md:grid md:min-h-site-desktop-header md:grid-cols-3">
         <Link
           to="/"
           className="inline-flex min-h-16 items-center gap-2.5 rounded-md text-h4 font-bold text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid sm:text-h3 sm:font-bold md:justify-self-start"

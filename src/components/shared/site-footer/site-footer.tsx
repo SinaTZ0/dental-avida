@@ -69,7 +69,7 @@ function ClinicContact() {
 export function SiteFooter() {
   return (
     <footer className="bg-brand-surface porcelain-grain text-brand-surface-foreground">
-      <div className="mx-auto max-w-site px-4 pt-8 pb-4 sm:px-6 sm:pt-12 sm:pb-5">
+      <div className="mx-auto max-w-site-wide px-4 pt-8 pb-4 sm:px-6 sm:pt-12 sm:pb-5">
         <div className="grid gap-7 pb-7 md:grid-cols-3 md:gap-10">
           <div>
             <p className="text-h2">{m.site_name()}</p>

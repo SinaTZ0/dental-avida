@@ -1,13 +1,13 @@
 /*===== Page =====*/
 
 .home-shell {
-  inline-size: min(calc(100% - 2rem), calc(var(--container-site) - 3rem));
+  inline-size: min(calc(100% - 2rem), calc(var(--container-site-wide) - 3rem));
   margin-inline: auto;
 }
 
 @media (width >= 40rem) {
   .home-shell {
-    inline-size: min(calc(100% - 3rem), calc(var(--container-site) - 3rem));
+    inline-size: min(calc(100% - 3rem), calc(var(--container-site-wide) - 3rem));
   }
 }
 
@@ -672,6 +672,10 @@
   align-items: center;
 }
 
+.home-practice-copy {
+  max-inline-size: 35rem;
+}
+
 .home-practice-photo {
   display: block;
   inline-size: 100%;
@@ -996,6 +1000,10 @@
 .home-child-visit-steps li {
   position: relative;
   padding-inline-start: clamp(1.25rem, 2.75vw, 2rem);
+}
+
+.home-child-visit-steps p {
+  max-inline-size: 36rem;
 }
 
 .home-child-visit-steps li + li {

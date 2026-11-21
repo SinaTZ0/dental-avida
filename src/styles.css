@@ -72,8 +72,9 @@
   --text-nav--line-height: 1.375rem;
   --text-nav--font-weight: 500;
 
-  /* Layout: `max-w-site` is the 1200px content width */
+  /* The wide frame gives the homepage and site navigation room to grow on large displays. */
   --container-site: 75rem;
+  --container-site-wide: clamp(var(--container-site), 77.5vw, 93rem);
   --spacing-target: 2.75rem;
   --spacing-site-desktop-header: 5rem;
   --spacing-site-mobile-nav: 4.5rem;

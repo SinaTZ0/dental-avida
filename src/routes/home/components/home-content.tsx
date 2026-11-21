@@ -41,7 +41,7 @@ export function HomeHero() {
       aria-labelledby="hero-title"
       className="home-hero relative isolate overflow-hidden bg-hero-surface porcelain-grain"
     >
-      <div className="home-hero-inner mx-auto flex max-w-site items-center px-4 sm:px-6">
+      <div className="home-hero-inner mx-auto flex max-w-site-wide items-center px-4 sm:px-6">
         <div className="home-hero-copy relative z-10">
           <h1 id="hero-title" className="text-hero">
             {m.home_hero_title()} <span className="block">{m.home_hero_emphasis()}</span>
@@ -185,7 +185,7 @@ export function HomePractice() {
           <img
             src={treatmentRoom}
             srcSet={`${treatmentRoom720} 720w, ${treatmentRoom} 1536w`}
-            sizes="(min-width: 75rem) 36rem, (min-width: 48rem) 50vw, calc(100vw - 2rem)"
+            sizes="auto, (min-width: 120rem) 47rem, (min-width: 97rem) 40vw, (min-width: 75rem) 36rem, (min-width: 48rem) 50vw, calc(100vw - 2rem)"
             width={1536}
             height={1024}
             loading="lazy"
