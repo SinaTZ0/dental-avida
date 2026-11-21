@@ -7,7 +7,7 @@ const twSharedStyles = defineStyles({
   // `group/button` lets icons and labels react to the button's own state.
   layout: "group/button inline-flex shrink-0 items-center justify-center",
   // A 1.5px edge, transparent unless a variant draws it, so every variant has the same size.
-  geometry: "border-[1.5px]",
+  geometry: "min-h-target min-w-target border-[1.5px]",
   appearance: "border-transparent bg-clip-padding",
   typography: "text-button whitespace-nowrap",
   interaction:
@@ -53,6 +53,12 @@ const twVariant = defineStyles({
     hover: "hover:bg-accent",
     state: "aria-expanded:bg-accent",
   },
+  choice: {
+    appearance: "border-input bg-card text-foreground",
+    hover: "hover:bg-accent",
+    state:
+      "aria-pressed:border-brand-surface-line aria-pressed:bg-brand-surface aria-pressed:font-bold aria-pressed:text-brand-surface-foreground aria-pressed:hover:bg-brand-surface",
+  },
   destructive: {
     appearance: "bg-destructive-surface text-destructive",
     hover: "hover:border-destructive",
@@ -65,28 +71,28 @@ const twVariant = defineStyles({
 
 /*===== Geometry =====*/
 
-// Heights line up with the 44px inputs; `sm` and every icon size keep a 40px minimum tap target.
+// Compact sizes reduce padding or icon size while keeping the shared target minimum.
 // `geometryIcon` tightens the padding on the side holding a `data-icon` child so the icon looks optically centered.
 // `geometryGroup` restores the shared radius when compact buttons sit inside a ButtonGroup.
 const twSize = defineStyles({
   xs: {
     layout: "gap-1",
-    geometry: "h-8 rounded-sm px-3",
+    geometry: "rounded-sm px-3",
     geometryIcon: "has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
     geometryGroup: "in-data-[slot=button-group]:rounded-md",
-    typography: "text-caption font-bold",
+    typography: "text-body-sm font-semibold",
     icon: "[&_svg:not([class*='size-'])]:size-4",
   },
   sm: {
     layout: "gap-1.5",
-    geometry: "h-10 rounded-sm px-4",
+    geometry: "rounded-sm px-4",
     geometryIcon: "has-data-[icon=inline-end]:pe-3 has-data-[icon=inline-start]:ps-3",
     geometryGroup: "in-data-[slot=button-group]:rounded-md",
     icon: "[&_svg:not([class*='size-'])]:size-4",
   },
   default: {
     layout: "gap-2",
-    geometry: "h-11 rounded-md px-5",
+    geometry: "rounded-md px-5",
     geometryIcon: "has-data-[icon=inline-end]:pe-4 has-data-[icon=inline-start]:ps-4",
   },
   lg: {
@@ -99,17 +105,21 @@ const twSize = defineStyles({
     geometry: "h-12 rounded-full px-6",
     geometryIcon: "has-data-[icon=inline-end]:pe-5 has-data-[icon=inline-start]:ps-5",
   },
+  choice: {
+    layout: "flex-col gap-1 md:flex-row md:justify-start md:gap-3",
+    geometry: "min-h-16 rounded-md px-1 py-2 md:min-h-14 md:px-4",
+  },
   "icon-xs": {
-    geometry: "size-8 rounded-sm",
+    geometry: "rounded-sm",
     geometryGroup: "in-data-[slot=button-group]:rounded-md",
     icon: "[&_svg:not([class*='size-'])]:size-4",
   },
   "icon-sm": {
-    geometry: "size-10 rounded-sm",
+    geometry: "rounded-sm",
     geometryGroup: "in-data-[slot=button-group]:rounded-md",
   },
   icon: {
-    geometry: "size-11 rounded-md",
+    geometry: "rounded-md",
   },
   "icon-lg": {
     geometry: "size-12 rounded-md",

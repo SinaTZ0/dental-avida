@@ -9,7 +9,7 @@ const twTriggerStyles = defineStyles({
   layoutValue:
     "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5",
   // Same chrome as Input: 1.5px `input` edge.
-  geometry: "rounded-sm border-[1.5px] py-2 ps-4 pe-3",
+  geometry: "min-h-target min-w-target rounded-sm border-[1.5px] py-2 ps-4 pe-3",
   // The `body` style at 16px also keeps iOS Safari from zooming in on focus.
   typography: "text-body whitespace-nowrap",
   appearance: "border-input bg-card data-placeholder:text-muted-foreground",
@@ -23,11 +23,9 @@ const twTriggerStyles = defineStyles({
 });
 
 const twTriggerSize = defineStyles({
-  default: {
-    geometry: "h-11",
-  },
+  default: {},
   sm: {
-    geometry: "h-10",
+    geometry: "px-2.5",
   },
 });
 
@@ -87,7 +85,7 @@ const twItemStyles = defineStyles({
   // A trailing span (such as a shortcut hint) lays out its own children in a row.
   layoutTrailing: "*:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2",
   // `pe-8` reserves room for the absolutely positioned check indicator.
-  geometry: "min-h-10 rounded-sm py-2 ps-2.5 pe-8",
+  geometry: "min-h-target rounded-sm py-2 ps-2.5 pe-8",
   typography: "text-body-sm",
   interaction: "cursor-default outline-hidden select-none",
   focus: "focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground",

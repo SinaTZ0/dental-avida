@@ -4,6 +4,7 @@ import { absoluteUrl, jsonLd, pageMeta } from "#/lib/seo";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 import { HomeHero, HomePractice, HomeQuestions, HomeServices, HomeVisit } from "#/routes/home/components/home-content";
+import { HomeTreatmentResults } from "#/routes/home/components/home-treatment-results";
 import "#/routes/home/home.css";
 
 /*===== Route =====*/
@@ -30,6 +31,7 @@ function Home() {
     <>
       <HomeHero />
       <HomeServices />
+      <HomeTreatmentResults />
       <HomePractice />
       <HomeVisit />
       <HomeQuestions />

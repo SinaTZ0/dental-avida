@@ -11,8 +11,7 @@ const twTabsStyles = defineStyles({
 
 const twListStyles = defineStyles({
   layout: "group/tabs-list inline-flex w-fit items-center justify-center group-data-vertical/tabs:flex-col",
-  geometry:
-    "rounded-md p-1 group-data-horizontal/tabs:h-12 group-data-vertical/tabs:h-fit data-[variant=line]:rounded-none",
+  geometry: "rounded-md p-1 data-[variant=line]:rounded-none",
   appearance: "text-muted-foreground",
 });
 
@@ -32,7 +31,7 @@ const twVariant = defineStyles({
 const twTriggerStyles = defineStyles({
   layout:
     "relative inline-flex flex-1 items-center justify-center gap-1.5 group-data-vertical/tabs:w-full group-data-vertical/tabs:justify-start",
-  geometry: "h-full rounded-sm border px-3 py-1",
+  geometry: "min-h-target min-w-target rounded-sm border px-3 py-1",
   geometryIcon: "has-data-[icon=inline-end]:pe-2 has-data-[icon=inline-start]:ps-2",
   typography: "text-nav whitespace-nowrap",
   appearance: "border-transparent text-muted-foreground",

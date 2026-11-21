@@ -58,9 +58,8 @@ const twActionStyles = defineStyles({
   layout: "shrink-0",
 });
 
-// The `after:` box enlarges the small close button's hit area.
 const twCloseStyles = defineStyles({
-  layout: "relative shrink-0 after:absolute after:-inset-2 after:content-['']",
+  layout: "shrink-0",
   appearance: "text-muted-foreground",
   hover: "hover:text-foreground",
 });

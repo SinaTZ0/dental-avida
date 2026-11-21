@@ -1,4 +1,5 @@
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
+import { Button } from "#/components/primitive/button/button";
 import { cn } from "#/lib/utils";
 import { tooltipArrowClasses, tooltipContentClasses, tooltipPositionerClasses } from "./tooltip.styles";
 
@@ -12,8 +13,8 @@ function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
   return <TooltipPrimitive.Root data-slot="tooltip" {...props} />;
 }
 
-function TooltipTrigger({ ...props }: TooltipPrimitive.Trigger.Props) {
-  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
+function TooltipTrigger({ render = <Button variant="ghost" />, ...props }: TooltipPrimitive.Trigger.Props) {
+  return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" render={render} {...props} />;
 }
 
 /*===== Popup =====*/

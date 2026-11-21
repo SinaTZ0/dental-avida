@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { ArrowLeftIcon, CalendarIcon, PlusIcon } from "lucide-react";
+import { ArrowLeftIcon, CalendarIcon, GemIcon, PlusIcon, SparklesIcon } from "lucide-react";
 
 import { Input } from "#/components/primitive/input/input";
 import { m } from "#/paraglide/messages";
@@ -95,6 +95,21 @@ export const HomepageAction: Story = {
       <CalendarIcon data-icon="inline-start" />
       {m.home_plan_visit()}
     </Button>
+  ),
+};
+
+export const Choices: Story = {
+  render: (args) => (
+    <div className="flex flex-wrap gap-2">
+      <Button {...args} variant="choice" size="choice" aria-pressed>
+        <GemIcon aria-hidden />
+        {m.home_results_veneers()}
+      </Button>
+      <Button {...args} variant="choice" size="choice" aria-pressed={false}>
+        <SparklesIcon aria-hidden />
+        {m.home_results_whitening()}
+      </Button>
+    </div>
   ),
 };
 

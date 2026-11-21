@@ -32,7 +32,7 @@ const NAV_ITEMS = [
 
 // The current page gets the primary underline; hover and focus tint the text.
 const navItemClasses =
-  "relative inline-flex min-h-10 items-center px-1.5 text-nav text-muted-foreground outline-none transition-colors duration-150 after:absolute after:inset-x-1.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary after:opacity-0 hover:text-foreground hover:after:opacity-50 focus-visible:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid aria-[current=page]:text-foreground aria-[current=page]:after:opacity-100 motion-safe:after:transition-opacity motion-reduce:transition-none lg:h-18";
+  "relative inline-flex min-h-target min-w-target items-center px-1.5 text-nav text-muted-foreground outline-none transition-colors duration-150 after:absolute after:inset-x-1.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary after:opacity-0 hover:text-foreground hover:after:opacity-50 focus-visible:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid aria-[current=page]:text-foreground aria-[current=page]:after:opacity-100 motion-safe:after:transition-opacity motion-reduce:transition-none lg:h-18";
 
 /*===== Account =====*/
 

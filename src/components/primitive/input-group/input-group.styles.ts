@@ -9,8 +9,8 @@ const twGroupStyles = defineStyles({
   // Block-aligned addons and textareas stack vertically, so the fixed height gives way.
   layoutBlock:
     "has-[>[data-align=block-end]]:h-auto has-[>[data-align=block-end]]:flex-col has-[>[data-align=block-start]]:h-auto has-[>[data-align=block-start]]:flex-col has-[>textarea]:h-auto",
-  // Same chrome as Input: 44px, 1.5px `input` edge.
-  geometry: "h-11 rounded-sm border-[1.5px]",
+  // Leave 44px inside the group's own border for the input and any buttons.
+  geometry: "h-12 rounded-sm border-[1.5px]",
   // The input yields padding on the side an addon occupies.
   geometryAddon:
     "has-[>[data-align=block-end]]:[&>input]:pt-3 has-[>[data-align=block-start]]:[&>input]:pb-3 has-[>[data-align=inline-end]]:[&>input]:pe-1.5 has-[>[data-align=inline-start]]:[&>input]:ps-1.5",
@@ -32,6 +32,7 @@ const twGroupStyles = defineStyles({
 const twAddonStyles = defineStyles({
   layout: "flex items-center justify-center gap-2",
   geometry: "h-auto py-1.5",
+  geometryAction: "has-[>button]:data-[align^=inline]:py-0",
   geometryKbd: "[&>kbd]:rounded-[calc(var(--radius)-5px)]",
   typography: "text-body-sm font-medium",
   appearance: "text-muted-foreground",
@@ -72,15 +73,15 @@ const twButtonStyles = defineStyles({
 const twButtonSize = defineStyles({
   xs: {
     layout: "gap-1",
-    geometry: "h-6 rounded-[calc(var(--radius)-3px)] px-1.5",
+    geometry: "rounded-[calc(var(--radius)-3px)] px-1.5",
     icon: "[&>svg:not([class*='size-'])]:size-3.5",
   },
   sm: {},
   "icon-xs": {
-    geometry: "size-6 rounded-[calc(var(--radius)-3px)] p-0 has-[>svg]:p-0",
+    geometry: "rounded-[calc(var(--radius)-3px)] p-0 has-[>svg]:p-0",
   },
   "icon-sm": {
-    geometry: "size-8 p-0 has-[>svg]:p-0",
+    geometry: "p-0 has-[>svg]:p-0",
   },
 });
 
@@ -99,7 +100,7 @@ const twTextStyles = defineStyles({
 const twInputStyles = defineStyles({
   layout: "h-full flex-1",
   // Rounded like the group (minus its 1.5px border) so nothing paints square corners over it.
-  geometry: "rounded-[calc(var(--radius-sm)-1.5px)] border-0",
+  geometry: "min-h-target rounded-[calc(var(--radius-sm)-1.5px)] border-0",
   appearance: "bg-transparent shadow-none",
   focus: "focus-visible:outline-none",
   disabled: "disabled:bg-transparent",

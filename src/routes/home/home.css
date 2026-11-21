@@ -39,7 +39,8 @@
   --home-forward-shift: -0.2rem;
 
   display: inline-flex;
-  min-block-size: 2.75rem;
+  min-block-size: var(--spacing-target);
+  min-inline-size: var(--spacing-target);
   align-items: center;
   gap: 0.5rem;
   border-radius: var(--radius-sm);
@@ -215,6 +216,128 @@
   .home-treatment:nth-child(3n + 1) {
     padding-inline-start: 0;
     border-inline-start: 0;
+  }
+}
+
+/*===== Treatment results =====*/
+
+.home-results-shell {
+  /* Leave room for the 48px thumb and its focus ring at either end of the photo. */
+  max-inline-size: calc(100% - 3.5rem);
+}
+
+.home-results-heading {
+  margin-block-end: 1.5rem;
+}
+
+.home-results-heading p {
+  text-align: start;
+}
+
+.home-results-layout {
+  display: grid;
+  grid-template-areas: "treatments" "photo" "arrows";
+  gap: 1rem 2rem;
+}
+
+.home-results-treatments {
+  grid-area: treatments;
+}
+
+.home-results-figure {
+  grid-area: photo;
+}
+
+.home-results-arrows {
+  display: flex;
+  grid-area: arrows;
+  align-self: start;
+  justify-self: end;
+  gap: 0.5rem;
+}
+
+.home-results-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.home-results-frame {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 16 / 9;
+}
+
+.home-results-frame::after {
+  position: absolute;
+  z-index: -1;
+  inset-block: 0;
+  inset-inline-start: var(--comparison-split);
+  border-inline-start: 2px solid var(--brand-surface-foreground);
+  pointer-events: none;
+  content: "";
+}
+
+.home-results-image,
+.home-results-before {
+  position: absolute;
+  inset: 0;
+}
+
+.home-results-image {
+  z-index: -2;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--muted);
+}
+
+/* Clipping keeps both photos at the same scale as the split moves. */
+.home-results-before {
+  clip-path: inset(0 calc(100% - var(--comparison-split)) 0 0);
+}
+
+.home-results-before:dir(rtl) {
+  clip-path: inset(0 0 0 calc(100% - var(--comparison-split)));
+}
+
+.home-results-image img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.home-results-tag {
+  position: absolute;
+  inset-block-end: clamp(0.5rem, 2vw, 1rem);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--brand-surface);
+  color: var(--brand-surface-foreground);
+}
+
+.home-results-tag-before {
+  inset-inline-start: clamp(0.5rem, 2vw, 1rem);
+}
+
+.home-results-tag-after {
+  inset-inline-end: clamp(0.5rem, 2vw, 1rem);
+}
+
+@media (width >= 48rem) {
+  .home-results-layout {
+    grid-template: "treatments photo" auto "arrows photo" 1fr / clamp(12rem, 22vw, 17rem) minmax(0, 1fr);
+  }
+
+  .home-results-choices {
+    grid-template-columns: 1fr;
+  }
+
+  .home-results-arrows {
+    justify-self: start;
+  }
+
+  .home-results-frame {
+    aspect-ratio: 2.6;
   }
 }
 

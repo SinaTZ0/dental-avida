@@ -7,6 +7,7 @@ import { composeStyles, defineStyles, joinStyles } from "../styles";
 const twCardStyles = defineStyles({
   layout: "group/card flex flex-col gap-(--card-spacing) overflow-hidden",
   geometry: "rounded-lg py-(--card-spacing)",
+  geometryLink: "[a&]:min-h-target [a&]:min-w-target",
   // The footer brings its own padding, so the card drops its bottom padding.
   geometryFooter: "has-data-[slot=card-footer]:pb-0",
   // Edge-to-edge media replaces the card's top padding; the card's `overflow-hidden` rounds its corners.

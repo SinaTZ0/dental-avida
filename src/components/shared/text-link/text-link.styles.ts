@@ -5,8 +5,8 @@ import { composeStyles, defineStyles, joinStyles } from "#/components/primitive/
 
 const twTextLinkStyles = defineStyles({
   layout: "group/text-link inline-flex items-center gap-2",
-  // A standalone link keeps the 40px tap target; a call inside a link card is part of the card's target already.
-  geometry: "rounded-sm [a&]:min-h-10",
+  // A call inside a link card is part of the card's target already.
+  geometry: "rounded-sm [a&]:min-h-target [a&]:min-w-target",
   typography: "text-button",
   interaction: "transition-colors duration-150 ease-out outline-none",
   focus:

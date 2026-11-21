@@ -62,8 +62,8 @@
   --text-caption: 0.75rem;
   --text-caption--line-height: 1.25rem;
   --text-caption--font-weight: 500;
-  --text-button: 0.8125rem;
-  --text-button--line-height: 1.375rem;
+  --text-button: 0.9375rem;
+  --text-button--line-height: 1.625rem;
   --text-button--font-weight: 600;
   --text-kicker: 0.75rem;
   --text-kicker--line-height: 1.25rem;
@@ -74,6 +74,7 @@
 
   /* Layout: `max-w-site` is the 1200px content width */
   --container-site: 75rem;
+  --spacing-target: 2.75rem;
 }
 
 /* Under 600px the three largest styles drop one step. Overriding the variables here, instead of pairing breakpoint

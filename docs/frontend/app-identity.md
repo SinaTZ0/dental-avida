@@ -38,4 +38,4 @@ These come from the language and accessibility, not from taste, so they hold wha
 - Text pairs at least 4.5:1; control edges, focus rings and large text at least 3:1. Check new colours in both themes.
 - Every interactive element shows a visible keyboard focus. Status colours travel with an icon or a word, never colour
   alone. Movement respects `prefers-reduced-motion` (`motion-safe:` / `motion-reduce:`).
-- Tap targets are at least 40px.
+- Standalone controls have a minimum target of 44 × 44 CSS px (`--spacing-target`), following [WCAG 2.2 Target Size (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html). Use larger targets for prominent controls when space allows.

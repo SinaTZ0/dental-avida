@@ -31,7 +31,7 @@ function SiteLayout() {
     <div className="flex min-h-svh flex-col">
       <a
         href="#main"
-        className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-button text-primary-foreground focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4"
+        className="sr-only z-50 rounded-md bg-primary px-4 py-2 text-button text-primary-foreground focus:not-sr-only focus:fixed focus:inset-s-4 focus:top-4 focus:inline-flex focus:min-h-target focus:min-w-target focus:items-center"
       >
         {m.common_skip_to_content()}
       </a>
