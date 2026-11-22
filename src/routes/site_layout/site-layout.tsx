@@ -1,10 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 import { SiteFooter } from "#/components/shared/site-footer/site-footer";
 import { SiteHeader } from "#/components/shared/site-header/site-header";
 import { setReportedUser } from "#/lib/error-reporting.browser";
+import { markHomeIntroConsumed } from "#/lib/home-intro-state";
 import { orpc } from "#/orpc/client";
 import { m } from "#/paraglide/messages";
 
@@ -21,11 +22,20 @@ export const Route = createFileRoute("/_site-layout")({
 function SiteLayout() {
   const { data: viewer } = useSuspenseQuery(orpc.session.viewer.queryOptions());
   const userId = viewer?.id ?? null;
+  const pathname = useLocation({ select: (location) => location.pathname });
 
   /*------ Error Reports ------*/
   // Browser reports carry the signed-in user's ID, like the server's (docs/backend/logging.md → User ID). Sign-in and
   // sign-out invalidate the viewer query, which updates it.
   useEffect(() => setReportedUser(userId), [userId]);
+
+  /*------ Home Intro Eligibility ------*/
+  // Once the visitor has been on any inner route, navigating back to `/` skips the initial load intro.
+  useEffect(() => {
+    if (pathname !== "/") {
+      markHomeIntroConsumed();
+    }
+  }, [pathname]);
 
   return (
     <div data-site-layout="" className="flex min-h-svh flex-col pb-(--site-mobile-nav-inset) md:pb-0">

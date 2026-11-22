@@ -13,9 +13,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "#/components/primitive/dropdown-menu/dropdown-menu";
-import { defineStyles, joinStyles } from "#/components/primitive/styles";
 import { AvidaBrandEmblem } from "#/components/shared/avida-smile/avida-smile";
 import { LocaleSwitcher } from "#/components/shared/locale-switcher/locale-switcher";
+import { useActiveHomeSection } from "#/components/shared/site-header/use-active-home-section";
 import { useDesktopHeaderHidden } from "#/components/shared/site-header/use-desktop-header-hidden";
 import { ThemeToggle } from "#/components/shared/theme-toggle/theme-toggle";
 import { useLocaleLinks } from "#/hooks/use-locale-links";
@@ -24,31 +24,32 @@ import { homeSections } from "#/lib/site";
 import { cn } from "#/lib/utils";
 import type { Viewer } from "#/orpc/session/contract";
 import { m } from "#/paraglide/messages";
+import "#/components/shared/site-header/site-header.css";
 
-/*===== Navigation =====*/
+/*===== Navigation Data =====*/
 
 // Message functions, not their text: called in render, so each request gets its own locale's labels.
-const NAV_ITEMS = [
-  { label: m.nav_services, icon: StethoscopeIcon, to: "/", hash: homeSections.services },
-  { label: m.nav_technology_short, icon: CpuIcon, to: "/", hash: homeSections.technology },
-  { label: m.nav_team, icon: UsersIcon, to: "/", hash: homeSections.team },
-  { label: m.nav_book, icon: CalendarDaysIcon, to: "/", hash: homeSections.appointments },
+const DESKTOP_NAV_ITEMS = [
+  { label: m.nav_services, hash: homeSections.services, desktopWideOnly: false },
+  { label: m.nav_technology_short, hash: homeSections.technology, desktopWideOnly: false },
+  { label: m.nav_team, hash: homeSections.team, desktopWideOnly: false },
+  { label: m.nav_visit, hash: homeSections.visit, desktopWideOnly: true },
 ] as const;
 
-const navItemClasses = joinStyles(
-  defineStyles({
-    layout: "group/nav relative flex flex-col items-center justify-center gap-0.5 md:inline-flex",
-    geometry:
-      "min-h-site-mobile-nav min-w-target px-0.5 py-1 md:min-h-target md:rounded-full md:px-1.5 md:py-0 lg:px-4",
-    typography: "text-center text-caption md:text-body md:font-medium",
-    hover: "hover:text-foreground md:hover:bg-accent",
-    focus:
-      "focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid md:focus-visible:outline-offset-2",
-    active:
-      "md:after:absolute md:after:inset-x-4 md:after:bottom-1 md:after:h-0.5 md:after:rounded-full md:after:bg-current md:after:opacity-0 md:aria-[current=page]:after:opacity-100",
-    motion: "motion-safe:transition-colors motion-safe:duration-150",
-  }),
-);
+const MOBILE_DOCK_ITEMS = [
+  { label: m.nav_services, icon: StethoscopeIcon, hash: homeSections.services, featured: false },
+  { label: m.nav_technology_short, icon: CpuIcon, hash: homeSections.technology, featured: false },
+  { label: m.nav_team, icon: UsersIcon, hash: homeSections.team, featured: false },
+  { label: m.nav_book, icon: CalendarDaysIcon, hash: homeSections.appointments, featured: true },
+] as const;
+
+const OBSERVED_SECTIONS = [
+  homeSections.services,
+  homeSections.technology,
+  homeSections.team,
+  homeSections.visit,
+  homeSections.appointments,
+] as const;
 
 const SCROLL_MOTION_QUERY = "(prefers-reduced-motion: no-preference)";
 const SMOOTH_HASH_SCROLL: ScrollIntoViewOptions = { behavior: "smooth" };
@@ -83,16 +84,108 @@ function scrollToCurrentSection({
   document.getElementById(hash.slice(1))?.scrollIntoView(options);
 }
 
-/*===== Account =====*/
+/*===== Subcomponents =====*/
+
+function BrandLockup() {
+  return (
+    <Link
+      to="/"
+      className="group/brand pointer-events-auto inline-flex min-h-target shrink-0 items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid"
+    >
+      <AvidaBrandEmblem className="group-hover/brand:scale-105 motion-safe:transition-transform motion-safe:duration-200" />
+      <span className="flex flex-col">
+        <span className="text-h4 leading-snug font-extrabold text-foreground sm:text-h3">{m.site_name()}</span>
+        <span className="hidden text-caption leading-tight text-muted-foreground sm:block md:hidden xl:block">
+          {m.site_brand_subtitle()}
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+function DesktopNav({
+  activeSection,
+  onHome,
+  hashScroll,
+}: {
+  activeSection: string | null;
+  onHome: boolean;
+  hashScroll: boolean | ScrollIntoViewOptions;
+}) {
+  return (
+    <nav
+      aria-label={m.nav_main()}
+      className="site-desktop-nav-pill pointer-events-auto hidden items-center gap-1 rounded-full p-1 md:flex"
+    >
+      {DESKTOP_NAV_ITEMS.map(({ label, hash, desktopWideOnly }) => {
+        const isActive = activeSection === hash;
+
+        return (
+          <Link
+            key={hash}
+            to="/"
+            hash={hash}
+            hashScrollIntoView={hashScroll}
+            onClick={onHome ? (event) => scrollToCurrentSection({ event, options: hashScroll }) : undefined}
+            data-active={isActive ? "true" : undefined}
+            className={cn(
+              "site-desktop-nav-link focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
+              desktopWideOnly && "site-desktop-nav-link-wide",
+            )}
+          >
+            <span aria-hidden className="site-desktop-nav-dot" />
+            {label()}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
+
+function MobileAppDock({
+  activeSection,
+  onHome,
+  hashScroll,
+}: {
+  activeSection: string | null;
+  onHome: boolean;
+  hashScroll: boolean | ScrollIntoViewOptions;
+}) {
+  return (
+    <nav aria-label={m.nav_main()} className="site-mobile-dock">
+      {MOBILE_DOCK_ITEMS.map(({ icon: Icon, label, hash, featured }) => {
+        const isActive = activeSection === hash;
+
+        return (
+          <Link
+            key={hash}
+            to="/"
+            hash={hash}
+            hashScrollIntoView={hashScroll}
+            onClick={onHome ? (event) => scrollToCurrentSection({ event, options: hashScroll }) : undefined}
+            data-active={isActive ? "true" : undefined}
+            className={cn(
+              "site-mobile-tab focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid",
+              featured && "site-mobile-tab-featured",
+            )}
+          >
+            <span aria-hidden className="site-mobile-tab-dot" />
+            <Icon aria-hidden className="size-5 shrink-0" />
+            <span>{label()}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
 
 function AccountMenu({ viewer }: { viewer: Viewer }) {
   const signOut = useSignOut();
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" size="sm" />}>
+      <DropdownMenuTrigger aria-label={m.nav_account()} render={<Button variant="glass" size="icon-pill" />}>
         <UserIcon aria-hidden />
-        <span className="sr-only lg:not-sr-only">{m.nav_account()}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-56">
         <DropdownMenuGroup>
@@ -115,11 +208,16 @@ function AccountMenu({ viewer }: { viewer: Viewer }) {
 
 /*===== Site Header =====*/
 
-/** Brand, main navigation, language switcher, theme toggle and the account menu (or a sign-in button for visitors). */
+/**
+ * Floating translucent glass navigation: frameless over the hero at scroll top, transitioning into a full-width
+ * frosted-glass bar once scrolled (auto-hiding on downward desktop scroll and reappearing on upward scroll), paired
+ * with the floating glass mobile app dock.
+ */
 export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
   const localeLinks = useLocaleLinks();
-  const desktopHeaderHidden = useDesktopHeaderHidden();
+  const { hidden: desktopHeaderHidden, scrolled } = useDesktopHeaderHidden();
   const onHome = useLocation({ select: (location) => location.pathname === "/" });
+  const activeSection = useActiveHomeSection(OBSERVED_SECTIONS, onHome);
   const allowScrollMotion = useSyncExternalStore(
     subscribeToScrollMotion,
     () => window.matchMedia(SCROLL_MOTION_QUERY).matches,
@@ -128,79 +226,49 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
   const hashScroll = onHome && allowScrollMotion ? SMOOTH_HASH_SCROLL : true;
 
   return (
-    <header
-      className={cn(
-        "border-b border-border/80 bg-card md:sticky md:top-0 md:z-40 md:bg-card/90 md:backdrop-blur-md md:has-[:focus-visible]:translate-y-0 md:motion-safe:transition-transform md:motion-safe:duration-200 md:motion-safe:ease-out",
-        desktopHeaderHidden && "md:-translate-y-full",
-      )}
-    >
-      <div className="mx-auto flex max-w-site-wide flex-wrap items-center justify-between gap-x-2 px-4 sm:px-6 md:grid md:min-h-site-desktop-header md:grid-cols-3">
-        <Link
-          to="/"
-          className="inline-flex min-h-16 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid md:justify-self-start"
-        >
-          <AvidaBrandEmblem />
-          <span className="flex flex-col">
-            <span className="text-h4 leading-snug font-extrabold text-foreground sm:text-h3">{m.site_name()}</span>
-            <span className="hidden text-caption leading-tight text-muted-foreground sm:block">
-              {m.site_brand_subtitle()}
-            </span>
-          </span>
-        </Link>
+    <>
+      <header
+        data-scrolled={scrolled ? "true" : undefined}
+        className={cn(
+          "site-header-floating pointer-events-none z-30 md:z-40 md:has-[:focus-visible]:translate-y-0 md:motion-safe:transition-transform md:motion-safe:duration-200 md:motion-safe:ease-out",
+          onHome ? "fixed inset-x-0 top-0" : "sticky top-0",
+          desktopHeaderHidden && "md:-translate-y-full",
+        )}
+      >
+        <div className="site-header-inner mx-auto flex max-w-site-wide items-center justify-between gap-3 px-4 py-3 sm:px-6 md:py-4">
+          <BrandLockup />
 
-        <nav
-          aria-label={m.nav_main()}
-          className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t bg-card pb-(--site-mobile-nav-safe-area) md:static md:z-auto md:flex md:w-max md:items-center md:gap-1 md:justify-self-center md:border-t-0 md:bg-transparent md:pb-0"
-        >
-          {NAV_ITEMS.map(({ icon: Icon, label, to, hash }) => {
-            const featured = hash === homeSections.appointments;
+          <DesktopNav activeSection={activeSection} onHome={onHome} hashScroll={hashScroll} />
 
-            return (
-              <Link
-                key={hash ?? to}
-                to={to}
-                hash={hash}
-                hashScrollIntoView={hash ? hashScroll : undefined}
-                onClick={hash && onHome ? (event) => scrollToCurrentSection({ event, options: hashScroll }) : undefined}
-                activeOptions={{ exact: true, includeHash: true, includeSearch: false }}
-                className={cn(
-                  navItemClasses,
-                  featured
-                    ? "font-semibold text-brand-jade md:bg-brand-jade-surface md:font-semibold"
-                    : "text-muted-foreground aria-[current=page]:text-foreground",
-                )}
-              >
-                <span
-                  aria-hidden
-                  className={cn(
-                    "grid h-7 w-12 place-items-center rounded-full md:hidden",
-                    featured
-                      ? "bg-brand-jade-surface group-aria-[current=page]/nav:ring-1 group-aria-[current=page]/nav:ring-current"
-                      : "group-aria-[current=page]/nav:bg-accent",
-                  )}
-                >
-                  <Icon className="size-5" />
-                </span>
-                {label()}
+          <div className="site-header-actions pointer-events-auto flex shrink-0 items-center gap-2">
+            <ThemeToggle variant="glass" size="icon-pill" />
+            <LocaleSwitcher links={localeLinks} variant="glass" size="pill" />
+            {viewer ? (
+              <AccountMenu viewer={viewer} />
+            ) : (
+              // A link styled as a button: `<Button render={<Link />}>` would announce it as a button (`role="button"`).
+              <Link to="/auth" className={buttonVariants({ variant: "glass", size: "icon-pill" })}>
+                <UserIcon aria-hidden />
+                <span className="sr-only">{m.nav_sign_in()}</span>
               </Link>
-            );
-          })}
-        </nav>
+            )}
 
-        <div className="ms-auto flex shrink-0 items-center gap-1 md:justify-self-end">
-          <LocaleSwitcher links={localeLinks} />
-          <ThemeToggle />
-          {viewer ? (
-            <AccountMenu viewer={viewer} />
-          ) : (
-            // A link styled as a button: `<Button render={<Link />}>` would announce it as a button (`role="button"`).
-            <Link to="/auth" className={cn(buttonVariants({ size: "sm", variant: "outline" }))}>
-              <UserIcon aria-hidden />
-              <span className="sr-only lg:not-sr-only">{m.nav_sign_in()}</span>
+            {/* Primary desktop booking glass pill; on mobile this lives as the featured tab in the bottom app dock. */}
+            <Link
+              to="/"
+              hash={homeSections.appointments}
+              hashScrollIntoView={hashScroll}
+              onClick={onHome ? (event) => scrollToCurrentSection({ event, options: hashScroll }) : undefined}
+              className="site-header-book-pill hidden min-h-target items-center gap-2 rounded-full px-4 text-body-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:outline-solid md:inline-flex"
+            >
+              <CalendarDaysIcon aria-hidden className="size-4 shrink-0" />
+              <span>{m.nav_book()}</span>
             </Link>
-          )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      <MobileAppDock activeSection={activeSection} onHome={onHome} hashScroll={hashScroll} />
+    </>
   );
 }

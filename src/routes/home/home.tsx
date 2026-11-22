@@ -6,6 +6,7 @@ import { localizeHref } from "#/paraglide/runtime";
 import { HomeAppointments } from "#/routes/home/components/home-appointments";
 import { HomeHero, HomePractice, HomeQuestions, HomeServices, HomeVisit } from "#/routes/home/components/home-content";
 import { HomeHighlights, HomeImplantShowcase, HomeTechnology } from "#/routes/home/components/home-luxury-sections";
+import { HomeSmileIntro } from "#/routes/home/components/home-smile-intro";
 import { HomeTreatmentResults } from "#/routes/home/components/home-treatment-results";
 import { HomeChildVisit } from "#/routes/home/components/home-visit-guides";
 import "#/routes/home/home.css";
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/_site-layout/")({
 function Home() {
   return (
     <>
+      <HomeSmileIntro />
       <HomeHero />
       <HomeHighlights />
       <HomeServices />

@@ -12,26 +12,23 @@ import { m } from "#/paraglide/messages";
 export function LocaleSwitcher({
   links,
   variant = "ghost",
+  size = "sm",
   className,
 }: {
   links: LocaleLink[];
   /** The links' button look: `ghost` by default, another variant where the header's surface needs one. */
   variant?: ButtonProps["variant"];
+  size?: ButtonProps["size"];
   className?: string;
 }) {
   if (links.length === 0) return null;
 
   return (
     <nav aria-label={m.common_language()} className={className}>
-      <ul className="flex items-center">
+      <ul className="flex items-center gap-1.5">
         {links.map((link) => (
           <li key={link.locale}>
-            <a
-              href={link.href}
-              hrefLang={link.locale}
-              lang={link.locale}
-              className={buttonVariants({ variant, size: "sm" })}
-            >
+            <a href={link.href} hrefLang={link.locale} lang={link.locale} className={buttonVariants({ variant, size })}>
               {link.name}
             </a>
           </li>

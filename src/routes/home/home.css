@@ -1,3 +1,40 @@
+/*===== Carved Smile Load Intro =====*/
+
+.home-smile-intro {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  overflow: hidden;
+  opacity: 1;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.home-smile-intro-svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+.home-smile-intro-mask-bg {
+  fill: #fff;
+}
+
+.home-smile-intro-mask-cutout {
+  fill: #000;
+}
+
+.home-smile-intro-veil {
+  fill: var(--background);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-smile-intro {
+    display: none;
+  }
+}
+
 /*===== Page =====*/
 
 .home-shell {
@@ -240,12 +277,12 @@
 }
 
 .home-hero-inner {
-  min-block-size: clamp(32rem, 45vw, 42rem);
+  min-block-size: clamp(35rem, 48vw, 44rem);
 }
 
 .home-hero-copy {
   max-inline-size: min(56%, 40rem);
-  padding-block: 3.75rem 7.5rem;
+  padding-block: 7rem 7.5rem;
 }
 
 .home-hero-meta {
@@ -275,33 +312,6 @@
 
 .home-hero-phone:hover {
   text-decoration: underline;
-}
-
-.home-hero-kicker {
-  display: inline-flex;
-  max-inline-size: 100%;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.4rem 0.95rem;
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 40%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--card) 82%, transparent);
-  backdrop-filter: blur(10px);
-  color: var(--brand-text);
-  font-size: var(--text-caption);
-  font-weight: 600;
-  box-shadow:
-    0 0 24px -6px color-mix(in srgb, var(--brand-gold) 28%, transparent),
-    var(--elevation-sm);
-}
-
-.home-hero-kicker-dot {
-  inline-size: 0.45rem;
-  block-size: 0.45rem;
-  border-radius: 50%;
-  background: var(--brand-gold);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--brand-gold) 75%, transparent);
 }
 
 .home-hero-title {
@@ -396,7 +406,7 @@
 
   .home-hero-copy {
     max-inline-size: 33rem;
-    padding-block: 2.5rem 1.5rem;
+    padding-block: 5.5rem 1.75rem;
   }
 
   .home-hero-photo {

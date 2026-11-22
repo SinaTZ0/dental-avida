@@ -61,6 +61,13 @@ const twVariant = defineStyles({
     hover: "hover:bg-accent",
     state: "aria-expanded:bg-accent",
   },
+  glass: {
+    appearance:
+      "border-border/90 bg-card/65 text-foreground shadow-sm backdrop-blur-xl dark:border-brand-surface-foreground/25 dark:bg-brand-surface/45 dark:text-brand-surface-foreground",
+    hover:
+      "hover:border-brand-gold/55 hover:bg-card/85 dark:hover:border-brand-surface-foreground/45 dark:hover:bg-brand-surface/70",
+    state: "aria-expanded:bg-card/85 dark:aria-expanded:bg-brand-surface/70",
+  },
   choice: {
     appearance: "bg-transparent text-brand-surface-foreground",
     hover: "hover:bg-brand-surface-foreground/10",
@@ -137,6 +144,9 @@ const twSize = defineStyles({
   },
   icon: {
     geometry: "rounded-md",
+  },
+  "icon-pill": {
+    geometry: "rounded-full",
   },
   "icon-lg": {
     geometry: "size-12 rounded-md",

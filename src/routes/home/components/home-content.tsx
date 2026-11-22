@@ -26,14 +26,10 @@ export function HomeHero() {
     <section aria-labelledby="hero-title" className="home-hero relative isolate overflow-hidden bg-hero-surface">
       <div className="home-hero-inner mx-auto flex max-w-site-wide items-center px-4 sm:px-6">
         <div className="home-hero-copy relative z-10">
-          <p className="home-hero-kicker">
-            <span className="home-hero-kicker-dot" aria-hidden />
-            {m.home_hero_kicker()}
-          </p>
-          <h1 id="hero-title" className="home-hero-title mt-4 text-hero">
+          <h1 id="hero-title" className="home-hero-title text-hero">
             {m.home_hero_title()} <span className="block text-brand-text">{m.home_hero_emphasis()}</span>
           </h1>
-          <div className="home-hero-smile-wrap" aria-hidden>
+          <div className="home-hero-smile-wrap" data-home-hero-smile-wrap="" aria-hidden>
             <AvidaSmile className="home-hero-smile" />
           </div>
           <p className="home-hero-intro mt-4 max-w-lg text-body-lg text-muted-foreground">{m.home_hero_intro()}</p>
