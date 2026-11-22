@@ -63,7 +63,7 @@ export function HomeHero() {
   );
 }
 
-/*===== Service directory =====*/
+/*===== Service Directory =====*/
 
 const treatments = [
   {
@@ -106,67 +106,65 @@ const treatments = [
 
 export function HomeServices() {
   return (
-    <section
-      id={homeSections.services}
-      aria-labelledby="services-title"
-      className="home-section home-shell home-services"
-    >
-      <div className="home-section-heading">
-        <div>
-          <p className="home-kicker">{m.home_services_kicker()}</p>
-          <h2 id="services-title" className="mt-2.5 text-section">
-            {m.home_services_title()}
-          </h2>
+    <section id={homeSections.services} aria-labelledby="services-title" className="home-section home-services-band">
+      <div className="home-shell home-services-spread">
+        <div className="home-services-lead">
+          <div>
+            <p className="home-kicker">{m.home_services_kicker()}</p>
+            <h2 id="services-title" className="mt-2.5 text-section">
+              {m.home_services_title()}
+            </h2>
+            <p className="mt-3 text-body-lg text-muted-foreground">{m.home_services_intro()}</p>
+          </div>
+
+          <div className="home-services-concierge home-glass-smoked">
+            <p className="home-kicker home-kicker-dark">{m.home_visit_kicker()}</p>
+            <h3 className="mt-2 text-h3 text-brand-surface-foreground">{m.home_services_start_title()}</h3>
+            <p className="mt-1.5 text-body-sm text-brand-surface-muted">{m.home_services_start_body()}</p>
+            <a href={`#${homeSections.visit}`} className="home-text-link home-text-link-dark mt-3">
+              {m.home_plan_visit()}
+              <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+            </a>
+          </div>
         </div>
-        <p className="max-w-md text-body-lg text-muted-foreground">{m.home_services_intro()}</p>
-      </div>
 
-      {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-      <ol className="home-service-ledger" role="list">
-        {treatments.map(({ id, title, description, tags }, index) => {
-          const tagItems = tags()
-            .split("•")
-            .map((part) => part.trim())
-            .filter(Boolean);
+        {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
+        <ol className="home-services-stack home-glass-pane" role="list">
+          {treatments.map(({ id, title, description, tags }, index) => {
+            const tagItems = tags()
+              .split("•")
+              .map((part) => part.trim())
+              .filter(Boolean);
 
-          return (
-            <li key={id} className="home-service-row">
-              <span className="home-service-num tabular-nums" aria-hidden>
-                {formatNumber(index + 1).padStart(2, "۰")}
-              </span>
-              <div className="home-service-primary">
-                <h3 className="text-h2 text-foreground">{title()}</h3>
-                <ul className="home-service-meta" aria-label={title()}>
-                  {tagItems.map((tag) => (
-                    <li key={tag} className="home-service-meta-item text-caption">
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="home-service-detail">
-                <p className="text-body text-muted-foreground">{description()}</p>
-                {id === "children" && (
-                  <a href={`#${homeSections.childVisit}`} className="home-text-link mt-2">
-                    {m.home_child_visit_link()}
-                    <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-
-      <div className="home-services-prompt">
-        <div>
-          <h3 className="text-h3 text-foreground">{m.home_services_start_title()}</h3>
-          <p className="mt-1 text-body text-muted-foreground">{m.home_services_start_body()}</p>
-        </div>
-        <a href={`#${homeSections.visit}`} className="home-text-link">
-          {m.home_plan_visit()}
-          <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
-        </a>
+            return (
+              <li key={id} className="home-service-item">
+                <span aria-hidden className="home-service-photo" />
+                <span className="home-service-num tabular-nums" aria-hidden>
+                  {formatNumber(index + 1).padStart(2, "۰")}
+                </span>
+                <div className="min-w-0">
+                  <div className="home-service-head">
+                    <h3 className="home-service-title text-h3 text-foreground">{title()}</h3>
+                    <ul className="home-service-tags" aria-label={title()}>
+                      {tagItems.map((tag) => (
+                        <li key={tag} className="home-tag-chip text-caption">
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <p className="home-service-desc mt-1.5 text-body text-muted-foreground">{description()}</p>
+                  {id === "children" && (
+                    <a href={`#${homeSections.childVisit}`} className="home-text-link mt-1">
+                      {m.home_child_visit_link()}
+                      <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+                    </a>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );
@@ -232,7 +230,7 @@ export function HomePractice() {
               ))}
             </ul>
 
-            <div className="home-practice-note">
+            <div className="home-practice-note home-glass-smoked">
               <h3 className="text-h3 text-brand-surface-foreground">{m.home_practice_reassurance_title()}</h3>
               <p className="mt-1.5 text-body text-brand-surface-muted">{m.home_practice_reassurance()}</p>
             </div>
@@ -240,17 +238,26 @@ export function HomePractice() {
 
           <figure className="home-practice-media">
             <div className="home-glow-stage">
-              <img
-                src={treatmentRoom}
-                srcSet={`${treatmentRoom720} 720w, ${treatmentRoom} 1264w`}
-                sizes="auto, (min-width: 120rem) 47rem, (min-width: 97rem) 40vw, (min-width: 75rem) 36rem, (min-width: 48rem) 50vw, calc(100vw - 2rem)"
-                width={1264}
-                height={848}
-                loading="lazy"
-                decoding="async"
-                alt={m.home_practice_image_alt()}
-                className="home-practice-photo"
-              />
+              <div className="home-photo-plate-wrap">
+                <img
+                  src={treatmentRoom}
+                  srcSet={`${treatmentRoom720} 720w, ${treatmentRoom} 1264w`}
+                  sizes="auto, (min-width: 120rem) 47rem, (min-width: 97rem) 40vw, (min-width: 75rem) 36rem, (min-width: 48rem) 50vw, calc(100vw - 2rem)"
+                  width={1264}
+                  height={848}
+                  loading="lazy"
+                  decoding="async"
+                  alt={m.home_practice_image_alt()}
+                  className="home-practice-photo"
+                />
+                <div className="home-photo-plate home-glass-smoked text-caption">
+                  <span className="inline-flex items-center gap-2 font-semibold text-brand-surface-foreground">
+                    <span className="home-glow-dot" aria-hidden />
+                    {m.home_practice_plate_title()}
+                  </span>
+                  <span className="text-brand-surface-gold">{m.home_practice_plate_note()}</span>
+                </div>
+              </div>
             </div>
             <figcaption className="mt-3 text-caption text-brand-surface-muted">
               {m.home_practice_image_caption()}
@@ -258,7 +265,7 @@ export function HomePractice() {
           </figure>
         </div>
 
-        {/*------ Interdisciplinary care columns ------*/}
+        {/*------ Interdisciplinary care smoked-glass bar ------*/}
         <div id={homeSections.team} className="home-disciplines">
           <div className="home-disciplines-head">
             <div>
@@ -269,15 +276,15 @@ export function HomePractice() {
           </div>
 
           {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-          <ol className="home-disciplines-grid" role="list">
+          <ol className="home-disciplines-bar home-glass-smoked" role="list">
             {careDisciplines.map(({ id, title, role, body }, index) => (
-              <li key={id} className="home-discipline-col">
+              <li key={id} className="home-discipline-cell">
                 <span className="home-discipline-num text-caption tabular-nums" aria-hidden>
                   {formatNumber(index + 1).padStart(2, "۰")}
                 </span>
-                <h4 className="mt-3 text-h4 text-brand-surface-foreground">{title()}</h4>
+                <h4 className="mt-2.5 text-h4 text-brand-surface-foreground">{title()}</h4>
                 <p className="mt-1 text-caption text-brand-surface-gold">{role()}</p>
-                <p className="mt-2.5 text-body-sm text-brand-surface-muted">{body()}</p>
+                <p className="mt-2 text-body-sm text-brand-surface-muted">{body()}</p>
               </li>
             ))}
           </ol>
@@ -287,7 +294,7 @@ export function HomePractice() {
   );
 }
 
-/*===== Patient guide =====*/
+/*===== Patient Guide — Asymmetric Glass Diptych =====*/
 
 const visitSteps = [
   [m.home_visit_talk, m.home_visit_talk_description],
@@ -312,54 +319,62 @@ const visitPreparation = [
 
 export function HomeVisit() {
   return (
-    <section id={homeSections.visit} aria-labelledby="visit-title" className="home-section home-shell">
-      <div className="home-section-heading">
-        <div>
-          <p className="home-kicker">{m.home_visit_kicker()}</p>
-          <h2 id="visit-title" className="mt-2.5 text-section">
-            {m.home_visit_title()}
-          </h2>
-        </div>
-        <p className="max-w-md text-body-lg text-muted-foreground">{m.home_visit_intro()}</p>
-      </div>
-
-      {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- The custom step markers replace the native markers. */}
-      <ol className="home-visit-steps" role="list">
-        {visitSteps.map(([title, description], index) => (
-          <li key={title()} className="home-visit-step">
-            <span aria-hidden className="home-visit-number tabular-nums">
-              {formatNumber(index + 1).padStart(2, "۰")}
-            </span>
-            <div>
-              <h3 className="text-h3 text-foreground">{title()}</h3>
-              <p className="mt-2 text-body text-muted-foreground">{description()}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-
-      <div className="home-visit-preparation">
-        {visitPreparation.map(({ title, items }, index) => (
-          <div key={title()} className="home-preparation-col">
-            <span className="home-editorial-index text-caption tabular-nums" aria-hidden>
-              {formatNumber(index + 1).padStart(2, "۰")}
-            </span>
-            <h3 className="mt-1.5 text-h3 text-foreground">{title()}</h3>
-            <ul className="home-preparation-list text-body text-muted-foreground">
-              {items.map((item) => (
-                <li key={item()}>{item()}</li>
-              ))}
-            </ul>
+    <section id={homeSections.visit} aria-labelledby="visit-title" className="home-section home-visit-band">
+      <div className="home-shell">
+        <div className="home-section-heading">
+          <div>
+            <p className="home-kicker">{m.home_visit_kicker()}</p>
+            <h2 id="visit-title" className="mt-2.5 text-section">
+              {m.home_visit_title()}
+            </h2>
           </div>
-        ))}
-      </div>
+          <p className="max-w-md text-body-lg text-muted-foreground">{m.home_visit_intro()}</p>
+        </div>
 
-      <HomeConsultationGuide />
+        <div className="home-visit-spread">
+          {/*------ Luminous frosted vertical visit timeline ------*/}
+          <div className="home-visit-journey home-glass-pane">
+            {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- The custom step markers replace the native markers. */}
+            <ol className="home-visit-timeline" role="list">
+              {visitSteps.map(([title, description], index) => (
+                <li key={title()} className="home-visit-stage">
+                  <span aria-hidden className="home-visit-badge tabular-nums">
+                    {formatNumber(index + 1).padStart(2, "۰")}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="text-h3 text-foreground">{title()}</h3>
+                    <p className="mt-1.5 text-body text-muted-foreground">{description()}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/*------ Deep smoked-emerald preparation dossier ------*/}
+          <div className="home-visit-prep-folio home-glass-smoked">
+            {visitPreparation.map(({ title, items }) => (
+              <div key={title()} className="home-prep-chapter">
+                <h3 className="home-prep-chapter-title text-h4 text-brand-surface-foreground">
+                  <span className="home-glow-dot" aria-hidden />
+                  {title()}
+                </h3>
+                <ul className="home-prep-bullets text-body-sm text-brand-surface-muted">
+                  {items.map((item) => (
+                    <li key={item()}>{item()}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <HomeConsultationGuide />
+      </div>
     </section>
   );
 }
 
-/*===== Common questions =====*/
+/*===== Common Questions =====*/
 
 const questions = [
   [m.home_faq_unsure, m.home_faq_unsure_answer],
@@ -377,7 +392,7 @@ export function HomeQuestions() {
     <section
       id={homeSections.questions}
       aria-labelledby="questions-title"
-      className="home-section home-questions-section bg-muted"
+      className="home-section home-questions-section"
     >
       <div className="home-shell home-questions">
         <div className="home-questions-intro">
@@ -386,8 +401,18 @@ export function HomeQuestions() {
             {m.home_faq_title()}
           </h2>
           <p className="mt-3 max-w-xs text-body-lg text-muted-foreground">{m.home_faq_intro()}</p>
+
+          <div className="home-faq-companion home-glass-smoked max-w-xs">
+            <p className="text-h4 text-brand-surface-foreground">{m.home_appointment_title()}</p>
+            <p className="mt-1 text-body-sm text-brand-surface-muted">{m.home_appointment_prepare_description()}</p>
+            <a href={`#${homeSections.visit}`} className="home-text-link home-text-link-dark mt-2">
+              {m.home_plan_visit()}
+              <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+            </a>
+          </div>
         </div>
-        <div className="home-question-list">
+
+        <div className="home-faq-panel home-glass-pane">
           {questions.map(([question, answer]) => (
             <details key={question()} className="group">
               <summary className="home-question text-h3">

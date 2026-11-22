@@ -12,7 +12,7 @@
 }
 
 .home-section {
-  padding-block: clamp(4rem, 7vw, 6.5rem);
+  padding-block: clamp(2.85rem, 4.8vw, 4.4rem);
   scroll-margin-block-start: 1.5rem;
 }
 
@@ -21,7 +21,7 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem 2.5rem;
   align-items: end;
-  margin-block-end: clamp(2.25rem, 4.2vw, 3.25rem);
+  margin-block-end: clamp(1.5rem, 2.8vw, 2.25rem);
 }
 
 .home-section-heading > p {
@@ -33,7 +33,63 @@
   text-wrap: balance;
 }
 
-/*------ Kicker & links ------*/
+/*------ Optical Glass Surfaces ------*/
+
+.home-glass-pane {
+  border: 1px solid color-mix(in srgb, white 76%, var(--border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 76%, transparent) 0%,
+    color-mix(in srgb, var(--card) 52%, transparent) 100%
+  );
+  backdrop-filter: blur(22px) saturate(165%);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 88%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--brand-gold) 16%, transparent),
+    0 22px 52px -24px color-mix(in srgb, var(--brand-surface) 24%, transparent),
+    0 2px 10px -2px color-mix(in srgb, var(--brand-surface) 8%, transparent);
+}
+
+.dark .home-glass-pane {
+  border-color: color-mix(in srgb, var(--brand-surface-gold) 24%, var(--border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 74%, transparent) 0%,
+    color-mix(in srgb, var(--secondary) 48%, transparent) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 14%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--brand-surface-gold) 12%, transparent),
+    0 26px 56px -24px #000000a6;
+}
+
+.home-glass-smoked {
+  border: 1px solid color-mix(in srgb, var(--brand-surface-gold) 34%, transparent);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--brand-surface) 88%, transparent) 0%,
+    color-mix(in srgb, var(--consultation-deep) 78%, transparent) 100%
+  );
+  backdrop-filter: blur(20px) saturate(155%);
+  -webkit-backdrop-filter: blur(20px) saturate(155%);
+  color: var(--brand-surface-foreground);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--brand-surface-gold) 18%, transparent),
+    0 24px 54px -22px #0212098c;
+}
+
+.home-glow-dot {
+  inline-size: 0.45rem;
+  block-size: 0.45rem;
+  flex: none;
+  border-radius: 50%;
+  background: var(--brand-surface-gold);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--brand-surface-gold) 85%, transparent);
+}
+
+/*------ Kicker & Links ------*/
 
 .home-kicker {
   display: inline-flex;
@@ -63,12 +119,6 @@
     var(--brand-surface-gold),
     color-mix(in srgb, var(--brand-surface-gold) 30%, transparent)
   );
-}
-
-.home-editorial-index {
-  color: var(--brand-gold);
-  font-weight: 700;
-  letter-spacing: 0.05em;
 }
 
 .home-text-link {
@@ -108,7 +158,7 @@
   outline-offset: 3px;
 }
 
-/*------ Luminous gallery spotlight for photography on dark emerald bands ------*/
+/*------ Luminous Gallery Spotlight & Photo Plates ------*/
 
 .home-glow-stage {
   position: relative;
@@ -134,6 +184,25 @@
   filter: blur(22px);
   pointer-events: none;
   content: "";
+}
+
+.home-photo-plate-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.home-photo-plate {
+  position: absolute;
+  inset-block-end: 0.75rem;
+  inset-inline: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem 1rem;
+  padding: 0.7rem 1.05rem;
+  border-radius: var(--radius-md);
 }
 
 /*===== Hero =====*/
@@ -326,171 +395,211 @@
   }
 }
 
-/*===== Clinic Highlights Manifesto Strip =====*/
+/*===== Clinic Highlights Smoked-Emerald Anchor Dock =====*/
 
-.home-highlights-wrap {
+.home-dock-wrap {
   position: relative;
-  z-index: 2;
-  padding-block-start: clamp(1rem, 2.5vw, 1.75rem);
+  z-index: 3;
+  margin-block-start: -1.5rem;
+  padding-block-end: clamp(1rem, 2vw, 1.5rem);
 }
 
-.home-highlights {
+@media (width >= 48rem) {
+  .home-dock-wrap {
+    margin-block-start: -3.5rem;
+  }
+}
+
+.home-dock {
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  border-block: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
 }
 
-.home-highlights::before {
+.home-dock::before {
   position: absolute;
-  inset-block-start: -1px;
-  inset-inline: 18%;
-  block-size: 1px;
+  inset-block-start: 0;
+  inset-inline: 10%;
+  block-size: 1.5px;
   background: linear-gradient(
     to left,
     transparent,
-    color-mix(in srgb, var(--brand-gold) 70%, transparent),
+    var(--brand-surface-gold),
+    color-mix(in srgb, var(--consultation-mint) 75%, white),
     transparent
   );
   pointer-events: none;
   content: "";
 }
 
-.home-highlight-item {
-  padding-block: 1.25rem;
+.home-dock-cell {
+  padding: 1.15rem 1.35rem;
 }
 
-.home-highlight-item + .home-highlight-item {
-  border-block-start: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+.home-dock-cell:hover {
+  background: color-mix(in srgb, white 5%, transparent);
 }
 
-.home-highlight-index {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--brand-gold);
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-
-.home-highlight-index::after {
-  inline-size: 1.5rem;
-  block-size: 1px;
-  background: color-mix(in srgb, var(--brand-gold) 55%, transparent);
-  content: "";
+.home-dock-cell + .home-dock-cell {
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
 }
 
 @media (width >= 40rem) {
-  .home-highlights {
+  .home-dock {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .home-highlight-item {
-    padding: 1.4rem 1.5rem;
-  }
-
-  .home-highlight-item + .home-highlight-item {
+  .home-dock-cell + .home-dock-cell {
     border-block-start: 0;
   }
 
-  .home-highlight-item:nth-child(odd) {
-    padding-inline-start: 0;
+  .home-dock-cell:nth-child(even) {
+    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 
-  .home-highlight-item:nth-child(even) {
-    padding-inline-end: 0;
-    border-inline-start: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
-  }
-
-  .home-highlight-item:nth-child(n + 3) {
-    border-block-start: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  .home-dock-cell:nth-child(n + 3) {
+    border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 }
 
 @media (width >= 64rem) {
-  .home-highlights {
+  .home-dock {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .home-highlight-item {
-    padding: 1.6rem 1.5rem;
+  .home-dock-cell {
+    padding: 1.3rem 1.45rem;
   }
 
-  .home-highlight-item:first-child {
-    padding-inline-start: 0;
-  }
-
-  .home-highlight-item:last-child {
-    padding-inline-end: 0;
-  }
-
-  .home-highlight-item:nth-child(odd) {
-    padding-inline-start: 1.5rem;
-  }
-
-  .home-highlight-item:first-child:nth-child(odd) {
-    padding-inline-start: 0;
-  }
-
-  .home-highlight-item:nth-child(even) {
-    padding-inline-end: 1.5rem;
-  }
-
-  .home-highlight-item:last-child:nth-child(even) {
-    padding-inline-end: 0;
-  }
-
-  .home-highlight-item:nth-child(n + 3) {
+  .home-dock-cell:nth-child(n + 3) {
     border-block-start: 0;
   }
 
-  .home-highlight-item + .home-highlight-item {
-    border-inline-start: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  .home-dock-cell + .home-dock-cell {
+    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 }
 
-/*===== Service Directory — Editorial Architectural Ledger =====*/
+/*===== Service Directory — Frosted Stack with Emerald Photo Reveal =====*/
 
-.home-services {
-  padding-block-start: clamp(3.5rem, 6vw, 5.25rem);
-}
-
-.home-service-ledger {
-  border-block-start: 1px solid var(--border);
-}
-
-.home-service-row {
+.home-services-band {
   position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 0.75rem 1.25rem;
-  align-items: start;
-  padding-block: clamp(1.35rem, 2.4vw, 1.9rem);
-  padding-inline: 0.5rem;
-  border-block-end: 1px solid var(--border);
+  background:
+    radial-gradient(
+      ellipse 52% 58% at 86% 18%,
+      color-mix(in srgb, var(--brand-gold) 20%, transparent),
+      transparent 66%
+    ),
+    radial-gradient(
+      ellipse 48% 58% at 14% 82%,
+      color-mix(in srgb, var(--brand-jade) 16%, transparent),
+      transparent 68%
+    ),
+    var(--consultation-paper);
 }
 
-.home-service-row::before {
+.home-services-spread {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.75rem, 3.8vw, 3.25rem);
+  align-items: start;
+}
+
+.home-services-lead {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.home-services-concierge {
+  border-radius: var(--radius-lg);
+  padding: 1.45rem 1.5rem;
+}
+
+.home-services-stack {
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
+}
+
+.home-service-item {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.35rem 1rem;
+  align-items: baseline;
+  overflow: hidden;
+  padding: clamp(1.05rem, 2vw, 1.4rem) clamp(1.1rem, 2.4vw, 1.65rem);
+}
+
+.home-service-item + .home-service-item {
+  border-block-start: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
+}
+
+.home-service-item::before {
   position: absolute;
+  z-index: 1;
   inset-block: 0;
   inset-inline-start: 0;
-  inline-size: 2.5px;
-  background: linear-gradient(to bottom, var(--brand-gold), var(--brand-jade));
+  inline-size: 3px;
+  background: linear-gradient(to bottom, var(--brand-surface-gold), var(--consultation-mint));
   opacity: 0;
+  pointer-events: none;
   content: "";
 }
 
-.home-service-row:is(:hover, :focus-within) {
-  background: linear-gradient(
-    to left,
-    color-mix(in srgb, var(--brand-jade-surface) 58%, transparent),
-    color-mix(in srgb, var(--brand-gold-surface) 28%, transparent) 62%,
-    transparent
-  );
+.home-service-photo {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  container-type: size;
+  pointer-events: none;
+  opacity: 0;
 }
 
-.home-service-row:is(:hover, :focus-within)::before {
-  opacity: 1;
+.home-service-photo::before,
+.home-service-photo::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.home-service-photo::before {
+  /* Cover the service row with its matching square from the 3×2 clinic photo sheet. */
+  --service-photo-size: max(100cqw, 100cqh);
+
+  background-color: var(--brand-surface);
+  background-image: url("./assets/treatment-directory.webp");
+  background-repeat: no-repeat;
+  background-position: calc(50% + var(--service-photo-column, 0) * var(--service-photo-size))
+    calc(50% + var(--service-photo-row, 0.5) * var(--service-photo-size));
+  background-size: calc(3 * var(--service-photo-size)) auto;
+}
+
+.home-service-photo::after {
+  background-image: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--brand-surface) 72%, transparent) 0%,
+    color-mix(in srgb, var(--consultation-deep) 84%, transparent) 100%
+  );
+  backdrop-filter: blur(7px) saturate(145%);
+  -webkit-backdrop-filter: blur(7px) saturate(145%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--brand-surface-gold) 26%, transparent);
+}
+
+/* Map each of the six rows onto its panel in the 3×2 treatment directory sheet. */
+.home-service-item:nth-child(3n + 1) {
+  --service-photo-column: 1;
+}
+
+.home-service-item:nth-child(3n) {
+  --service-photo-column: -1;
+}
+
+.home-service-item:nth-child(n + 4) {
+  --service-photo-row: -0.5;
 }
 
 .home-service-num {
@@ -501,69 +610,74 @@
   letter-spacing: 0.02em;
 }
 
-.home-service-row:is(:hover, :focus-within) .home-service-num {
-  color: var(--brand-text);
-}
-
-.home-service-primary {
-  min-inline-size: 0;
-}
-
-.home-service-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem 0.65rem;
-  margin-block-start: 0.45rem;
-  color: var(--brand-text);
-}
-
-.home-service-meta-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.home-service-meta-item + .home-service-meta-item::before {
-  inline-size: 0.28rem;
-  block-size: 0.28rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--brand-gold) 75%, transparent);
-  content: "";
-}
-
-.home-service-detail {
-  grid-column: 1 / -1;
-  max-inline-size: 40rem;
-}
-
-.home-services-prompt {
+.home-service-head {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 2rem;
-  margin-block-start: clamp(2rem, 3.5vw, 2.75rem);
-  padding: 1.35rem clamp(1.25rem, 2.5vw, 1.85rem);
-  border-inline-start: 2.5px solid var(--brand-gold);
-  background: linear-gradient(
-    to left,
-    color-mix(in srgb, var(--brand-gold-surface) 62%, transparent),
-    color-mix(in srgb, var(--brand-jade-surface) 38%, transparent) 60%,
-    transparent
-  );
+  gap: 0.4rem 0.9rem;
 }
 
-@media (width >= 54rem) {
-  .home-service-row {
-    grid-template-columns: 4.5rem minmax(0, 0.95fr) minmax(0, 1.3fr);
-    gap: 1rem 2.25rem;
-    align-items: baseline;
-    padding-inline: 1.25rem;
+.home-service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.home-tag-chip {
+  padding: 0.18rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 30%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand-gold-surface) 56%, transparent);
+  color: var(--brand-text);
+}
+
+.dark .home-tag-chip {
+  border-color: color-mix(in srgb, var(--brand-surface-gold) 24%, var(--border));
+  background: color-mix(in srgb, var(--brand-gold-surface) 80%, transparent);
+}
+
+.home-service-item:is(:hover, :focus-within) {
+  .home-service-photo {
+    opacity: 1;
   }
 
-  .home-service-detail {
-    grid-column: auto;
+  .home-service-num,
+  .home-text-link {
+    color: var(--brand-surface-gold);
+  }
+
+  .home-service-title {
+    color: var(--brand-surface-foreground);
+  }
+
+  .home-service-desc {
+    color: var(--brand-surface-muted);
+  }
+
+  .home-tag-chip {
+    border-color: color-mix(in srgb, var(--brand-surface-gold) 44%, transparent);
+    background: color-mix(in srgb, var(--brand-surface) 56%, transparent);
+    color: var(--brand-surface-foreground);
+  }
+
+  .home-text-link:focus-visible {
+    outline-color: var(--brand-surface-gold);
+  }
+}
+
+.home-service-item:is(:hover, :focus-within)::before {
+  opacity: 1;
+}
+
+@media (width >= 58rem) {
+  .home-services-spread {
+    grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.42fr);
+  }
+
+  .home-services-lead {
+    position: sticky;
+    inset-block-start: calc(var(--spacing-site-desktop-header) + 1.75rem);
   }
 }
 
@@ -596,16 +710,24 @@
   align-items: center;
 }
 
-.home-implant-pillars {
+.home-implant-pillars-slab {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem 2rem;
-  margin-block-start: 2rem;
+  overflow: hidden;
+  margin-block-start: 1.75rem;
+  border-radius: var(--radius-lg);
 }
 
-.home-implant-pillar {
-  padding-block-start: 1rem;
-  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 32%, var(--brand-surface-line));
+.home-implant-pillar-cell {
+  padding: 1.05rem 1.25rem;
+}
+
+.home-implant-pillar-cell:hover {
+  background: color-mix(in srgb, white 5%, transparent);
+}
+
+.home-implant-pillar-cell + .home-implant-pillar-cell {
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
 }
 
 .home-implant-pillar-head {
@@ -632,8 +754,20 @@
 }
 
 @media (width >= 36rem) {
-  .home-implant-pillars {
+  .home-implant-pillars-slab {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-implant-pillar-cell + .home-implant-pillar-cell {
+    border-block-start: 0;
+  }
+
+  .home-implant-pillar-cell:nth-child(even) {
+    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
+  }
+
+  .home-implant-pillar-cell:nth-child(n + 3) {
+    border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 }
 
@@ -646,16 +780,16 @@
 /*===== Treatment Results =====*/
 
 .home-results {
-  padding-block: clamp(3.5rem, 6vw, 5.25rem);
+  padding-block: clamp(3rem, 5.2vw, 4.75rem);
   background:
     radial-gradient(
       ellipse 52% 65% at 88% 18%,
-      color-mix(in srgb, var(--brand-gold) 15%, transparent),
+      color-mix(in srgb, var(--brand-gold) 18%, transparent),
       transparent 66%
     ),
     radial-gradient(
       ellipse 55% 70% at 15% 84%,
-      color-mix(in srgb, var(--brand-jade) 14%, transparent),
+      color-mix(in srgb, var(--brand-jade) 18%, transparent),
       transparent 70%
     ),
     var(--hero-surface);
@@ -668,10 +802,11 @@
 
 .home-results-layout {
   display: grid;
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 32%, var(--border));
   border-radius: var(--radius-lg);
   box-shadow:
-    0 24px 60px -28px color-mix(in srgb, var(--brand-surface) 35%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 72%, transparent),
+    0 24px 60px -28px color-mix(in srgb, var(--brand-surface) 38%, transparent),
     var(--elevation-md);
 }
 
@@ -773,11 +908,12 @@
   position: absolute;
   inset-block-end: clamp(0.65rem, 2vw, 1.1rem);
   padding: 0.3rem 0.85rem;
-  border: 1px solid color-mix(in srgb, var(--brand-surface-gold) 42%, transparent);
+  border: 1px solid color-mix(in srgb, white 30%, var(--brand-surface-gold));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--brand-surface) 84%, transparent);
-  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--brand-surface) 70%, transparent);
+  backdrop-filter: blur(14px) saturate(155%);
   color: var(--brand-surface-foreground);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 24%, transparent);
 }
 
 .home-results-tag-before {
@@ -815,26 +951,30 @@
   }
 }
 
-/*===== Digital Technology & Hygiene — Editorial Split Ledger =====*/
+/*===== Digital Technology & Hygiene — Overlapping Frosted Spec Panel =====*/
 
 .home-tech-section {
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 46% 58% at 10% 30%, color-mix(in srgb, var(--brand-jade) 9%, transparent), transparent 68%),
     radial-gradient(
-      ellipse 42% 52% at 88% 76%,
-      color-mix(in srgb, var(--brand-gold) 10%, transparent),
-      transparent 70%
+      ellipse 48% 58% at 14% 24%,
+      color-mix(in srgb, var(--brand-jade) 18%, transparent),
+      transparent 66%
     ),
-    var(--background);
+    radial-gradient(
+      ellipse 46% 56% at 86% 78%,
+      color-mix(in srgb, var(--brand-gold) 20%, transparent),
+      transparent 68%
+    ),
+    var(--consultation-paper);
 }
 
-.home-tech-layout {
+.home-tech-overlap {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: clamp(2rem, 4.5vw, 4rem);
-  align-items: stretch;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .home-tech-photo-stage {
@@ -872,45 +1012,31 @@
     var(--elevation-md);
 }
 
-.home-tech-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-block-start: 1px solid var(--border);
-}
-
-.home-tech-row {
+.home-tech-glass-panel {
   position: relative;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
+}
+
+.home-tech-glass-row {
   display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr);
-  gap: 1rem;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  gap: 0.85rem;
   align-items: baseline;
-  padding-block: clamp(1.2rem, 2.2vw, 1.55rem);
-  padding-inline: 0.5rem;
-  border-block-end: 1px solid var(--border);
+  padding: 1.1rem clamp(1.1rem, 2.4vw, 1.6rem);
 }
 
-.home-tech-row::before {
-  position: absolute;
-  inset-block-start: -1px;
-  inset-inline: 0;
-  block-size: 1.5px;
-  background: linear-gradient(
-    to left,
-    var(--brand-gold),
-    color-mix(in srgb, var(--brand-jade) 40%, transparent),
-    transparent
-  );
-  opacity: 0;
-  content: "";
+.home-tech-glass-row + .home-tech-glass-row {
+  border-block-start: 1px solid color-mix(in srgb, var(--border) 66%, transparent);
 }
 
-.home-tech-row:hover {
-  background: linear-gradient(to left, color-mix(in srgb, var(--brand-jade-surface) 50%, transparent), transparent 75%);
+.home-tech-glass-row:hover {
+  background: color-mix(in srgb, var(--brand-jade-surface) 44%, transparent);
 }
 
-.home-tech-row:hover::before {
-  opacity: 1;
+.dark .home-tech-glass-row:hover {
+  background: color-mix(in srgb, var(--brand-jade) 12%, transparent);
 }
 
 .home-tech-num {
@@ -921,17 +1047,13 @@
 }
 
 @media (width >= 60rem) {
-  .home-tech-layout {
-    grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.08fr);
+  .home-tech-overlap {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.05fr);
+    gap: 0;
   }
 
-  .home-tech-media {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .home-tech-photo {
-    aspect-ratio: auto;
+  .home-tech-glass-panel {
+    margin-inline-start: -3.25rem;
   }
 }
 
@@ -1005,17 +1127,17 @@
 }
 
 .home-practice-note {
-  margin-block-start: 1.75rem;
-  padding-block: 0.35rem;
-  padding-inline-start: 1.25rem;
-  border-inline-start: 2px solid var(--brand-surface-gold);
+  margin-block-start: 1.5rem;
+  padding: 1.15rem 1.35rem;
+  border-radius: var(--radius-lg);
+  border-inline-start: 2.5px solid var(--brand-surface-gold);
 }
 
 .home-disciplines {
   position: relative;
   z-index: 1;
-  margin-block-start: clamp(3.25rem, 5.5vw, 4.75rem);
-  padding-block-start: clamp(2.5rem, 4.5vw, 3.75rem);
+  margin-block-start: clamp(3rem, 5vw, 4.25rem);
+  padding-block-start: clamp(2.25rem, 4vw, 3.25rem);
   border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 26%, var(--brand-surface-line));
   scroll-margin-block-start: 2rem;
 }
@@ -1025,17 +1147,26 @@
   grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem 2.5rem;
   align-items: end;
-  margin-block-end: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-block-end: clamp(1.5rem, 3vw, 2.25rem);
 }
 
-.home-disciplines-grid {
+.home-disciplines-bar {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.2rem);
 }
 
-.home-discipline-col {
-  padding-block: 1.25rem;
-  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 20%, var(--brand-surface-line));
+.home-discipline-cell {
+  padding: 1.35rem 1.45rem;
+}
+
+.home-discipline-cell:hover {
+  background: color-mix(in srgb, white 5%, transparent);
+}
+
+.home-discipline-cell + .home-discipline-cell {
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
 }
 
 .home-discipline-num {
@@ -1055,21 +1186,20 @@
 }
 
 @media (width >= 40rem) {
-  .home-disciplines-grid {
+  .home-disciplines-bar {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .home-discipline-col {
-    padding: 1.5rem;
+  .home-discipline-cell + .home-discipline-cell {
+    border-block-start: 0;
   }
 
-  .home-discipline-col:nth-child(odd) {
-    padding-inline-start: 0;
+  .home-discipline-cell:nth-child(even) {
+    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 
-  .home-discipline-col:nth-child(even) {
-    padding-inline-end: 0;
-    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 22%, var(--brand-surface-line));
+  .home-discipline-cell:nth-child(n + 3) {
+    border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 }
 
@@ -1078,120 +1208,177 @@
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .home-disciplines-grid {
+  .home-disciplines-bar {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .home-discipline-col {
-    padding: 1.5rem 1.5rem 0.5rem;
+  .home-discipline-cell:nth-child(n + 3) {
     border-block-start: 0;
   }
 
-  .home-discipline-col:first-child {
-    padding-inline-start: 0;
-  }
-
-  .home-discipline-col:last-child {
-    padding-inline-end: 0;
-  }
-
-  .home-discipline-col:nth-child(odd) {
-    padding-inline-start: 1.5rem;
-  }
-
-  .home-discipline-col:first-child:nth-child(odd) {
-    padding-inline-start: 0;
-  }
-
-  .home-discipline-col:nth-child(even) {
-    padding-inline-end: 1.5rem;
-  }
-
-  .home-discipline-col:last-child:nth-child(even) {
-    padding-inline-end: 0;
-  }
-
-  .home-discipline-col + .home-discipline-col {
-    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 22%, var(--brand-surface-line));
+  .home-discipline-cell + .home-discipline-cell {
+    border-inline-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
   }
 }
 
-/*===== Patient Guide — Open Progression & Tonal Ledger =====*/
+/*===== Patient Guide — Asymmetric Glass Diptych =====*/
 
-.home-visit-steps {
+.home-visit-band {
+  position: relative;
+  background:
+    radial-gradient(
+      ellipse 46% 42% at 85% 32%,
+      color-mix(in srgb, var(--brand-gold) 16%, transparent),
+      transparent 66%
+    ),
+    radial-gradient(
+      ellipse 48% 45% at 16% 52%,
+      color-mix(in srgb, var(--brand-jade) 16%, transparent),
+      transparent 68%
+    ),
+    var(--background);
+}
+
+.home-visit-spread {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.75rem;
+  gap: clamp(1.25rem, 2.8vw, 2rem);
+  align-items: stretch;
 }
 
-.home-visit-step {
+.home-visit-journey {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
+  padding: clamp(1.5rem, 3vw, 2.35rem);
+}
+
+.home-visit-timeline {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.home-visit-stage {
   position: relative;
   display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr);
-  gap: 0.75rem 1rem;
-  align-items: baseline;
-  padding-block-start: 1.25rem;
-  border-block-start: 1px solid var(--border);
+  grid-template-columns: 3.1rem minmax(0, 1fr);
+  gap: 0.35rem 1.15rem;
+  align-items: start;
 }
 
-.home-visit-step::before {
+.home-visit-stage:not(:last-child) {
+  flex: 1;
+  padding-block-end: 1.75rem;
+}
+
+.home-visit-stage:not(:last-child)::after {
   position: absolute;
-  inset-block-start: -3.5px;
-  inset-inline-start: 0;
-  inline-size: 0.45rem;
-  block-size: 0.45rem;
-  border-radius: 50%;
-  background: var(--brand-gold);
-  box-shadow: 0 0 12px color-mix(in srgb, var(--brand-gold) 70%, transparent);
+  inset-block: 3.1rem 0;
+  inset-inline-start: 1.55rem;
+  inline-size: 1px;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--brand-gold) 70%, transparent),
+    color-mix(in srgb, var(--brand-jade) 32%, transparent)
+  );
+  pointer-events: none;
   content: "";
 }
 
-.home-visit-number {
-  color: var(--brand-gold);
-  font-size: clamp(1.75rem, 2.8vw, 2.5rem);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: 0.02em;
-}
-
-.home-visit-preparation {
+.home-visit-badge {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 1.75rem;
-  margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
-  padding: clamp(1.75rem, 3.2vw, 2.5rem) clamp(1.25rem, 3vw, 2.25rem);
-  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
-  background:
-    radial-gradient(
-      ellipse 60% 90% at 88% 15%,
-      color-mix(in srgb, var(--brand-gold) 10%, transparent),
-      transparent 68%
-    ),
-    radial-gradient(
-      ellipse 55% 85% at 12% 85%,
-      color-mix(in srgb, var(--brand-jade) 10%, transparent),
-      transparent 70%
-    ),
-    var(--muted);
+  inline-size: 3.1rem;
+  block-size: 3.1rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 44%, var(--border));
+  border-radius: 999px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 92%, transparent),
+    color-mix(in srgb, var(--brand-gold-surface) 70%, transparent)
+  );
+  color: var(--brand-gold);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 88%, transparent),
+    0 8px 20px -10px color-mix(in srgb, var(--brand-gold) 45%, transparent);
 }
 
-.home-preparation-list {
-  margin-block-start: 0.85rem;
-  padding-inline-start: 1.25rem;
+.dark .home-visit-badge {
+  border-color: color-mix(in srgb, var(--brand-surface-gold) 36%, var(--border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 90%, transparent),
+    color-mix(in srgb, var(--brand-surface) 64%, transparent)
+  );
+  color: var(--brand-surface-gold);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 16%, transparent);
+}
+
+.home-visit-prep-folio {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
+  padding: clamp(1.5rem, 3vw, 2.35rem);
+}
+
+.home-visit-prep-folio::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 12%;
+  block-size: 1.5px;
+  background: linear-gradient(
+    to left,
+    transparent,
+    var(--brand-surface-gold),
+    color-mix(in srgb, var(--consultation-mint) 70%, white),
+    transparent
+  );
+  pointer-events: none;
+  content: "";
+}
+
+.home-prep-chapter + .home-prep-chapter {
+  margin-block-start: 1.25rem;
+  padding-block-start: 1.25rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-surface-gold) 20%, transparent);
+}
+
+.home-prep-chapter-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.home-prep-bullets {
+  margin-block-start: 0.65rem;
+  padding-inline-start: 1.15rem;
   list-style: disc;
 }
 
-.home-preparation-list li + li {
-  margin-block-start: 0.5rem;
+.home-prep-bullets li + li {
+  margin-block-start: 0.35rem;
 }
 
-.home-preparation-list li::marker {
-  color: var(--brand-gold);
+.home-prep-bullets li::marker {
+  color: var(--brand-surface-gold);
 }
 
-.home-preparation-col + .home-preparation-col {
-  padding-block-start: 1.5rem;
-  border-block-start: 1px solid var(--border);
+@media (width >= 56rem) {
+  .home-visit-spread {
+    grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  }
 }
 
 /*===== Consultation Prompts =====*/
@@ -1199,7 +1386,7 @@
 .home-consultation-guide {
   display: grid;
   overflow: hidden;
-  margin-block-start: clamp(2.5rem, 4.5vw, 3.5rem);
+  margin-block-start: clamp(1.75rem, 3.2vw, 2.5rem);
   border: 1px solid color-mix(in srgb, var(--brand-gold) 30%, var(--border));
   border-radius: var(--radius-lg);
   background:
@@ -1283,22 +1470,27 @@
   }
 }
 
-/*===== A Child's First Visit =====*/
+/*===== A Child's First Visit — Enclosed Frosted Spread =====*/
 
 .home-child-visit {
   border-block: 1px solid color-mix(in srgb, var(--brand-jade) 18%, var(--border));
   background:
     radial-gradient(
-      ellipse 50% 70% at 88% 20%,
-      color-mix(in srgb, var(--brand-gold) 15%, transparent),
+      ellipse 54% 76% at 88% 20%,
+      color-mix(in srgb, var(--brand-gold) 24%, transparent),
       transparent 66%
     ),
     radial-gradient(
-      ellipse 56% 72% at 16% 80%,
-      color-mix(in srgb, var(--brand-jade) 16%, transparent),
-      transparent 70%
+      ellipse 56% 78% at 12% 84%,
+      color-mix(in srgb, var(--brand-jade) 26%, transparent),
+      transparent 68%
     ),
-    var(--brand-jade-surface);
+    var(--hero-surface);
+}
+
+.home-child-frame {
+  border-radius: calc(var(--radius-lg) + 0.35rem);
+  padding: clamp(1.65rem, 3.6vw, 2.75rem);
 }
 
 .home-child-visit-layout {
@@ -1360,13 +1552,13 @@
   box-shadow: 0 0 12px color-mix(in srgb, var(--brand-jade) 55%, transparent);
 }
 
-/*===== Appointments and Patient Reviews =====*/
+/*===== Appointments & Patient Reviews =====*/
 
 .home-appointments {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
-  margin-block: clamp(3.5rem, 6vw, 5.5rem);
+  margin-block: clamp(2.5rem, 4.2vw, 3.75rem);
   scroll-margin-block-start: 1.5rem;
 }
 
@@ -1441,21 +1633,29 @@
   display: flex;
   flex-direction: column;
   padding: clamp(1.5rem, 2.75vw, 2rem);
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
-  background:
-    radial-gradient(
-      ellipse 75% 65% at 15% 12%,
-      color-mix(in srgb, var(--brand-gold) 12%, transparent),
-      transparent 66%
-    ),
-    radial-gradient(
-      ellipse 70% 65% at 88% 90%,
-      color-mix(in srgb, var(--brand-jade) 10%, transparent),
-      transparent 68%
-    ),
-    var(--card);
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 36%, var(--border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--consultation-paper) 92%, transparent),
+    color-mix(in srgb, var(--brand-gold-surface) 64%, transparent)
+  );
+  backdrop-filter: blur(18px);
   color: var(--card-foreground);
-  box-shadow: var(--elevation-sm);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 85%, transparent),
+    var(--elevation-md);
+}
+
+.dark .home-appointment-reviews {
+  border-color: color-mix(in srgb, var(--brand-surface-gold) 28%, var(--border));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--card) 86%, transparent),
+    color-mix(in srgb, var(--brand-gold-surface) 72%, transparent)
+  );
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, white 12%, transparent),
+    var(--elevation-md);
 }
 
 .home-appointment-copy {
@@ -1572,21 +1772,21 @@
   }
 }
 
-/*===== Questions =====*/
+/*===== Questions — Smoked Concierge & Frosted Accordion Panel =====*/
 
 .home-questions-section {
   background:
     radial-gradient(
-      ellipse 48% 60% at 86% 18%,
-      color-mix(in srgb, var(--brand-gold) 11%, transparent),
+      ellipse 50% 62% at 86% 18%,
+      color-mix(in srgb, var(--brand-gold) 18%, transparent),
       transparent 66%
     ),
     radial-gradient(
-      ellipse 52% 64% at 14% 84%,
-      color-mix(in srgb, var(--brand-jade) 10%, transparent),
-      transparent 70%
+      ellipse 52% 66% at 14% 84%,
+      color-mix(in srgb, var(--brand-jade) 18%, transparent),
+      transparent 68%
     ),
-    var(--muted);
+    var(--consultation-paper);
 }
 
 .home-questions {
@@ -1596,12 +1796,20 @@
   align-items: start;
 }
 
-.home-question-list {
-  border-block-start: 1px solid var(--border);
+.home-faq-companion {
+  margin-block-start: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: 1.15rem 1.3rem;
 }
 
-.home-question-list details {
-  border-block-end: 1px solid var(--border);
+.home-faq-panel {
+  overflow: hidden;
+  border-radius: calc(var(--radius-lg) + 0.25rem);
+  padding-inline: clamp(1.1rem, 2.5vw, 1.75rem);
+}
+
+.home-faq-panel details + details {
+  border-block-start: 1px solid color-mix(in srgb, var(--border) 68%, transparent);
 }
 
 .home-question {
@@ -1616,7 +1824,7 @@
 }
 
 .home-question:hover,
-.home-question-list details[open] .home-question {
+.home-faq-panel details[open] .home-question {
   color: var(--brand-text);
 }
 
@@ -1634,7 +1842,7 @@
 }
 
 .home-question:is(:hover, :focus-visible) .home-question-indicator,
-.home-question-list details[open] .home-question-indicator {
+.home-faq-panel details[open] .home-question-indicator {
   color: var(--brand-text);
 }
 
@@ -1657,17 +1865,6 @@
     grid-area: 1 / 2;
   }
 
-  .home-visit-steps {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2.25rem;
-  }
-
-  .home-visit-step {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.85rem;
-    padding-block-start: 1.6rem;
-  }
-
   .home-child-visit-layout {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   }
@@ -1679,20 +1876,6 @@
   .home-questions-intro {
     position: sticky;
     inset-block-start: calc(var(--spacing-site-desktop-header) + 2rem);
-  }
-}
-
-@media (width >= 54rem) {
-  .home-visit-preparation {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 2rem;
-  }
-
-  .home-preparation-col + .home-preparation-col {
-    padding-block-start: 0;
-    padding-inline-start: 1.75rem;
-    border-block-start: 0;
-    border-inline-start: 1px solid var(--border);
   }
 }
 
@@ -1711,22 +1894,34 @@
     animation: home-smile-in 440ms cubic-bezier(0.22, 1, 0.36, 1) 160ms both;
   }
 
-  .home-service-row,
-  .home-tech-row,
+  .home-dock-cell,
+  .home-implant-pillar-cell,
+  .home-discipline-cell,
+  .home-tech-glass-row,
   .home-consultation-prompt {
     transition:
-      background-color 200ms ease-out,
+      background-color 190ms ease-out,
       opacity 200ms ease-out,
       translate 240ms ease-out;
   }
 
-  .home-service-row::before,
-  .home-tech-row::before {
-    transition: opacity 220ms ease-out;
+  .home-service-photo {
+    transition: opacity 300ms cubic-bezier(0.25, 0.75, 0.25, 1);
   }
 
-  .home-service-num {
-    transition: color 200ms ease-out;
+  .home-service-item::before {
+    transition: opacity 240ms ease-out;
+  }
+
+  .home-service-item :is(.home-service-num, .home-service-title, .home-service-desc, .home-text-link) {
+    transition: color 240ms ease-out;
+  }
+
+  .home-tag-chip {
+    transition:
+      background-color 240ms ease-out,
+      border-color 240ms ease-out,
+      color 240ms ease-out;
   }
 
   .home-text-link svg {
@@ -1761,7 +1956,7 @@
 
   /* Opening stays native. Browsers with intrinsic size interpolation can also follow the answer's height. */
   @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
-    .home-question-list details::details-content {
+    .home-faq-panel details::details-content {
       block-size: 0;
       overflow: clip;
       opacity: 0;
@@ -1772,21 +1967,21 @@
         content-visibility 220ms allow-discrete;
     }
 
-    .home-question-list details[open]::details-content {
+    .home-faq-panel details[open]::details-content {
       block-size: auto;
       opacity: 1;
     }
   }
 
-  .home-section:target .home-visit-number {
+  .home-section:target .home-visit-badge {
     animation: home-visit-arrival 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  .home-visit-step:nth-child(2) .home-visit-number {
+  .home-visit-stage:nth-child(2) .home-visit-badge {
     animation-delay: 80ms;
   }
 
-  .home-visit-step:nth-child(3) .home-visit-number {
+  .home-visit-stage:nth-child(3) .home-visit-badge {
     animation-delay: 160ms;
   }
 

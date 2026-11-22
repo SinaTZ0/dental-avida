@@ -107,28 +107,30 @@ const childVisitSteps = [
 export function HomeChildVisit() {
   return (
     <section id={homeSections.childVisit} aria-labelledby="child-visit-title" className="home-section home-child-visit">
-      <div className="home-shell home-child-visit-layout">
-        <div className="home-child-visit-intro">
-          <p className="home-kicker">{m.home_child_visit_kicker()}</p>
-          <h2 id="child-visit-title" className="mt-2.5 text-section">
-            {m.home_child_visit_title()}
-          </h2>
-          <p className="mt-3 max-w-sm text-body-lg text-muted-foreground">{m.home_child_visit_intro()}</p>
-          <a href={`#${homeSections.visit}`} className="home-text-link mt-3">
-            {m.home_plan_visit()}
-            <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
-          </a>
-        </div>
+      <div className="home-shell">
+        <div className="home-child-frame home-glass-pane home-child-visit-layout">
+          <div className="home-child-visit-intro">
+            <p className="home-kicker">{m.home_child_visit_kicker()}</p>
+            <h2 id="child-visit-title" className="mt-2.5 text-section">
+              {m.home_child_visit_title()}
+            </h2>
+            <p className="mt-3 max-w-sm text-body-lg text-muted-foreground">{m.home_child_visit_intro()}</p>
+            <a href={`#${homeSections.visit}`} className="home-text-link mt-4">
+              {m.home_plan_visit()}
+              <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+            </a>
+          </div>
 
-        {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- The timeline replaces the native markers. */}
-        <ol className="home-child-visit-steps" role="list">
-          {childVisitSteps.map(([title, description]) => (
-            <li key={title()}>
-              <h3 className="text-h3 text-foreground">{title()}</h3>
-              <p className="mt-1.5 text-body text-muted-foreground">{description()}</p>
-            </li>
-          ))}
-        </ol>
+          {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- The timeline replaces the native markers. */}
+          <ol className="home-child-visit-steps" role="list">
+            {childVisitSteps.map(([title, description]) => (
+              <li key={title()}>
+                <h3 className="text-h3 text-foreground">{title()}</h3>
+                <p className="mt-1.5 text-body text-muted-foreground">{description()}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

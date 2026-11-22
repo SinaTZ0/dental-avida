@@ -8,7 +8,7 @@ import { m } from "#/paraglide/messages";
 import implantShowcase from "#/routes/home/assets/implant-showcase.webp";
 import technologySuite from "#/routes/home/assets/technology-suite.webp";
 
-/*===== Clinic Highlights Manifesto Strip =====*/
+/*===== Clinic Highlights Smoked-Emerald Dock =====*/
 
 const highlights = [
   {
@@ -35,16 +35,16 @@ const highlights = [
 
 export function HomeHighlights() {
   return (
-    <section aria-label={m.home_highlights_label()} className="home-highlights-wrap home-shell">
+    <section aria-label={m.home_highlights_label()} className="home-dock-wrap home-shell">
       {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-      <ol className="home-highlights" role="list">
+      <ol className="home-dock home-glass-smoked" role="list">
         {highlights.map(({ id, title, body }, index) => (
-          <li key={id} className="home-highlight-item">
-            <span className="home-highlight-index text-caption tabular-nums" aria-hidden>
+          <li key={id} className="home-dock-cell">
+            <span className="home-discipline-num text-caption tabular-nums" aria-hidden>
               {formatNumber(index + 1).padStart(2, "۰")}
             </span>
-            <h2 className="mt-2.5 text-h4 text-foreground">{title()}</h2>
-            <p className="mt-1 text-body-sm text-muted-foreground">{body()}</p>
+            <h2 className="mt-2 text-h4 text-brand-surface-foreground">{title()}</h2>
+            <p className="mt-1 text-body-sm text-brand-surface-muted">{body()}</p>
           </li>
         ))}
       </ol>
@@ -93,9 +93,9 @@ export function HomeImplantShowcase() {
           <p className="mt-4 text-body-lg text-brand-surface-muted">{m.home_implant_intro()}</p>
 
           {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-          <ol className="home-implant-pillars" role="list">
+          <ol className="home-implant-pillars-slab home-glass-smoked" role="list">
             {implantPillars.map(({ id, title, body }, index) => (
-              <li key={id} className="home-implant-pillar">
+              <li key={id} className="home-implant-pillar-cell">
                 <div className="home-implant-pillar-head">
                   <span className="home-implant-index text-caption tabular-nums" aria-hidden>
                     {formatNumber(index + 1).padStart(2, "۰")}
@@ -107,7 +107,7 @@ export function HomeImplantShowcase() {
             ))}
           </ol>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
             <Link
               to="/"
               hash={homeSections.appointments}
@@ -125,15 +125,24 @@ export function HomeImplantShowcase() {
 
         <figure className="home-implant-media">
           <div className="home-glow-stage">
-            <img
-              src={implantShowcase}
-              width={1200}
-              height={896}
-              loading="lazy"
-              decoding="async"
-              alt={m.home_implant_image_alt()}
-              className="home-implant-photo"
-            />
+            <div className="home-photo-plate-wrap">
+              <img
+                src={implantShowcase}
+                width={1200}
+                height={896}
+                loading="lazy"
+                decoding="async"
+                alt={m.home_implant_image_alt()}
+                className="home-implant-photo"
+              />
+              <div className="home-photo-plate home-glass-smoked text-caption">
+                <span className="inline-flex items-center gap-2 font-semibold text-brand-surface-foreground">
+                  <span className="home-glow-dot" aria-hidden />
+                  {m.home_implant_plate_title()}
+                </span>
+                <span className="text-brand-surface-gold">{m.home_implant_plate_note()}</span>
+              </div>
+            </div>
           </div>
           <figcaption className="mt-3 text-caption text-brand-surface-muted">
             {m.home_implant_image_caption()}
@@ -183,7 +192,7 @@ export function HomeTechnology() {
           <p className="max-w-md text-body-lg text-muted-foreground">{m.home_tech_intro()}</p>
         </div>
 
-        <div className="home-tech-layout">
+        <div className="home-tech-overlap">
           <figure className="home-tech-media">
             <div className="home-tech-photo-stage">
               <img
@@ -200,15 +209,15 @@ export function HomeTechnology() {
           </figure>
 
           {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-          <ol className="home-tech-list" role="list">
+          <ol className="home-tech-glass-panel home-glass-pane" role="list">
             {techFeatures.map(({ id, title, body }, index) => (
-              <li key={id} className="home-tech-row">
+              <li key={id} className="home-tech-glass-row">
                 <span className="home-tech-num tabular-nums" aria-hidden>
                   {formatNumber(index + 1).padStart(2, "۰")}
                 </span>
                 <div className="min-w-0">
                   <h3 className="text-h3 text-foreground">{title()}</h3>
-                  <p className="mt-1.5 text-body text-muted-foreground">{body()}</p>
+                  <p className="mt-1 text-body text-muted-foreground">{body()}</p>
                 </div>
               </li>
             ))}
