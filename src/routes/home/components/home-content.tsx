@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeftIcon, CalendarDaysIcon, MinusIcon, PlusIcon } from "lucide-react";
+import { ArrowLeftIcon, CalendarDaysIcon, ClockIcon, MinusIcon, PhoneIcon, PlusIcon } from "lucide-react";
 
 import { buttonVariants } from "#/components/primitive/button/button.styles";
+import { AvidaSmile } from "#/components/shared/avida-smile/avida-smile";
+import { SiteLink } from "#/components/shared/site-link/site-link";
 import { formatNumber } from "#/lib/locale";
 import { clinicDetails, homeSections } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -28,11 +30,13 @@ export function HomeHero() {
             <span className="home-hero-kicker-dot" aria-hidden />
             {m.home_hero_kicker()}
           </p>
-          <h1 id="hero-title" className="mt-4 text-hero">
+          <h1 id="hero-title" className="home-hero-title mt-4 text-hero">
             {m.home_hero_title()} <span className="block text-brand-text">{m.home_hero_emphasis()}</span>
           </h1>
-          <span className="home-smile home-hero-smile" aria-hidden />
-          <p className="home-hero-intro mt-5 max-w-md text-body-lg text-muted-foreground">{m.home_hero_intro()}</p>
+          <div className="home-hero-smile-wrap" aria-hidden>
+            <AvidaSmile className="home-hero-smile" />
+          </div>
+          <p className="home-hero-intro mt-4 max-w-lg text-body-lg text-muted-foreground">{m.home_hero_intro()}</p>
           <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2">
             <Link
               to="/"
@@ -47,6 +51,22 @@ export function HomeHero() {
               <ArrowLeftIcon aria-hidden className="size-4 ltr:rotate-180" />
             </a>
           </div>
+          {clinicDetails.phone && (
+            <div className="home-hero-meta text-body-sm text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5">
+                <ClockIcon aria-hidden className="size-4 text-brand-gold" />
+                {m.home_hero_hours_short()}
+              </span>
+              <span className="home-hero-meta-sep" aria-hidden />
+              <SiteLink href={`tel:${clinicDetails.phone.number}`} className="home-hero-phone">
+                <PhoneIcon aria-hidden className="size-4 text-brand-text" />
+                <span>{m.home_hero_phone_prefix()}</span>
+                <bdi dir="ltr" className="font-bold text-foreground tabular-nums">
+                  {clinicDetails.phone.label()}
+                </bdi>
+              </SiteLink>
+            </div>
+          )}
         </div>
       </div>
       <img
@@ -118,11 +138,11 @@ export function HomeServices() {
           </div>
 
           <div className="home-services-concierge home-glass-smoked">
-            <p className="home-kicker home-kicker-dark">{m.home_visit_kicker()}</p>
+            <p className="home-kicker home-kicker-dark">{m.home_appointment_kicker()}</p>
             <h3 className="mt-2 text-h3 text-brand-surface-foreground">{m.home_services_start_title()}</h3>
-            <p className="mt-1.5 text-body-sm text-brand-surface-muted">{m.home_services_start_body()}</p>
-            <a href={`#${homeSections.visit}`} className="home-text-link home-text-link-dark mt-3">
-              {m.home_plan_visit()}
+            <p className="mt-2 text-body-sm text-brand-surface-muted">{m.home_services_start_body()}</p>
+            <a href={`#${homeSections.appointments}`} className="home-text-link home-text-link-dark mt-3">
+              {m.home_services_start_action()}
               <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
             </a>
           </div>
@@ -183,24 +203,28 @@ const careDisciplines = [
     id: "implant",
     title: m.home_team_implant_title,
     role: m.home_team_implant_role,
+    credential: m.home_team_implant_credential,
     body: m.home_team_implant_body,
   },
   {
     id: "esthetic",
     title: m.home_team_esthetic_title,
     role: m.home_team_esthetic_role,
+    credential: m.home_team_esthetic_credential,
     body: m.home_team_esthetic_body,
   },
   {
     id: "ortho",
     title: m.home_team_ortho_title,
     role: m.home_team_ortho_role,
+    credential: m.home_team_ortho_credential,
     body: m.home_team_ortho_body,
   },
   {
     id: "family",
     title: m.home_team_family_title,
     role: m.home_team_family_role,
+    credential: m.home_team_family_credential,
     body: m.home_team_family_body,
   },
 ] as const;
@@ -277,14 +301,15 @@ export function HomePractice() {
 
           {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
           <ol className="home-disciplines-bar home-glass-smoked" role="list">
-            {careDisciplines.map(({ id, title, role, body }, index) => (
+            {careDisciplines.map(({ id, title, role, credential, body }, index) => (
               <li key={id} className="home-discipline-cell">
                 <span className="home-discipline-num text-caption tabular-nums" aria-hidden>
                   {formatNumber(index + 1).padStart(2, "۰")}
                 </span>
-                <h4 className="mt-2.5 text-h4 text-brand-surface-foreground">{title()}</h4>
-                <p className="mt-1 text-caption text-brand-surface-gold">{role()}</p>
-                <p className="mt-2 text-body-sm text-brand-surface-muted">{body()}</p>
+                <h4 className="mt-2.5 text-h3 text-brand-surface-foreground">{title()}</h4>
+                <p className="mt-1 text-body-sm font-semibold text-brand-surface-gold">{role()}</p>
+                <p className="home-doctor-credential mt-1.5 text-caption text-brand-surface-muted">{credential()}</p>
+                <p className="mt-2.5 text-body-sm text-brand-surface-muted">{body()}</p>
               </li>
             ))}
           </ol>
@@ -377,17 +402,18 @@ export function HomeVisit() {
 /*===== Common Questions =====*/
 
 const questions = [
-  [m.home_faq_unsure, m.home_faq_unsure_answer],
-  [m.home_faq_anxiety, m.home_faq_anxiety_answer],
-  [m.home_faq_implant_duration, m.home_faq_implant_duration_answer],
-  [m.home_faq_sterilization, m.home_faq_sterilization_answer],
-  [m.home_faq_cost, m.home_faq_cost_answer],
   [m.home_faq_records, m.home_faq_records_answer],
-  [m.home_faq_child, m.home_faq_child_answer],
-  [m.home_faq_followup, m.home_faq_followup_answer],
+  [m.home_faq_insurance, m.home_faq_insurance_answer],
+  [m.home_faq_implant_duration, m.home_faq_implant_duration_answer],
+  [m.home_faq_cost, m.home_faq_cost_answer],
+  [m.home_faq_sterilization, m.home_faq_sterilization_answer],
+  [m.home_faq_anxiety, m.home_faq_anxiety_answer],
+  [m.home_faq_unsure, m.home_faq_unsure_answer],
 ] as const;
 
 export function HomeQuestions() {
+  const { phone } = clinicDetails;
+
   return (
     <section
       id={homeSections.questions}
@@ -403,12 +429,22 @@ export function HomeQuestions() {
           <p className="mt-3 max-w-xs text-body-lg text-muted-foreground">{m.home_faq_intro()}</p>
 
           <div className="home-faq-companion home-glass-smoked max-w-xs">
-            <p className="text-h4 text-brand-surface-foreground">{m.home_appointment_title()}</p>
-            <p className="mt-1 text-body-sm text-brand-surface-muted">{m.home_appointment_prepare_description()}</p>
-            <a href={`#${homeSections.visit}`} className="home-text-link home-text-link-dark mt-2">
-              {m.home_plan_visit()}
-              <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
-            </a>
+            <p className="text-h4 text-brand-surface-foreground">{m.home_faq_companion_title()}</p>
+            <p className="mt-1.5 text-body-sm text-brand-surface-muted">{m.home_faq_companion_body()}</p>
+            {phone ? (
+              <SiteLink href={`tel:${phone.number}`} className="home-text-link home-text-link-dark mt-2.5">
+                <PhoneIcon className="size-4" aria-hidden />
+                <span>{m.home_appointment_call()}</span>
+                <bdi dir="ltr" className="tabular-nums">
+                  {phone.label()}
+                </bdi>
+              </SiteLink>
+            ) : (
+              <a href={`#${homeSections.appointments}`} className="home-text-link home-text-link-dark mt-2.5">
+                {m.home_appointment_plan()}
+                <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
+              </a>
+            )}
           </div>
         </div>
 

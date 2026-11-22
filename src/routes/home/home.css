@@ -13,7 +13,7 @@
 
 .home-section {
   padding-block: clamp(2.85rem, 4.8vw, 4.4rem);
-  scroll-margin-block-start: 1.5rem;
+  scroll-margin-block-start: 5.5rem;
 }
 
 .home-section-heading {
@@ -98,7 +98,8 @@
   color: var(--brand-text);
   font-size: var(--text-kicker);
   font-weight: 700;
-  letter-spacing: 0.015em;
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 
 .home-kicker::before {
@@ -244,7 +245,36 @@
 
 .home-hero-copy {
   max-inline-size: min(56%, 40rem);
-  padding-block: 4rem 7.5rem;
+  padding-block: 3.75rem 7.5rem;
+}
+
+.home-hero-meta {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin-block-start: 1.5rem;
+  padding-block-start: 1.05rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-gold) 32%, var(--border));
+}
+
+.home-hero-meta-sep {
+  inline-size: 0.25rem;
+  block-size: 0.25rem;
+  border-radius: 50%;
+  background: var(--brand-gold);
+}
+
+.home-hero-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: var(--radius-sm);
+  text-underline-offset: 0.35em;
+}
+
+.home-hero-phone:hover {
+  text-decoration: underline;
 }
 
 .home-hero-kicker {
@@ -274,49 +304,43 @@
   box-shadow: 0 0 8px color-mix(in srgb, var(--brand-gold) 75%, transparent);
 }
 
-.home-smile {
-  --smile-tilt: -9deg;
-  --smile-stroke: 0.23rem;
+.home-hero-title {
+  font-weight: 850;
+}
 
+.home-hero-smile-wrap {
   position: relative;
-  display: block;
-  aspect-ratio: 4.7;
-  color: var(--brand-jade);
-  pointer-events: none;
-  rotate: var(--smile-tilt);
+  display: inline-block;
+  margin-block: 0.2rem 0.35rem;
+  margin-inline-start: 0.15rem;
+  isolation: isolate;
 }
 
-.home-smile:dir(ltr) {
-  --smile-tilt: 9deg;
-}
-
-.home-smile::before,
-.home-smile::after {
+.home-hero-smile-wrap::before {
   position: absolute;
+  z-index: -1;
+  inset: -40% -14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 64% 60% at 50% 58%,
+    color-mix(in srgb, var(--brand-gold) 24%, transparent),
+    color-mix(in srgb, var(--brand-jade) 18%, transparent) 52%,
+    transparent 74%
+  );
+  filter: blur(12px);
+  pointer-events: none;
   content: "";
 }
 
-.home-smile::before {
-  inset-block: 0.1rem 0;
-  inset-inline: 0 12%;
-  border-block-end: var(--smile-stroke) solid currentColor;
-  border-end-start-radius: 58% 90%;
-  border-end-end-radius: 45% 96%;
-}
-
-.home-smile::after {
-  inset-block-start: 10%;
-  inset-inline-end: 2%;
-  inline-size: calc(var(--smile-stroke) * 1.65);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: currentColor;
-}
-
 .home-hero-smile {
-  inline-size: clamp(5.5rem, 12vw, 9rem);
-  margin-block: 0.1rem 0.4rem;
-  margin-inline-start: 0.3rem;
+  inline-size: clamp(8.5rem, 16vw, 13rem);
+  color: var(--brand-jade);
+  filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--brand-jade) 24%, transparent));
+}
+
+.dark .home-hero-smile {
+  color: var(--brand-jade);
+  filter: drop-shadow(0 6px 18px color-mix(in srgb, var(--brand-jade) 36%, transparent));
 }
 
 .home-hero-photo {
@@ -1158,7 +1182,14 @@
 }
 
 .home-discipline-cell {
-  padding: 1.35rem 1.45rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.4rem 1.45rem;
+}
+
+.home-doctor-credential {
+  padding-block-end: 0.7rem;
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-surface-gold) 18%, transparent);
 }
 
 .home-discipline-cell:hover {
@@ -1568,7 +1599,19 @@
 }
 
 .home-review-tag {
+  padding: 0.15rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 32%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 72%, transparent);
   color: var(--brand-text);
+  font-weight: 600;
+}
+
+.home-review-quote {
+  line-height: 1.9;
+}
+
+.home-review-author {
   font-weight: 600;
 }
 
@@ -1668,8 +1711,17 @@
 }
 
 .home-appointment-copy h2 {
-  max-inline-size: 20rem;
+  max-inline-size: 25rem;
   text-wrap: balance;
+}
+
+.home-appointment-meta {
+  display: grid;
+  gap: 0.45rem;
+  inline-size: 100%;
+  max-inline-size: 27rem;
+  padding-block: 0.75rem;
+  border-block: 1px solid color-mix(in srgb, var(--brand-surface-gold) 24%, transparent);
 }
 
 .home-appointment-actions {

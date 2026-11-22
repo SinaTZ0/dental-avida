@@ -21,55 +21,55 @@
 /*===== Type =====*/
 
 @theme {
-  /* Persian needs tall lines; these match caption, body-sm, body and body-lg below */
-  --text-xs--line-height: calc(20 / 12);
-  --text-sm--line-height: calc(22 / 13);
-  --text-base--line-height: calc(26 / 15);
-  --text-lg--line-height: calc(28 / 16);
+  /* Persian needs tall lines for ascenders, descenders and ezafe marks; these match caption, body-sm, body and body-lg. */
+  --text-xs--line-height: calc(22 / 13);
+  --text-sm--line-height: calc(26 / 14);
+  --text-base--line-height: calc(28 / 15);
+  --text-lg--line-height: calc(32 / 17);
 
-  /* The app's type styles as `text-<name>`: size, line height and weight together. Small sizes and medium weights
-     keep the page quiet; display, h1 and h2 drop one step on phones, below. */
+  /* The app's type styles as `text-<name>`: size, line height and weight together. Clear weight contrast between
+     Vazirmatn Variable display/headings (700–850) and calm body copy (400–500) gives Persian text effortless hierarchy. */
   --text-display: 2.75rem;
-  --text-display--line-height: 4.25rem;
-  --text-display--font-weight: 700;
-  --text-hero: clamp(2.35rem, 5.1vw, 4.7rem);
-  --text-hero--line-height: 1.28;
-  --text-hero--font-weight: 800;
-  --text-section: clamp(1.75rem, 3vw, 2.75rem);
-  --text-section--line-height: 1.4;
-  --text-section--font-weight: 750;
+  --text-display--line-height: 4rem;
+  --text-display--font-weight: 800;
+  --text-hero: clamp(2.35rem, 4.9vw, 4.45rem);
+  --text-hero--line-height: 1.32;
+  --text-hero--font-weight: 850;
+  --text-section: clamp(1.65rem, 2.85vw, 2.55rem);
+  --text-section--line-height: 1.44;
+  --text-section--font-weight: 800;
   --text-stat: 2.25rem;
   --text-stat--line-height: 3rem;
   --text-stat--font-weight: 700;
-  --text-h1: 2rem;
-  --text-h1--line-height: 3.25rem;
-  --text-h1--font-weight: 700;
+  --text-h1: clamp(1.75rem, 2.4vw, 2.15rem);
+  --text-h1--line-height: 1.48;
+  --text-h1--font-weight: 800;
   --text-h2: 1.5rem;
-  --text-h2--line-height: 2.5rem;
-  --text-h2--font-weight: 600;
+  --text-h2--line-height: 2.35rem;
+  --text-h2--font-weight: 700;
   --text-h3: 1.125rem;
-  --text-h3--line-height: 1.875rem;
-  --text-h3--font-weight: 600;
-  --text-h4: 0.9375rem;
-  --text-h4--line-height: 1.625rem;
-  --text-h4--font-weight: 600;
-  --text-body-lg: 1rem;
-  --text-body-lg--line-height: 1.75rem;
+  --text-h3--line-height: 1.9rem;
+  --text-h3--font-weight: 700;
+  --text-h4: 1rem;
+  --text-h4--line-height: 1.7rem;
+  --text-h4--font-weight: 700;
+  --text-body-lg: 1.0625rem;
+  --text-body-lg--line-height: 1.95rem;
   --text-body: 0.9375rem;
-  --text-body--line-height: 1.625rem;
-  --text-body-sm: 0.8125rem;
-  --text-body-sm--line-height: 1.375rem;
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1.25rem;
+  --text-body--line-height: 1.75rem;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.625rem;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4rem;
   --text-caption--font-weight: 500;
   --text-button: 0.9375rem;
   --text-button--line-height: 1.625rem;
   --text-button--font-weight: 600;
-  --text-kicker: 0.75rem;
-  --text-kicker--line-height: 1.25rem;
-  --text-kicker--font-weight: 600;
-  --text-nav: 0.8125rem;
-  --text-nav--line-height: 1.375rem;
+  --text-kicker: 0.8125rem;
+  --text-kicker--line-height: 1.4rem;
+  --text-kicker--font-weight: 700;
+  --text-nav: 0.875rem;
+  --text-nav--line-height: 1.5rem;
   --text-nav--font-weight: 500;
 
   /* The wide frame gives the homepage and site navigation room to grow on large displays. */
@@ -352,16 +352,22 @@
   }
   html {
     @apply font-sans antialiased;
-    /* Kerning and ligatures on, and the browser's own text smoothing on dark grounds */
+    /* Kerning and contextual ligatures keep connected Persian script crisp across variable weights. */
     font-kerning: normal;
+    font-feature-settings:
+      "kern" 1,
+      "liga" 1,
+      "calt" 1;
+    text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
   }
   h1,
   h2,
   h3,
   h4 {
-    @apply font-heading font-semibold;
-    /* Balanced line breaks keep short Persian headings from ending on a lone word */
+    @apply font-heading font-bold;
+    /* Never add positive letter-spacing to connected Persian script; balance keeps headings off lone trailing words. */
+    letter-spacing: 0;
     text-wrap: balance;
   }
   p {

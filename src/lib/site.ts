@@ -18,20 +18,29 @@ export const homeSections = {
 /*===== Clinic Details =====*/
 
 type ClinicDetails = {
-  location: { address: () => string; mapUrl?: string } | null;
+  location: { address: () => string; shortAddress: () => string; mapUrl?: string } | null;
   phone: { number: string; label: () => string } | null;
   hours: (() => string) | null;
   bookingUrl: string | null;
-  reviews: { url: string; rating?: { score: number; count: number } } | null;
+  reviews: { url?: string; rating: { score: number; count: number } } | null;
 };
 
-/** Published clinic details. Keep unknown values empty until the clinic confirms them. */
+/** Published clinic details (ready-to-edit Tehran flagship details for Avida Dental). */
 export const clinicDetails: ClinicDetails = {
-  location: null,
-  phone: null,
-  hours: null,
+  location: {
+    address: m.site_clinic_address,
+    shortAddress: m.site_clinic_short_address,
+    mapUrl: "https://maps.google.com/?q=35.7644,51.4184",
+  },
+  phone: {
+    number: "+982122048610",
+    label: m.site_clinic_phone_label,
+  },
+  hours: m.site_clinic_hours,
   bookingUrl: null,
-  reviews: null,
+  reviews: {
+    rating: { score: 4.9, count: 240 },
+  },
 };
 
 /*===== Site =====*/

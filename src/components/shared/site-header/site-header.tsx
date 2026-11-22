@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Building2Icon, CalendarDaysIcon, LogOutIcon, NotebookPenIcon, StethoscopeIcon, UserIcon } from "lucide-react";
+import { CalendarDaysIcon, CpuIcon, LogOutIcon, StethoscopeIcon, UserIcon, UsersIcon } from "lucide-react";
 import { type MouseEvent, useSyncExternalStore } from "react";
 
 import { Button } from "#/components/primitive/button/button";
@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "#/components/primitive/dropdown-menu/dropdown-menu";
 import { defineStyles, joinStyles } from "#/components/primitive/styles";
+import { AvidaBrandEmblem } from "#/components/shared/avida-smile/avida-smile";
 import { LocaleSwitcher } from "#/components/shared/locale-switcher/locale-switcher";
 import { useDesktopHeaderHidden } from "#/components/shared/site-header/use-desktop-header-hidden";
 import { ThemeToggle } from "#/components/shared/theme-toggle/theme-toggle";
@@ -29,9 +30,9 @@ import { m } from "#/paraglide/messages";
 // Message functions, not their text: called in render, so each request gets its own locale's labels.
 const NAV_ITEMS = [
   { label: m.nav_services, icon: StethoscopeIcon, to: "/", hash: homeSections.services },
-  { label: m.nav_practice, icon: Building2Icon, to: "/", hash: homeSections.practice },
-  { label: m.nav_visit, icon: CalendarDaysIcon, to: "/", hash: homeSections.visit },
-  { label: m.nav_notes, icon: NotebookPenIcon, to: "/notes", hash: undefined },
+  { label: m.nav_technology_short, icon: CpuIcon, to: "/", hash: homeSections.technology },
+  { label: m.nav_team, icon: UsersIcon, to: "/", hash: homeSections.team },
+  { label: m.nav_book, icon: CalendarDaysIcon, to: "/", hash: homeSections.appointments },
 ] as const;
 
 const navItemClasses = joinStyles(
@@ -136,22 +137,15 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
       <div className="mx-auto flex max-w-site-wide flex-wrap items-center justify-between gap-x-2 px-4 sm:px-6 md:grid md:min-h-site-desktop-header md:grid-cols-3">
         <Link
           to="/"
-          className="inline-flex min-h-16 items-center gap-2.5 rounded-md text-h4 font-bold text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid sm:text-h3 sm:font-bold md:justify-self-start"
+          className="inline-flex min-h-16 items-center gap-3 rounded-md focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid md:justify-self-start"
         >
-          <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-brand-gold/40 bg-brand-jade-surface text-brand-text shadow-sm sm:size-12">
-            <svg
-              aria-hidden
-              className="size-7 stroke-2"
-              viewBox="0 0 28 32"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M14 5C11 5 8.5 1.5 5 3.5 0 6.2 2.5 14 4.5 18.5 7 24.3 6 29 9.3 29c3.3 0 1.5-9.3 4.7-9.3s1.4 9.3 4.7 9.3c3.3 0 2.3-4.7 4.8-10.5 2-4.5 4.5-12.3-.5-15C19.5 1.5 17 5 14 5Zm0 0 3.4-.9" />
-            </svg>
+          <AvidaBrandEmblem />
+          <span className="flex flex-col">
+            <span className="text-h4 leading-snug font-extrabold text-foreground sm:text-h3">{m.site_name()}</span>
+            <span className="hidden text-caption leading-tight text-muted-foreground sm:block">
+              {m.site_brand_subtitle()}
+            </span>
           </span>
-          {m.site_name()}
         </Link>
 
         <nav
@@ -159,7 +153,7 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
           className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t bg-card pb-(--site-mobile-nav-safe-area) md:static md:z-auto md:flex md:w-max md:items-center md:gap-1 md:justify-self-center md:border-t-0 md:bg-transparent md:pb-0"
         >
           {NAV_ITEMS.map(({ icon: Icon, label, to, hash }) => {
-            const featured = hash === homeSections.visit;
+            const featured = hash === homeSections.appointments;
 
             return (
               <Link

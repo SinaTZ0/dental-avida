@@ -115,8 +115,8 @@ export function HomeChildVisit() {
               {m.home_child_visit_title()}
             </h2>
             <p className="mt-3 max-w-sm text-body-lg text-muted-foreground">{m.home_child_visit_intro()}</p>
-            <a href={`#${homeSections.visit}`} className="home-text-link mt-4">
-              {m.home_plan_visit()}
+            <a href={`#${homeSections.appointments}`} className="home-text-link mt-4">
+              {m.home_child_visit_cta()}
               <ArrowLeftIcon className="size-4 ltr:rotate-180" aria-hidden />
             </a>
           </div>

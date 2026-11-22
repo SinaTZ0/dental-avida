@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ClockIcon, MapPinIcon, PhoneIcon } from "lucide-react";
 
+import { AvidaBrandEmblem, AvidaSmile } from "#/components/shared/avida-smile/avida-smile";
 import { SiteLink } from "#/components/shared/site-link/site-link";
 import { clinicDetails, homeSections } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -78,27 +79,37 @@ function ClinicContact() {
 export function SiteFooter() {
   return (
     <footer className="border-t border-brand-surface-gold/30 bg-brand-surface text-brand-surface-foreground">
-      <div className="mx-auto max-w-site-wide px-4 pt-8 pb-4 sm:px-6 sm:pt-12 sm:pb-5">
-        <div className="grid gap-7 pb-7 md:grid-cols-3 md:gap-10">
+      <div className="mx-auto max-w-site-wide px-4 pt-10 pb-6 sm:px-6 sm:pt-14 sm:pb-7">
+        <div className="grid gap-8 pb-8 md:grid-cols-3 md:gap-12">
           <div>
-            <p className="text-h2">{m.site_name()}</p>
-            <p className="mt-1 max-w-xs text-body text-brand-surface-muted">{m.site_footer_description()}</p>
+            <div className="flex items-center gap-3">
+              <AvidaBrandEmblem className="size-11 border-brand-surface-gold/55 bg-consultation-deep" />
+              <div>
+                <p className="text-h2 leading-snug font-extrabold">{m.site_name()}</p>
+                <p className="text-caption text-brand-surface-gold">{m.site_brand_subtitle()}</p>
+              </div>
+            </div>
+            <AvidaSmile className="mt-3 w-28 text-brand-surface-gold" accentDot={false} />
+            <p className="mt-3 max-w-xs text-body-sm text-brand-surface-muted">{m.site_footer_description()}</p>
           </div>
           <div className="min-w-0 md:col-span-2">
             <ClinicContact />
           </div>
         </div>
-        <nav aria-label={m.nav_footer()} className="border-t border-brand-surface-muted/30 pt-2">
-          <ul className="flex flex-wrap gap-x-5">
-            {footerSections.map(([hash, label]) => (
-              <li key={hash}>
-                <Link to="/" hash={hash} className={`${footerLinkClass} text-nav`}>
-                  {label()}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="flex flex-col gap-3 border-t border-brand-surface-muted/25 pt-4 md:flex-row md:items-center md:justify-between">
+          <nav aria-label={m.nav_footer()}>
+            <ul className="flex flex-wrap gap-x-5 gap-y-1">
+              {footerSections.map(([hash, label]) => (
+                <li key={hash}>
+                  <Link to="/" hash={hash} className={`${footerLinkClass} text-nav`}>
+                    {label()}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <p className="text-caption text-brand-surface-muted">{m.site_footer_copyright()}</p>
+        </div>
       </div>
     </footer>
   );

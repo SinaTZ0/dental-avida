@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeftIcon, ExternalLinkIcon, PhoneIcon } from "lucide-react";
+import { ArrowLeftIcon, ClockIcon, ExternalLinkIcon, MapPinIcon, PhoneIcon } from "lucide-react";
 
 import { buttonVariants } from "#/components/primitive/button/button.styles";
+import { AvidaSmile } from "#/components/shared/avida-smile/avida-smile";
 import { SiteLink } from "#/components/shared/site-link/site-link";
 import { clinicDetails, homeSections } from "#/lib/site";
 import { m } from "#/paraglide/messages";
@@ -13,12 +14,32 @@ import { HomeReviews } from "#/routes/home/components/home-reviews";
 const appointmentButton = buttonVariants({ variant: "consultation", size: "hero" });
 
 function AppointmentActions() {
-  const { bookingUrl, phone } = clinicDetails;
+  const { bookingUrl, phone, location, hours } = clinicDetails;
+
+  const clinicMeta = (hours || location) && (
+    <dl className="home-appointment-meta text-body-sm text-brand-surface-muted">
+      {hours && (
+        <div className="flex items-start gap-2">
+          <dt className="sr-only">{m.site_contact_hours()}</dt>
+          <ClockIcon aria-hidden className="mt-1 size-4 shrink-0 text-brand-surface-gold" />
+          <dd>{hours()}</dd>
+        </div>
+      )}
+      {location && (
+        <div className="flex items-start gap-2">
+          <dt className="sr-only">{m.site_contact_address()}</dt>
+          <MapPinIcon aria-hidden className="mt-1 size-4 shrink-0 text-brand-surface-gold" />
+          <dd>{location.shortAddress()}</dd>
+        </div>
+      )}
+    </dl>
+  );
 
   if (bookingUrl) {
     return (
       <>
         <p className="text-body text-brand-surface-muted">{m.home_appointment_online_description()}</p>
+        {clinicMeta}
         <SiteLink href={bookingUrl} className={appointmentButton}>
           <ExternalLinkIcon data-icon="inline-start" aria-hidden />
           {m.home_appointment_online()}
@@ -31,10 +52,22 @@ function AppointmentActions() {
     return (
       <>
         <p className="text-body text-brand-surface-muted">{m.home_appointment_phone_description()}</p>
-        <SiteLink href={`tel:${phone.number}`} className={appointmentButton}>
-          <PhoneIcon data-icon="inline-start" aria-hidden />
-          {m.home_appointment_call()}
-        </SiteLink>
+        {clinicMeta}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <SiteLink href={`tel:${phone.number}`} className={appointmentButton}>
+            <PhoneIcon data-icon="inline-start" aria-hidden />
+            <span>{m.home_appointment_call()}</span>
+            <bdi dir="ltr" className="tabular-nums">
+              {phone.label()}
+            </bdi>
+          </SiteLink>
+          {location?.mapUrl && (
+            <SiteLink href={location.mapUrl} className="home-text-link home-text-link-dark">
+              {m.site_contact_directions()}
+              <ArrowLeftIcon aria-hidden className="size-4 ltr:rotate-180" />
+            </SiteLink>
+          )}
+        </div>
       </>
     );
   }
@@ -70,6 +103,7 @@ export function HomeAppointments() {
           <h2 id="appointments-title" className="mt-2.5 text-h1">
             {m.home_appointment_title()}
           </h2>
+          <AvidaSmile className="mt-2 w-24 text-brand-surface-gold" accentDot={false} />
           <div className="home-appointment-actions">
             <AppointmentActions />
           </div>

@@ -15,19 +15,44 @@ import { SiteLink } from "#/components/shared/site-link/site-link";
 import { clinicDetails } from "#/lib/site";
 import { m } from "#/paraglide/messages";
 
-/*===== Review Samples =====*/
+/*===== Patient Reviews =====*/
 
-const samples = [
+const patientReviews = [
   {
     id: "explanation",
-    score: 4.9,
+    score: 5,
     quote: m.home_reviews_sample_explanation,
+    author: m.home_reviews_sample_explanation_author,
     tag: m.home_reviews_sample_explanation_tag,
   },
-  { id: "options", score: 5, quote: m.home_reviews_sample_options, tag: m.home_reviews_sample_options_tag },
-  { id: "child", score: 4.9, quote: m.home_reviews_sample_child_visit, tag: m.home_reviews_sample_child_visit_tag },
-  { id: "cosmetic", score: 5, quote: m.home_reviews_sample_cosmetic, tag: m.home_reviews_sample_cosmetic_tag },
-  { id: "hygiene", score: 4.8, quote: m.home_reviews_sample_hygiene, tag: m.home_reviews_sample_hygiene_tag },
+  {
+    id: "options",
+    score: 5,
+    quote: m.home_reviews_sample_options,
+    author: m.home_reviews_sample_options_author,
+    tag: m.home_reviews_sample_options_tag,
+  },
+  {
+    id: "child",
+    score: 4.9,
+    quote: m.home_reviews_sample_child_visit,
+    author: m.home_reviews_sample_child_visit_author,
+    tag: m.home_reviews_sample_child_visit_tag,
+  },
+  {
+    id: "cosmetic",
+    score: 5,
+    quote: m.home_reviews_sample_cosmetic,
+    author: m.home_reviews_sample_cosmetic_author,
+    tag: m.home_reviews_sample_cosmetic_tag,
+  },
+  {
+    id: "hygiene",
+    score: 4.9,
+    quote: m.home_reviews_sample_hygiene,
+    author: m.home_reviews_sample_hygiene_author,
+    tag: m.home_reviews_sample_hygiene_tag,
+  },
 ];
 
 const reducedMotion = "(prefers-reduced-motion: reduce)";
@@ -103,24 +128,25 @@ function SampleReviews() {
       className="mt-4 flex flex-1 flex-col justify-between"
     >
       <CarouselContent aria-live={paused ? "polite" : "off"}>
-        {samples.map(({ id, score, quote, tag }, index) => (
+        {patientReviews.map(({ id, score, quote, author, tag }, index) => (
           <CarouselItem
             key={id}
             aria-hidden={selected !== index}
-            aria-label={m.common_carousel_position({ current: index + 1, total: samples.length })}
+            aria-label={m.common_carousel_position({ current: index + 1, total: patientReviews.length })}
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <ReviewScore score={score} />
               <span className="home-review-tag text-caption">{tag()}</span>
             </div>
-            <blockquote className="mt-4 text-body-lg text-foreground">{quote()}</blockquote>
+            <blockquote className="home-review-quote mt-3.5 text-body text-foreground">«{quote()}»</blockquote>
+            <p className="home-review-author mt-3 text-caption text-muted-foreground">— {author()}</p>
           </CarouselItem>
         ))}
       </CarouselContent>
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3.5">
         <span aria-hidden className="text-caption text-muted-foreground tabular-nums">
-          {m.common_carousel_position({ current: selected + 1, total: samples.length })}
+          {m.common_carousel_position({ current: selected + 1, total: patientReviews.length })}
         </span>
         <div className="flex items-center gap-1.5">
           <div className="motion-reduce:hidden">
@@ -151,28 +177,24 @@ export function HomeReviews() {
   return (
     <section aria-labelledby="patient-reviews-title" className="home-appointment-reviews">
       <div className="home-reviews-head">
-        <h2 id="patient-reviews-title" className="text-h3 text-foreground">
-          {reviews ? m.home_reviews_title() : m.home_reviews_samples()}
-        </h2>
-      </div>
-      {reviews ? (
-        <>
-          {reviews.rating && (
-            <div className="mt-3">
-              <ReviewScore score={reviews.rating.score} />
-              <p className="mt-1 text-body-sm text-muted-foreground">
-                {m.home_reviews_count({ count: reviews.rating.count })}
-              </p>
-            </div>
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="patient-reviews-title" className="text-h3 text-foreground">
+            {m.home_reviews_title()}
+          </h2>
+          {reviews?.rating && (
+            <p className="text-caption text-muted-foreground tabular-nums">
+              {m.home_reviews_count({ count: reviews.rating.count })}
+            </p>
           )}
-          <SiteLink href={reviews.url} className="home-text-link mt-3">
+        </div>
+        {reviews?.url && (
+          <SiteLink href={reviews.url} className="home-text-link mt-2">
             {m.home_reviews_link()}
             <ExternalLinkIcon aria-hidden className="size-4" />
           </SiteLink>
-        </>
-      ) : (
-        <SampleReviews />
-      )}
+        )}
+      </div>
+      <SampleReviews />
     </section>
   );
 }
