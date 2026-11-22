@@ -119,7 +119,7 @@ export function HomeServices() {
     <section
       id={homeSections.services}
       aria-labelledby="services-title"
-      className="home-section home-shell home-services"
+      className="home-section home-shell home-services lg:-mt-25"
     >
       <div className="home-section-heading">
         <h2 id="services-title" className="text-section">
