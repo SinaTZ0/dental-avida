@@ -41,10 +41,10 @@ function AppointmentActions() {
 
   return (
     <>
-      <p className="text-body text-brand-surface-muted">{m.home_appointment_unavailable()}</p>
+      <p className="text-body text-brand-surface-muted">{m.home_appointment_prepare_description()}</p>
       <Link to="/" hash={homeSections.visit} className={appointmentButton}>
         {m.home_plan_visit()}
-        <ArrowLeftIcon className="ltr:rotate-180" aria-hidden />
+        <ArrowLeftIcon data-icon="inline-end" className="ltr:rotate-180" aria-hidden />
       </Link>
     </>
   );
@@ -55,18 +55,19 @@ function AppointmentActions() {
 export function HomeAppointments() {
   return (
     <div id={homeSections.appointments} className="home-appointments home-shell">
-      <section aria-labelledby="appointments-title" className="home-appointment-main porcelain-grain">
+      <section aria-labelledby="appointments-title" className="home-appointment-main">
         <img
           src={appointmentPlanner}
-          width={900}
-          height={600}
+          width={1080}
+          height={725}
           alt=""
           loading="lazy"
           decoding="async"
           className="home-appointment-photo"
         />
         <div className="home-appointment-copy">
-          <h2 id="appointments-title" className="text-section">
+          <p className="home-kicker home-kicker-dark">{m.home_appointment_kicker()}</p>
+          <h2 id="appointments-title" className="mt-2.5 text-h1">
             {m.home_appointment_title()}
           </h2>
           <div className="home-appointment-actions">

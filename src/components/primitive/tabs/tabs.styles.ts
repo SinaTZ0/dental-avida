@@ -10,8 +10,8 @@ const twTabsStyles = defineStyles({
 const twRootVariant = defineStyles({
   default: {},
   guide: {
-    layout: "gap-0",
-    geometry: "p-3 md:p-5 min-[60rem]:ps-16",
+    layout: "gap-4",
+    geometry: "p-4 sm:p-6 md:p-7",
     appearance: "bg-transparent",
   },
 });
@@ -30,9 +30,9 @@ const twVariant = defineStyles({
     appearance: "bg-muted",
   },
   guide: {
-    layout: "relative gap-1",
+    layout: "relative flex-wrap gap-1 sm:flex-nowrap",
     geometry: "rounded-none border-b p-0",
-    appearance: "border-brand-jade/30 bg-transparent",
+    appearance: "border-border bg-transparent",
   },
   line: {
     layout: "gap-1",
@@ -64,7 +64,7 @@ const twTriggerStyles = defineStyles({
   stateLine:
     "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-active:bg-transparent group-data-[variant=line]/tabs-list:data-active:text-brand-text group-data-[variant=line]/tabs-list:data-active:shadow-none group-data-[variant=line]/tabs-list:data-active:after:opacity-100",
   stateIndicator:
-    "after:bg-gold after:absolute after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-inset-e-1 group-data-vertical/tabs:after:w-0.5",
+    "after:absolute after:bg-gold after:opacity-0 after:transition-opacity group-data-horizontal/tabs:after:inset-x-0 group-data-horizontal/tabs:after:-bottom-1.25 group-data-horizontal/tabs:after:h-0.5 group-data-vertical/tabs:after:inset-y-0 group-data-vertical/tabs:after:-inset-e-1 group-data-vertical/tabs:after:w-0.5",
   icon: "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 });
 
@@ -73,7 +73,7 @@ const twTriggerStyles = defineStyles({
 const twGuideIndicatorStyles = defineStyles({
   layout: "pointer-events-none absolute start-(--active-tab-left) -bottom-px rtl:start-(--active-tab-right)",
   geometry: "h-0.75 w-(--active-tab-width) rounded-full",
-  appearance: "bg-brand-jade",
+  appearance: "bg-brand-gold",
   motion: "motion-safe:transition-[inset-inline-start,width] motion-safe:duration-250 motion-safe:ease-out",
 });
 

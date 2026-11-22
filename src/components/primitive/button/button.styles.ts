@@ -67,7 +67,7 @@ const twVariant = defineStyles({
     focus: "focus-visible:outline-brand-surface-foreground",
     state:
       "aria-pressed:bg-consultation-button aria-pressed:font-bold aria-pressed:text-consultation-deep aria-pressed:hover:bg-consultation-button",
-    icon: "[&_svg[data-icon=choice]]:box-content [&_svg[data-icon=choice]]:size-4 [&_svg[data-icon=choice]]:rounded-full [&_svg[data-icon=choice]]:bg-brand-surface-foreground/10 [&_svg[data-icon=choice]]:p-1.5 [&_svg[data-icon=choice]]:text-consultation-mint aria-pressed:[&_svg[data-icon=choice]]:bg-brand-jade-surface aria-pressed:[&_svg[data-icon=choice]]:text-brand-jade",
+    icon: "[&_svg[data-icon=choice]]:box-content [&_svg[data-icon=choice]]:size-5 [&_svg[data-icon=choice]]:rounded-full [&_svg[data-icon=choice]]:bg-brand-surface-foreground/10 [&_svg[data-icon=choice]]:p-1.5 [&_svg[data-icon=choice]]:text-brand-surface-foreground aria-pressed:[&_svg[data-icon=choice]]:bg-brand-jade-surface aria-pressed:[&_svg[data-icon=choice]]:text-brand-text",
   },
   destructive: {
     appearance: "bg-destructive-surface text-destructive",

@@ -129,7 +129,7 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
   return (
     <header
       className={cn(
-        "border-b bg-card md:sticky md:top-0 md:z-40 md:has-[:focus-visible]:translate-y-0 md:motion-safe:transition-transform md:motion-safe:duration-200 md:motion-safe:ease-out",
+        "border-b border-border/80 bg-card md:sticky md:top-0 md:z-40 md:bg-card/90 md:backdrop-blur-md md:has-[:focus-visible]:translate-y-0 md:motion-safe:transition-transform md:motion-safe:duration-200 md:motion-safe:ease-out",
         desktopHeaderHidden && "md:-translate-y-full",
       )}
     >
@@ -138,7 +138,7 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
           to="/"
           className="inline-flex min-h-16 items-center gap-2.5 rounded-md text-h4 font-bold text-foreground focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-solid sm:text-h3 sm:font-bold md:justify-self-start"
         >
-          <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-muted text-brand-text sm:size-12">
+          <span className="grid size-11 shrink-0 place-items-center rounded-lg border border-brand-gold/40 bg-brand-jade-surface text-brand-text shadow-sm sm:size-12">
             <svg
               aria-hidden
               className="size-7 stroke-2"

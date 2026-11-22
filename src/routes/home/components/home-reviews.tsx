@@ -1,5 +1,5 @@
 import Autoplay from "embla-carousel-autoplay";
-import { ExternalLinkIcon, MessageSquareTextIcon, PauseIcon, PlayIcon, StarIcon } from "lucide-react";
+import { ExternalLinkIcon, PauseIcon, PlayIcon, StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "#/components/primitive/button/button";
@@ -18,17 +18,24 @@ import { m } from "#/paraglide/messages";
 /*===== Review Samples =====*/
 
 const samples = [
-  { score: 4.8, quote: m.home_reviews_sample_explanation },
-  { score: 5, quote: m.home_reviews_sample_options },
-  { score: 4.9, quote: m.home_reviews_sample_child_visit },
+  {
+    id: "explanation",
+    score: 4.9,
+    quote: m.home_reviews_sample_explanation,
+    tag: m.home_reviews_sample_explanation_tag,
+  },
+  { id: "options", score: 5, quote: m.home_reviews_sample_options, tag: m.home_reviews_sample_options_tag },
+  { id: "child", score: 4.9, quote: m.home_reviews_sample_child_visit, tag: m.home_reviews_sample_child_visit_tag },
+  { id: "cosmetic", score: 5, quote: m.home_reviews_sample_cosmetic, tag: m.home_reviews_sample_cosmetic_tag },
+  { id: "hygiene", score: 4.8, quote: m.home_reviews_sample_hygiene, tag: m.home_reviews_sample_hygiene_tag },
 ];
 
 const reducedMotion = "(prefers-reduced-motion: reduce)";
 
 function ReviewScore({ score }: { score: number }) {
   return (
-    <p className="flex items-center gap-2 text-h3">
-      <StarIcon aria-hidden className="size-4 fill-current text-brand-jade" />
+    <p className="flex items-center gap-1.5 text-h4 font-bold text-foreground tabular-nums">
+      <StarIcon aria-hidden className="size-4 fill-current text-brand-gold" />
       {m.home_reviews_rating({ score })}
     </p>
   );
@@ -93,31 +100,32 @@ function SampleReviews() {
       setApi={setApi}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="mt-2"
+      className="mt-4 flex flex-1 flex-col justify-between"
     >
       <CarouselContent aria-live={paused ? "polite" : "off"}>
-        {samples.map(({ score, quote }, index) => (
+        {samples.map(({ id, score, quote, tag }, index) => (
           <CarouselItem
-            key={score}
+            key={id}
             aria-hidden={selected !== index}
             aria-label={m.common_carousel_position({ current: index + 1, total: samples.length })}
           >
-            <ReviewScore score={score} />
-            <blockquote className="mt-2 border-s-2 border-brand-jade/40 ps-3 text-body-sm text-muted-foreground">
-              {quote()}
-            </blockquote>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <ReviewScore score={score} />
+              <span className="home-review-tag text-caption">{tag()}</span>
+            </div>
+            <blockquote className="mt-4 text-body-lg text-foreground">{quote()}</blockquote>
           </CarouselItem>
         ))}
       </CarouselContent>
 
-      <div className="mt-2 flex flex-wrap items-center justify-between gap-1">
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3.5">
         <span aria-hidden className="text-caption text-muted-foreground tabular-nums">
           {m.common_carousel_position({ current: selected + 1, total: samples.length })}
         </span>
-        <div className="flex items-center">
+        <div className="flex items-center gap-1.5">
           <div className="motion-reduce:hidden">
             <Button
-              variant="ghost"
+              variant="outline"
               size="icon-xs"
               aria-label={paused ? m.common_carousel_play() : m.common_carousel_pause()}
               onClick={() => setPaused(!paused)}
@@ -125,9 +133,9 @@ function SampleReviews() {
               {paused ? <PlayIcon aria-hidden /> : <PauseIcon aria-hidden />}
             </Button>
           </div>
-          <div className="flex items-center" onFocusCapture={() => setPaused(true)}>
-            <CarouselPrevious variant="ghost" size="icon-xs" className="static m-0" />
-            <CarouselNext variant="ghost" size="icon-xs" className="static m-0" />
+          <div className="flex items-center gap-1.5" onFocusCapture={() => setPaused(true)}>
+            <CarouselPrevious variant="outline" size="icon-xs" className="static m-0" />
+            <CarouselNext variant="outline" size="icon-xs" className="static m-0" />
           </div>
         </div>
       </div>
@@ -142,30 +150,29 @@ export function HomeReviews() {
 
   return (
     <section aria-labelledby="patient-reviews-title" className="home-appointment-reviews">
-      <MessageSquareTextIcon aria-hidden className="size-6 text-brand-jade" />
-      <div>
-        <h2 id="patient-reviews-title" className="text-h3">
+      <div className="home-reviews-head">
+        <h2 id="patient-reviews-title" className="text-h3 text-foreground">
           {reviews ? m.home_reviews_title() : m.home_reviews_samples()}
         </h2>
-        {reviews ? (
-          <>
-            {reviews.rating && (
-              <div className="mt-2">
-                <ReviewScore score={reviews.rating.score} />
-                <p className="text-body-sm text-muted-foreground">
-                  {m.home_reviews_count({ count: reviews.rating.count })}
-                </p>
-              </div>
-            )}
-            <SiteLink href={reviews.url} className="home-text-link">
-              {m.home_reviews_link()}
-              <ExternalLinkIcon aria-hidden className="size-4" />
-            </SiteLink>
-          </>
-        ) : (
-          <SampleReviews />
-        )}
       </div>
+      {reviews ? (
+        <>
+          {reviews.rating && (
+            <div className="mt-3">
+              <ReviewScore score={reviews.rating.score} />
+              <p className="mt-1 text-body-sm text-muted-foreground">
+                {m.home_reviews_count({ count: reviews.rating.count })}
+              </p>
+            </div>
+          )}
+          <SiteLink href={reviews.url} className="home-text-link mt-3">
+            {m.home_reviews_link()}
+            <ExternalLinkIcon aria-hidden className="size-4" />
+          </SiteLink>
+        </>
+      ) : (
+        <SampleReviews />
+      )}
     </section>
   );
 }

@@ -5,7 +5,11 @@ import { m } from "#/paraglide/messages";
 export const homeSections = {
   appointments: "appointments",
   services: "services",
+  implantShowcase: "implant-showcase",
+  results: "results",
+  technology: "technology",
   practice: "practice",
+  team: "team",
   visit: "visit",
   childVisit: "child-visit",
   questions: "questions",

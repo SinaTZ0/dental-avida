@@ -49,7 +49,7 @@ export const comparisonControlClasses = joinStyles(defineStyles({ interaction: "
 export const comparisonThumbClasses = joinStyles(
   defineStyles({
     geometry: "size-12 border-2",
-    appearance: "border-brand-surface bg-brand-surface-foreground text-brand-surface shadow-md",
-    focus: "focus-within:ring-2 focus-within:ring-brand-surface focus-within:outline-brand-surface-foreground",
+    appearance: "border-brand-surface-gold bg-brand-surface text-brand-surface-foreground shadow-md",
+    focus: "focus-within:ring-2 focus-within:ring-brand-surface-gold focus-within:outline-brand-surface-foreground",
   }),
 );

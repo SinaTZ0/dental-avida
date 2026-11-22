@@ -5,8 +5,9 @@ import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
 import { HomeAppointments } from "#/routes/home/components/home-appointments";
 import { HomeHero, HomePractice, HomeQuestions, HomeServices, HomeVisit } from "#/routes/home/components/home-content";
+import { HomeHighlights, HomeImplantShowcase, HomeTechnology } from "#/routes/home/components/home-luxury-sections";
 import { HomeTreatmentResults } from "#/routes/home/components/home-treatment-results";
-import { HomeChildVisit, HomeConsultationBanner } from "#/routes/home/components/home-visit-guides";
+import { HomeChildVisit } from "#/routes/home/components/home-visit-guides";
 import "#/routes/home/home.css";
 
 /*===== Route =====*/
@@ -32,13 +33,15 @@ function Home() {
   return (
     <>
       <HomeHero />
+      <HomeHighlights />
       <HomeServices />
-      <HomeAppointments />
+      <HomeImplantShowcase />
       <HomeTreatmentResults />
+      <HomeTechnology />
       <HomePractice />
       <HomeVisit />
       <HomeChildVisit />
-      <HomeConsultationBanner />
+      <HomeAppointments />
       <HomeQuestions />
     </>
   );

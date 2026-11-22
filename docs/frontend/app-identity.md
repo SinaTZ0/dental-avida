@@ -2,9 +2,9 @@
 
 ## Mood
 
-- **Calm**. Pale blue surfaces, generous room around headings, and natural daylight in photographs.
-- **Clear**. Put treatment descriptions and the steps of a visit where people can read them in order.
-- **Warm**. Put conversations with patients at the center of the clinic’s story.
+- **Lively & Luxurious**. Luminous emerald-mist surfaces, deep forest emerald anchor bands, delicate champagne gold accents, and crisp marble-porcelain cleanliness.
+- **Clear**. Put treatment descriptions, technology standards, and the steps of a visit where people can read them in order.
+- **Warm**. Put calm conversations and transparent care with patients at the center of the clinic’s story.
 
 ## Tone (copy)
 
@@ -13,11 +13,9 @@
 
 ## Brand
 
-The Avida wordmark pairs the clinic name with a thin tooth outline. Deep blue anchors headings and the footer. Photography uses soft light, with deliberate cropping around faces and illustrated clinic imagery identified in its caption.
+The Avida wordmark pairs the clinic name with a thin tooth outline inside an emerald-and-gold medallion. Deep luxury emerald anchors key feature bands and the footer, while champagne gold accents highlight precision details, ratings, and focus milestones. Photography uses sunlit daylight, white marble, emerald foliage, and refined luxury clinic interiors, with illustrated imagery identified in its caption.
 
-The homepage opens with the Blue Horizon hero. A daylight patient portrait fades into the blue introduction, with a curved edge leading into the service directory. The navy practice section separates services from the first-visit guide. Fine porcelain grain adds texture to the blue surfaces. The service directory, visit sequence, and questions use rules and spacing to establish hierarchy. Use a card when the content needs its own surface and actions.
-
-A jade smile stroke sits below the hero headline and appears again in the family visit guide. The same accent marks conversation prompts in the illustrated consultation guide. The family guide pairs a pale jade surface with a vertical sequence of steps before, during, and at the end of the visit.
+The homepage opens with the Emerald Horizon hero: a daylight portrait fades smoothly into a luminous pale emerald surface, framed by a subtle champagne gold kicker and curved porcelain edge leading into clinic highlights, the service directory, an implant & smile showcase, modern technology & sterilization standards, specialist care disciplines, and the first-visit guide. Fine porcelain grain adds tactile richness to emerald surfaces.
 
 ## Theme
 
