@@ -2,7 +2,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 
 import {
   AVIDA_SMILE_ARC_PATH,
-  AVIDA_SMILE_DOT,
+  AVIDA_SMILE_STAR_PATH,
   AVIDA_SMILE_VIEWBOX,
 } from "#/components/shared/avida-smile/avida-smile";
 import { canPlayHomeIntro, markHomeIntroConsumed } from "#/lib/home-intro-state";
@@ -18,16 +18,17 @@ const INITIAL_CENTER_Y_OFFSET = -20; // Slightly above geometric center (480 / 1
 const LOGO_CENTER = { x: AVIDA_SMILE_VIEWBOX.width / 2, y: AVIDA_SMILE_VIEWBOX.height / 2 } as const;
 const SSR_SCALE = (REF_VIEWBOX_SIZE * INITIAL_WIDTH_RATIO) / AVIDA_SMILE_VIEWBOX.width;
 
-// Snappy ~0.96s choreography starting directly from the carved state:
-// 0 → 680ms:   carved smile shrinks & glides smoothly onto the exact hero smile bounding box.
-// 580 → 780ms: real emerald & gold hero smile blooms into the docked cutout.
-// 0 → 960ms:   porcelain/dark veil fades from frame 0 along an ease-in power curve (barely moving at start, then
-//              dropping very fast at the end as the smile seats and fills with color).
-const SHRINK_DURATION_MS = 680;
-const FILL_START_MS = 580;
-const FILL_DURATION_MS = 200;
-const TOTAL_DURATION_MS = 960;
-const VEIL_FADE_EXPONENT = 4.2;
+// Snappy ~0.72s choreography starting directly from the carved state:
+// 0 → 700ms:   carved smile shrinks & glides smoothly onto the exact hero smile bounding box.
+// 0 → 640ms:   porcelain/dark veil fades from frame 0 along a steep ease-in curve (t^6 — holds nearly solid early,
+//              then whips away very fast so the fade is mostly complete before the smile finishes seating).
+// 520 → 700ms: real emerald & gold hero smile blooms into full color as the veil clears.
+const SHRINK_DURATION_MS = 700;
+const VEIL_FADE_DURATION_MS = 640;
+const FILL_START_MS = 520;
+const FILL_DURATION_MS = 180;
+const TOTAL_DURATION_MS = 720;
+const VEIL_FADE_EXPONENT = 6;
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -209,8 +210,8 @@ export function HomeSmileIntro() {
         smileWrap.style.opacity = String(fillProgress);
       }
 
-      /*------ Continuous Ease-In Veil Fade (Slow Start, Fast Finish) ------*/
-      const fadeProgress = easeInVeilFade(clamp01(elapsed / TOTAL_DURATION_MS));
+      /*------ Continuous Ease-In Veil Fade (Slow Start, Very Fast Finish Before Dock) ------*/
+      const fadeProgress = easeInVeilFade(clamp01(elapsed / VEIL_FADE_DURATION_MS));
       overlay.style.opacity = String(1 - fadeProgress);
 
       if (elapsed >= TOTAL_DURATION_MS) {
@@ -260,7 +261,7 @@ export function HomeSmileIntro() {
             <rect ref={maskBgRef} x="-3000" y="-3000" width="7000" height="7000" className="home-smile-intro-mask-bg" />
             <g ref={cutoutRef} transform={ssrTransform} className="home-smile-intro-mask-cutout">
               <path d={AVIDA_SMILE_ARC_PATH} />
-              <circle cx={AVIDA_SMILE_DOT.cx} cy={AVIDA_SMILE_DOT.cy} r={AVIDA_SMILE_DOT.r} />
+              <path d={AVIDA_SMILE_STAR_PATH} />
             </g>
           </mask>
         </defs>

@@ -158,6 +158,7 @@
   --color-brand-jade-surface: var(--brand-jade-surface);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-surface: var(--brand-gold-surface);
+  --color-brand-silver: var(--brand-silver);
   --color-gold: var(--brand-gold);
   --color-hero-surface: var(--hero-surface);
   --color-brand-surface: var(--brand-surface);
@@ -226,6 +227,7 @@
   --brand-jade-surface: #e2f3ea;
   --brand-gold: #b88926;
   --brand-gold-surface: #fbf5e4;
+  --brand-silver: #939da5;
   --hero-surface: #e6f4ec;
   --hero-line: #94c7ab;
   --brand-surface: #0b3d24;
@@ -298,6 +300,7 @@
   --brand-jade-surface: #123322;
   --brand-gold: #e5c165;
   --brand-gold-surface: #262111;
+  --brand-silver: #d4dbe0;
   --hero-surface: #0d2318;
   --hero-line: #2d6346;
   --brand-surface: #0c2c1b;
