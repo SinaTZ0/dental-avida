@@ -6,8 +6,9 @@ import { Input } from "#/components/primitive/input/input";
 import { Label } from "#/components/primitive/label/label";
 import { Textarea } from "#/components/primitive/textarea/textarea";
 import { formatNumber } from "#/lib/locale";
+import { syncIframeReviewTheme } from "#/lib/theme";
 import { normalizeReviewPath, REVIEW_MIN_BOX_SIZE, REVIEW_VIEWPORTS } from "#/orpc/review/constants";
-import type { ReviewViewport } from "#/orpc/review/constants";
+import type { ReviewTheme, ReviewViewport } from "#/orpc/review/constants";
 import type { ReviewFeedback } from "#/orpc/review/contract";
 import { m } from "#/paraglide/messages";
 import type { ReviewMode, ReviewZoomSetting } from "#/routes/review/components/review-toolbar";
@@ -25,6 +26,7 @@ type KeyedDraftBox = DraftBox & { readonly scopeKey: string };
 type ReviewStageProps = {
   readonly path: string;
   readonly viewport: ReviewViewport;
+  readonly theme: ReviewTheme;
   readonly mode: ReviewMode;
   readonly zoomSetting: ReviewZoomSetting;
   readonly showBoxes: boolean;
@@ -74,6 +76,7 @@ function saveAuthor(value: string) {
 export function ReviewStage({
   path,
   viewport,
+  theme,
   mode,
   zoomSetting,
   showBoxes,
@@ -163,6 +166,7 @@ export function ReviewStage({
   }, [onIframePathChange, path]);
 
   const handleIframeLoad = useCallback(() => {
+    syncIframeReviewTheme(iframeRef.current?.contentWindow ?? null, theme);
     syncIframeState();
     iframeResizeObserverRef.current?.disconnect();
     try {
@@ -176,7 +180,13 @@ export function ReviewStage({
     } catch {
       // Ignore if document is unavailable.
     }
-  }, [syncIframeState]);
+  }, [syncIframeState, theme]);
+
+  /*------ Push Theme Changes Live Into Iframe ------*/
+  useEffect(() => {
+    syncIframeReviewTheme(iframeRef.current?.contentWindow ?? null, theme);
+    syncIframeState();
+  }, [syncIframeState, theme]);
 
   useEffect(() => {
     // Lightweight poll catches client-side TanStack Router pushState navigations inside the iframe.
@@ -286,7 +296,8 @@ export function ReviewStage({
 
       {/*===== Scaled Artboard Wrapper =====*/}
       <div
-        className="relative mx-auto h-(--stage-outer-h) w-(--stage-outer-w) bg-background shadow-md ring-1 ring-border"
+        dir="ltr"
+        className="relative mx-auto h-(--stage-outer-h) w-(--stage-outer-w) overflow-hidden bg-background shadow-md ring-1 ring-border"
         style={outerVars}
       >
         <div

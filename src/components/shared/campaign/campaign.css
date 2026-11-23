@@ -1,46 +1,52 @@
 /*===== Top Campaign Ribbon =====*/
 
+/* Hide SSR'd campaign ribbon immediately before hydration when `/review` previews Normal Light/Dark style. */
+:root[data-review-preview="light"] .campaign-ribbon,
+:root[data-review-preview="dark"] .campaign-ribbon {
+  display: none;
+}
+
 .campaign-ribbon {
   position: relative;
-  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 35%, transparent);
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 45%, transparent);
   background: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--campaign-crimson) 26%, var(--brand-surface)) 0%,
-    var(--brand-surface) 48%,
-    color-mix(in srgb, var(--brand-gold) 16%, var(--brand-surface)) 100%
+    color-mix(in srgb, var(--campaign-crimson) 18%, #0a0a0a) 0%,
+    #060606 46%,
+    color-mix(in srgb, var(--brand-gold) 12%, #0a0a0a) 100%
   );
   color: var(--brand-surface-foreground);
 }
 
 .campaign-ribbon-dot {
-  inline-size: 0.5rem;
-  block-size: 0.5rem;
-  border-radius: 999px;
+  inline-size: 0.45rem;
+  block-size: 0.45rem;
+  border-radius: 0;
   background: var(--campaign-crimson);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--campaign-crimson) 85%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--campaign-crimson) 90%, transparent);
 }
 
 .campaign-ribbon-cta {
   display: inline-flex;
-  min-block-size: 1.85rem;
+  min-block-size: 1.9rem;
   align-items: center;
   gap: 0.35rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--brand-surface-gold) 50%, transparent);
-  background: var(--campaign-crimson);
-  padding-inline: 0.85rem;
-  color: var(--campaign-crimson-foreground);
+  border-radius: 2px;
+  border: 1px solid var(--highlight);
+  background: var(--highlight);
+  padding-inline: 0.9rem;
+  color: var(--highlight-foreground);
   font-size: var(--text-caption);
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
   transition:
-    background-color 150ms ease,
-    border-color 150ms ease;
+    background-color 140ms ease,
+    border-color 140ms ease;
 }
 
 .campaign-ribbon-cta:hover {
-  background: var(--campaign-crimson-hover);
-  border-color: var(--brand-surface-gold);
+  background: var(--highlight-hover);
+  border-color: var(--highlight-hover);
 }
 
 /*===== Countdown =====*/
@@ -48,8 +54,8 @@
 .campaign-countdown-editorial {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
-  background: color-mix(in srgb, var(--secondary) 65%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 38%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 82%, transparent);
 }
 
 .campaign-countdown-cell {
@@ -62,48 +68,75 @@
 }
 
 .campaign-countdown-cell + .campaign-countdown-cell {
-  border-inline-start: 1px solid color-mix(in srgb, var(--brand-gold) 20%, var(--border));
+  border-inline-start: 1px solid color-mix(in srgb, var(--brand-gold) 24%, var(--border));
 }
 
 .campaign-countdown-digits {
   font-variant-numeric: tabular-nums;
 }
 
-/*===== Native Capacity Progress Bar =====*/
+/*===== Native Capacity Progress Bars =====*/
 
 .campaign-progress {
+  display: block;
+  inline-size: 100%;
+  block-size: 0.4rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--border) 75%, transparent);
+  appearance: none;
+}
+
+.campaign-progress::-webkit-progress-bar {
+  border-radius: 0;
+  background: color-mix(in srgb, var(--border) 75%, transparent);
+}
+
+.campaign-progress::-webkit-progress-value {
+  border-radius: 0;
+  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+}
+
+.campaign-progress::-moz-progress-bar {
+  border-radius: 0;
+  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+}
+
+/* High-contrast jet-black meter sitting on the solid electric-yellow impact band. */
+.campaign-progress-impact {
   display: block;
   inline-size: 100%;
   block-size: 0.45rem;
   overflow: hidden;
   border: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: 0;
+  background: rgba(6, 6, 6, 0.22);
   appearance: none;
 }
 
-.campaign-progress::-webkit-progress-bar {
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--border) 65%, transparent);
+.campaign-progress-impact::-webkit-progress-bar {
+  border-radius: 0;
+  background: rgba(6, 6, 6, 0.22);
 }
 
-.campaign-progress::-webkit-progress-value {
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+.campaign-progress-impact::-webkit-progress-value {
+  border-radius: 0;
+  background: #060606;
 }
 
-.campaign-progress::-moz-progress-bar {
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+.campaign-progress-impact::-moz-progress-bar {
+  border-radius: 0;
+  background: #060606;
 }
 
 /*===== Entry Modal Editorial Art Header =====*/
 
 .campaign-modal-art-frame {
   position: relative;
-  block-size: 10.5rem;
+  block-size: 11rem;
   overflow: hidden;
-  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 30%, transparent);
+  border-block-end: 2px solid var(--brand-gold);
 }
 
 .campaign-modal-art-img {
@@ -118,8 +151,8 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--card) 18%, transparent) 0%,
-    color-mix(in srgb, var(--card) 72%, transparent) 68%,
+    color-mix(in srgb, var(--card) 12%, transparent) 0%,
+    color-mix(in srgb, var(--card) 56%, transparent) 66%,
     var(--card) 100%
   );
 }

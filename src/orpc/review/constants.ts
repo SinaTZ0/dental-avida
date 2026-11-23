@@ -9,6 +9,41 @@ export type ReviewViewport = keyof typeof REVIEW_VIEWPORTS;
 
 export const REVIEW_VIEWPORT_KEYS = ["desktop", "mobile"] as const;
 
+/*===== Theme Preview Presets =====*/
+/**
+ * Visual styles available inside `/review` and via `/review/enter?style=...` or `?theme=...` magic links:
+ * - `"light"`: regular Avida clinic design in light emerald (campaign chrome hidden)
+ * - `"dark"`: regular Avida clinic design in dark emerald (campaign chrome hidden)
+ * - `"black-friday"`: Black Friday Voltage Ticker design (jet black + electric yellow, campaign chrome shown)
+ */
+export const REVIEW_THEMES = ["light", "dark", "black-friday"] as const;
+
+export type ReviewTheme = (typeof REVIEW_THEMES)[number];
+
+/** Normalizes a `theme` or `style` query parameter into a valid `ReviewTheme`, or `null` if unknown. */
+export function normalizeReviewTheme(raw: string | null | undefined): ReviewTheme | null {
+  if (!raw) return null;
+  switch (raw.trim().toLowerCase()) {
+    case "light":
+    case "normal":
+    case "default":
+    case "regular":
+    case "classic":
+      return "light";
+    case "dark":
+    case "normal-dark":
+    case "default-dark":
+      return "dark";
+    case "black-friday":
+    case "blackfriday":
+    case "bf":
+    case "campaign":
+      return "black-friday";
+    default:
+      return null;
+  }
+}
+
 /*===== Statuses =====*/
 export const REVIEW_STATUSES = ["open", "resolved"] as const;
 

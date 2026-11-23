@@ -44,7 +44,7 @@ export function CampaignCountdown({
 }: {
   endsAt: Date;
   serverNow: Date;
-  variant?: "compact" | "editorial";
+  variant?: "compact" | "editorial" | "impact";
   onExpire?: () => void;
 }) {
   const endMs = endsAt.getTime();
@@ -71,7 +71,15 @@ export function CampaignCountdown({
 
   if (parts.expired) {
     return (
-      <output className="block text-body-sm font-semibold text-campaign-crimson">{m.campaign_ended_message()}</output>
+      <output
+        className={
+          variant === "impact"
+            ? "block text-h3 font-black text-highlight-foreground"
+            : "block text-body-sm font-semibold text-campaign-crimson"
+        }
+      >
+        {m.campaign_ended_message()}
+      </output>
     );
   }
 
@@ -80,7 +88,7 @@ export function CampaignCountdown({
       <span
         dir="ltr"
         aria-label={m.campaign_countdown_until()}
-        className="campaign-countdown-digits inline-flex items-center gap-1 rounded-full border border-brand-surface-gold/30 bg-card/55 px-2.5 py-0.5 text-caption font-bold text-brand-surface-gold"
+        className="campaign-countdown-digits inline-flex items-center gap-1 rounded-sm border border-brand-gold/45 bg-card/85 px-2.5 py-0.5 text-caption font-extrabold text-brand-gold"
       >
         <span>{twoDigits(parts.days)}</span>
         <span aria-hidden className="text-brand-surface-muted">
@@ -94,7 +102,7 @@ export function CampaignCountdown({
         <span aria-hidden className="text-brand-surface-muted">
           :
         </span>
-        <span className="text-campaign-crimson-foreground">{twoDigits(parts.seconds)}</span>
+        <span className="text-campaign-crimson">{twoDigits(parts.seconds)}</span>
       </span>
     );
   }
@@ -106,20 +114,41 @@ export function CampaignCountdown({
     { key: "seconds", value: twoDigits(parts.seconds), label: m.campaign_countdown_seconds() },
   ] as const;
 
+  if (variant === "impact") {
+    return (
+      <div aria-label={m.campaign_countdown_until()} className="grid grid-cols-4 gap-3 sm:gap-5">
+        {units.map((unit) => (
+          <div key={unit.key} className="flex flex-col items-center">
+            <span
+              className={
+                unit.key === "seconds"
+                  ? "campaign-countdown-digits rounded-sm bg-campaign-crimson px-2.5 py-0.5 text-h1 font-black text-campaign-crimson-foreground"
+                  : "campaign-countdown-digits text-h1 font-black text-highlight-foreground"
+              }
+            >
+              {unit.value}
+            </span>
+            <span className="text-caption font-extrabold text-highlight-foreground/80">{unit.label}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div aria-label={m.campaign_countdown_until()} className="campaign-countdown-editorial rounded-md">
+    <div aria-label={m.campaign_countdown_until()} className="campaign-countdown-editorial rounded-sm">
       {units.map((unit) => (
         <div key={unit.key} className="campaign-countdown-cell">
           <span
             className={
               unit.key === "seconds"
-                ? "campaign-countdown-digits text-h2 font-extrabold text-campaign-crimson"
-                : "campaign-countdown-digits text-h2 font-extrabold text-brand-surface-gold"
+                ? "campaign-countdown-digits text-h2 font-black text-campaign-crimson"
+                : "campaign-countdown-digits text-h2 font-black text-brand-gold"
             }
           >
             {unit.value}
           </span>
-          <span className="text-caption text-muted-foreground">{unit.label}</span>
+          <span className="text-caption font-semibold text-muted-foreground">{unit.label}</span>
         </div>
       ))}
     </div>

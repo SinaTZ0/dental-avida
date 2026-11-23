@@ -146,7 +146,7 @@ export function CampaignEntryModal({ campaign }: { campaign: PublicCampaign }) {
             <Link
               to="/black-friday"
               onClick={handleCtaClick}
-              className={buttonVariants({ variant: "crimson", size: "lg", className: "w-full" })}
+              className={buttonVariants({ variant: "highlight", size: "lg", className: "w-full" })}
             >
               <span>{m.campaign_modal_cta()}</span>
               <ArrowLeftIcon aria-hidden data-icon="inline-end" />

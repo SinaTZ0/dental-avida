@@ -44,7 +44,10 @@ const twVariant = defineStyles({
     appearance: "border-campaign-crimson/40 bg-campaign-crimson-surface text-campaign-crimson-foreground",
   },
   "crimson-solid": {
-    appearance: "bg-campaign-crimson text-campaign-crimson-foreground",
+    appearance: "bg-campaign-crimson font-extrabold text-campaign-crimson-foreground",
+  },
+  "highlight-outline": {
+    appearance: "border-highlight bg-highlight/12 font-extrabold text-highlight",
   },
 });
 

@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDownIcon, ArrowLeftIcon, ClockIcon, UsersIcon } from "lucide-react";
+import { ArrowDownIcon, ArrowLeftIcon, ClockIcon, SparklesIcon, UsersIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Alert, AlertDescription, AlertTitle } from "#/components/primitive/alert/alert";
@@ -9,6 +9,7 @@ import { buttonVariants } from "#/components/primitive/button/button.styles";
 import { CampaignCountdown } from "#/components/shared/campaign/campaign-countdown";
 import { consumeLandingViewFlag, readCampaignAttribution } from "#/lib/campaign-attribution";
 import { pageMeta } from "#/lib/seo";
+import { cn } from "#/lib/utils";
 import { client, orpc } from "#/orpc/client";
 import { m } from "#/paraglide/messages";
 import heroArtUrl from "#/routes/black_friday/assets/campaign-hero.webp";
@@ -49,89 +50,104 @@ function BlackFridayPage() {
 
   return (
     <div className="flex flex-col">
-      {/*===== Hero Band =====*/}
+      {/*===== Top Voltage Ticker =====*/}
+      <div className="bf-ticker">
+        <div className="mx-auto flex max-w-site flex-wrap items-center justify-between gap-2 px-4 py-2 text-caption font-extrabold sm:px-6">
+          <span className="inline-flex items-center gap-2">
+            <span className="inline-block size-2 bg-campaign-crimson" aria-hidden />
+            {m.campaign_page_kicker()}
+          </span>
+          <span dir="ltr" className="font-mono tracking-wider uppercase">
+            {m.campaign_ticker_banner({
+              percent: String(campaign.maxDiscountPercent),
+              total: String(campaign.totalCapacity),
+            })}
+          </span>
+        </div>
+      </div>
+
+      {/*===== Full-Bleed Dental Black Friday Hero =====*/}
       <section className="bf-hero">
         <img src={heroArtUrl} alt="" aria-hidden className="bf-hero-art" />
         <div className="bf-hero-scrim" aria-hidden />
 
-        <div className="relative mx-auto grid max-w-site gap-10 px-4 py-14 sm:px-6 md:grid-cols-12 md:items-end md:py-20">
-          {/*------ Editorial Headline & Copy ------*/}
-          <div className="space-y-5 md:col-span-7">
-            <p className="bf-kicker">{m.campaign_page_kicker()}</p>
-            <h1 className="text-hero text-foreground">{m.campaign_page_title()}</h1>
-            <p className="max-w-2xl text-body-lg text-muted-foreground">{m.campaign_page_intro()}</p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+        <div className="relative mx-auto max-w-site px-4 py-12 sm:px-6 md:py-24">
+          <div className="max-w-xl space-y-6">
+            <div className="flex flex-wrap items-center gap-2.5">
               <Badge variant="crimson-solid">
+                <SparklesIcon aria-hidden />
                 {m.campaign_page_up_to_discount({ percent: campaign.maxDiscountPercent })}
               </Badge>
-              <Badge variant="outline">
-                <UsersIcon aria-hidden />
-                {m.campaign_modal_capacity_headline({
-                  total: campaign.totalCapacity,
-                  maxPercent: campaign.maxDiscountPercent,
-                })}
+              <Badge variant="highlight-outline">
+                {m.campaign_page_spots_left({ remaining: campaign.remainingCapacity })}
               </Badge>
             </div>
 
+            <h1 className="text-hero font-black text-foreground">{m.campaign_page_title()}</h1>
+
+            <p className="max-w-lg text-body-lg text-foreground/85">{m.campaign_page_intro()}</p>
+
             {canSubmit && (
-              <div className="pt-2">
-                <a href="#campaign-lead-form" className={buttonVariants({ variant: "crimson", size: "lg" })}>
+              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                <a href="#campaign-lead-form" className={buttonVariants({ variant: "highlight", size: "lg" })}>
                   <span>{m.campaign_page_jump_form()}</span>
                   <ArrowDownIcon aria-hidden data-icon="inline-end" />
+                </a>
+                <a href="#bf-discounts-title" className={cn(buttonVariants({ variant: "outline", size: "lg" }))}>
+                  <span>{m.campaign_table_title()}</span>
                 </a>
               </div>
             )}
           </div>
+        </div>
+      </section>
 
-          {/*------ Live Countdown & Remaining Capacity Column ------*/}
-          <div className="space-y-5 border-t border-brand-gold/35 pt-6 md:col-span-5 md:border-s md:border-t-0 md:ps-8 md:pt-0">
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between gap-2 text-body-sm font-semibold">
-                <span className="inline-flex items-center gap-2 text-foreground">
-                  <UsersIcon aria-hidden className="size-4 text-campaign-crimson" />
-                  {m.campaign_page_capacity_label()}
-                </span>
-                <span className="font-bold text-brand-surface-gold">
-                  {m.campaign_page_spots_left({ remaining: campaign.remainingCapacity })}
-                </span>
-              </div>
-              <progress
-                className="campaign-progress"
-                value={campaign.remainingCapacity}
-                max={campaign.totalCapacity}
-                aria-label={m.campaign_page_capacity_label()}
-              />
-              <p className="text-caption text-muted-foreground">
-                {m.campaign_modal_remaining({
-                  remaining: campaign.remainingCapacity,
-                  total: campaign.totalCapacity,
-                })}
-              </p>
+      {/*===== Electric Yellow Impact Countdown & Capacity Band =====*/}
+      <section className="bf-impact-band" aria-label={m.campaign_countdown_until()}>
+        <div className="mx-auto grid max-w-site items-center gap-8 px-4 py-7 sm:px-6 lg:grid-cols-12">
+          <div className="space-y-2.5 lg:col-span-5">
+            <div className="flex items-center justify-between gap-2 text-body-sm font-black">
+              <span className="inline-flex items-center gap-2">
+                <UsersIcon aria-hidden className="size-4" />
+                {m.campaign_page_capacity_label()}
+              </span>
+              <span className="rounded-sm bg-highlight-foreground px-2.5 py-0.5 text-caption font-extrabold text-highlight">
+                {m.campaign_page_spots_left({ remaining: campaign.remainingCapacity })}
+              </span>
             </div>
+            <progress
+              className="campaign-progress-impact"
+              value={campaign.remainingCapacity}
+              max={campaign.totalCapacity}
+              aria-label={m.campaign_page_capacity_label()}
+            />
+            <p className="text-caption font-bold text-highlight-foreground/80">
+              {m.campaign_modal_remaining({
+                remaining: campaign.remainingCapacity,
+                total: campaign.totalCapacity,
+              })}
+            </p>
+          </div>
 
-            <div className="space-y-2.5">
-              <p className="inline-flex items-center gap-2 text-caption font-semibold text-muted-foreground">
-                <ClockIcon aria-hidden className="size-4 text-brand-gold" />
-                {m.campaign_countdown_until()}
-              </p>
-              {isEnded ? (
-                <Alert variant="destructive">
-                  <AlertTitle>{m.campaign_ended_message()}</AlertTitle>
-                </Alert>
-              ) : isUpcoming ? (
-                <Alert variant="info">
-                  <AlertTitle>{m.campaign_upcoming_message()}</AlertTitle>
-                </Alert>
-              ) : (
+          <div className="lg:col-span-7 lg:border-s-2 lg:border-highlight-foreground/25 lg:ps-8">
+            {isEnded ? (
+              <p className="text-h3 font-black text-highlight-foreground">{m.campaign_ended_message()}</p>
+            ) : isUpcoming ? (
+              <p className="text-h3 font-black text-highlight-foreground">{m.campaign_upcoming_message()}</p>
+            ) : (
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="inline-flex items-center gap-2 text-body-sm font-black">
+                  <ClockIcon aria-hidden className="size-4" />
+                  {m.campaign_countdown_until()}
+                </p>
                 <CampaignCountdown
                   endsAt={campaign.endsAt}
                   serverNow={campaign.serverNow}
-                  variant="editorial"
+                  variant="impact"
                   onExpire={() => setExpiredLocally(true)}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -143,9 +159,9 @@ function BlackFridayPage() {
       <section id="campaign-lead-form" aria-labelledby="bf-form-title" className="bf-lead-band scroll-mt-24">
         <div className="mx-auto max-w-site px-4 py-14 sm:px-6 md:py-20">
           <div className="grid gap-10 lg:grid-cols-12">
-            <div className="space-y-3 lg:col-span-5">
-              <p className="bf-kicker">{m.campaign_form_kicker()}</p>
-              <h2 id="bf-form-title" className="text-h1 text-foreground">
+            <div className="space-y-4 border-s-4 border-brand-gold ps-5 lg:col-span-5">
+              <p className="text-kicker font-extrabold text-brand-gold">{m.campaign_form_kicker()}</p>
+              <h2 id="bf-form-title" className="text-h1 font-black text-foreground">
                 {m.campaign_form_title()}
               </h2>
               <p className="text-body-sm text-muted-foreground">{m.campaign_form_reservation_disclaimer()}</p>

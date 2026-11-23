@@ -1,21 +1,15 @@
-/*===== Black Friday & Mother's Day Dedicated Page =====*/
+/*===== Black Friday & Mother's Day — Voltage Ticker Layout =====*/
+
+.bf-ticker {
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 45%, transparent);
+  background: #0c0c0c;
+  color: var(--brand-gold);
+}
 
 .bf-hero {
   position: relative;
   overflow: hidden;
-  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 30%, var(--border));
-  background:
-    radial-gradient(
-      ellipse 48% 66% at 15% 24%,
-      color-mix(in srgb, var(--campaign-crimson) 26%, transparent),
-      transparent 65%
-    ),
-    radial-gradient(
-      ellipse 52% 62% at 86% 18%,
-      color-mix(in srgb, var(--brand-gold) 18%, transparent),
-      transparent 66%
-    ),
-    var(--hero-surface);
+  background: var(--hero-surface);
 }
 
 .bf-hero-art {
@@ -25,7 +19,7 @@
   block-size: 100%;
   object-fit: cover;
   object-position: left center;
-  opacity: 0.42;
+  opacity: 0.96;
   pointer-events: none;
 }
 
@@ -34,69 +28,70 @@
   inset: 0;
   background: linear-gradient(
     to left,
-    color-mix(in srgb, var(--background) 92%, transparent) 0%,
-    color-mix(in srgb, var(--background) 78%, transparent) 48%,
-    color-mix(in srgb, var(--background) 38%, transparent) 100%
+    var(--hero-surface) 0%,
+    color-mix(in srgb, var(--hero-surface) 94%, transparent) 38%,
+    color-mix(in srgb, var(--hero-surface) 44%, transparent) 62%,
+    color-mix(in srgb, var(--hero-surface) 6%, transparent) 100%
   );
   pointer-events: none;
+}
+
+@media (width < 48rem) {
+  .bf-hero-art {
+    position: relative;
+    block-size: 15.5rem;
+    object-position: center center;
+  }
+
+  .bf-hero-scrim {
+    display: none;
+  }
+}
+
+/* Full-width electric yellow countdown & remaining capacity impact strip. */
+.bf-impact-band {
+  border-block: 2px solid var(--highlight-foreground);
+  background: var(--highlight);
+  color: var(--highlight-foreground);
 }
 
 .bf-kicker {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  color: var(--brand-surface-gold);
+  color: var(--brand-gold);
   font-size: var(--text-kicker);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .bf-kicker::before {
-  inline-size: 1.75rem;
-  block-size: 2px;
-  border-radius: 999px;
-  background: linear-gradient(to left, var(--campaign-crimson), var(--brand-gold));
+  inline-size: 1.5rem;
+  block-size: 3px;
+  border-radius: 0;
+  background: var(--brand-gold);
   content: "";
 }
 
-/*===== Ruled Editorial Discount Ledger =====*/
+/*===== Giant Typographic Discount Ledger =====*/
 
 .bf-ledger {
-  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 35%, var(--border));
+  border-block: 1px solid var(--border);
 }
 
 .bf-ledger-row {
   border-block-start: 1px solid var(--border);
-  transition: background-color 150ms ease;
+  transition: background-color 140ms ease;
 }
 
 .bf-ledger-row:hover {
-  background: color-mix(in srgb, var(--accent) 55%, transparent);
-}
-
-.bf-percent-cash {
-  color: var(--campaign-crimson-foreground);
-  background: var(--campaign-crimson);
-  font-variant-numeric: tabular-nums;
-}
-
-.bf-percent-installment {
-  color: var(--brand-surface-gold);
-  background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 38%, transparent);
-  font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
 /*===== Lead Band =====*/
 
 .bf-lead-band {
-  border-block-start: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
-  background:
-    radial-gradient(
-      ellipse 45% 58% at 90% 10%,
-      color-mix(in srgb, var(--campaign-crimson) 14%, transparent),
-      transparent 65%
-    ),
-    color-mix(in srgb, var(--secondary) 55%, var(--background));
+  border-block-start: 1px solid var(--border);
+  background: color-mix(in srgb, var(--secondary) 70%, var(--background));
 }
 
 .bf-honeypot {

@@ -8,8 +8,9 @@ import { toast } from "#/components/primitive/toast/toast";
 import { PageMessage } from "#/components/shared/page-message/page-message";
 import { describeApiFailure } from "#/lib/api-error";
 import { pageMeta } from "#/lib/seo";
+import { applyReviewStudioTheme, clearReviewStudioTheme, subscribeToReviewIframeThemeToggle } from "#/lib/theme";
 import { orpc } from "#/orpc/client";
-import type { ReviewStatus, ReviewStatusFilter, ReviewViewport } from "#/orpc/review/constants";
+import type { ReviewStatus, ReviewStatusFilter, ReviewTheme, ReviewViewport } from "#/orpc/review/constants";
 import type { ReviewFeedback } from "#/orpc/review/contract";
 import { m } from "#/paraglide/messages";
 import { localizeHref } from "#/paraglide/runtime";
@@ -24,9 +25,9 @@ import { reviewSearchSchema } from "#/routes/review/schema";
 export const Route = createFileRoute("/review")({
   validateSearch: reviewSearchSchema,
   loaderDeps: ({ search }) => ({
-    pathname: search.path,
-    viewport: search.viewport,
-    status: search.status,
+    pathname: search.path ?? "/",
+    viewport: search.viewport ?? "desktop",
+    status: search.status ?? "open",
   }),
   beforeLoad: async ({ context }) => {
     const access = await context.queryClient.ensureQueryData(orpc.review.access.queryOptions({ staleTime: 0 }));
@@ -34,7 +35,10 @@ export const Route = createFileRoute("/review")({
   },
   loader: async ({ context, deps }) => {
     if (!context.access.allowed) return;
-    await context.queryClient.ensureQueryData(orpc.review.list.queryOptions({ input: deps }));
+    await Promise.all([
+      context.queryClient.ensureQueryData(orpc.review.list.queryOptions({ input: deps })),
+      context.queryClient.ensureQueryData(orpc.campaign.public.queryOptions({ staleTime: 60_000 })),
+    ]);
   },
   head: (args) =>
     pageMeta({
@@ -65,15 +69,21 @@ function ReviewPage() {
 
 /*===== Studio =====*/
 function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
-  const { path, viewport, status } = Route.useSearch();
+  const search = Route.useSearch();
+  const path = search.path ?? "/";
+  const viewport = search.viewport ?? "desktop";
+  const status = search.status ?? "open";
   const navigate = Route.useNavigate();
   const queryClient = useQueryClient();
 
+  const { data: campaign } = useSuspenseQuery(orpc.campaign.public.queryOptions({ staleTime: 60_000 }));
   const { data } = useSuspenseQuery(
     orpc.review.list.queryOptions({
       input: { pathname: path, viewport, status },
     }),
   );
+
+  const activeTheme: ReviewTheme = search.theme ?? (campaign.themeActive ? "black-friday" : "light");
 
   const [mode, setMode] = useState<ReviewMode>("browse");
   const [zoom, setZoom] = useState<ReviewZoomSetting>("fit");
@@ -93,6 +103,32 @@ function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
   const statusMutation = useMutation(orpc.review.setStatus.mutationOptions());
   const deleteMutation = useMutation(orpc.review.delete.mutationOptions());
 
+  /*------ Navigation Helpers ------*/
+  const updateSearch = useCallback(
+    (patch: Partial<{ path: string; viewport: ReviewViewport; status: ReviewStatusFilter; theme: ReviewTheme }>) => {
+      void navigate({
+        search: (prev) => ({ ...prev, ...patch }),
+        replace: true,
+      });
+    },
+    [navigate],
+  );
+
+  /*------ Sync Studio & Embedded Site Theme ------*/
+  useEffect(() => {
+    applyReviewStudioTheme(activeTheme);
+  }, [activeTheme]);
+
+  useEffect(() => () => clearReviewStudioTheme(), []);
+
+  useEffect(
+    () =>
+      subscribeToReviewIframeThemeToggle((nextTheme) => {
+        updateSearch({ theme: nextTheme });
+      }),
+    [updateSearch],
+  );
+
   /*------ Keyboard Shortcut (`C` toggles Draw mode) ------*/
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -106,17 +142,6 @@ function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
-
-  /*------ Navigation Helpers ------*/
-  const updateSearch = useCallback(
-    (patch: Partial<{ path: string; viewport: ReviewViewport; status: ReviewStatusFilter }>) => {
-      void navigate({
-        search: (prev) => ({ ...prev, ...patch }),
-        replace: true,
-      });
-    },
-    [navigate],
-  );
 
   const handlePathChange = useCallback(
     (nextPath: string) => {
@@ -216,6 +241,7 @@ function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
       <ReviewToolbar
         path={path}
         viewport={viewport}
+        theme={activeTheme}
         mode={mode}
         zoom={zoom}
         showBoxes={showBoxes}
@@ -223,6 +249,7 @@ function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
         isExiting={isExiting}
         onPathChange={handlePathChange}
         onViewportChange={(nextViewport) => updateSearch({ viewport: nextViewport })}
+        onThemeChange={(nextTheme) => updateSearch({ theme: nextTheme })}
         onModeChange={setMode}
         onZoomChange={setZoom}
         onToggleBoxes={() => setShowBoxes((current) => !current)}
@@ -234,6 +261,7 @@ function ReviewStudio({ hasCookie }: { readonly hasCookie: boolean }) {
         <ReviewStage
           path={path}
           viewport={viewport}
+          theme={activeTheme}
           mode={mode}
           zoomSetting={zoom}
           showBoxes={showBoxes}

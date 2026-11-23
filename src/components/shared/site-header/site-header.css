@@ -427,6 +427,77 @@
   }
 }
 
+/*===== Reversible Black Friday Sharp Geometry & Electric Yellow Chrome =====*/
+
+[data-campaign="black-friday"] .site-header-floating::before {
+  border-block-end-color: color-mix(in srgb, var(--brand-gold) 45%, transparent);
+  background: linear-gradient(180deg, rgba(6, 6, 6, 0.94) 0%, rgba(10, 10, 10, 0.88) 100%);
+}
+
+[data-campaign="black-friday"] .site-desktop-nav-pill,
+[data-campaign="black-friday"] .site-desktop-nav-link,
+[data-campaign="black-friday"] .site-header-actions > [data-slot="button"],
+[data-campaign="black-friday"] .site-header-actions > a,
+[data-campaign="black-friday"] .site-header-actions nav a,
+[data-campaign="black-friday"] .site-header-book-pill,
+[data-campaign="black-friday"] .site-mobile-dock,
+[data-campaign="black-friday"] .site-mobile-tab {
+  border-radius: 2px;
+}
+
+[data-campaign="black-friday"] .site-desktop-nav-pill {
+  border-color: color-mix(in srgb, var(--brand-gold) 36%, transparent);
+  background: rgba(12, 12, 12, 0.82);
+}
+
+[data-campaign="black-friday"] .site-desktop-nav-link:hover {
+  background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
+  color: var(--brand-gold);
+}
+
+[data-campaign="black-friday"] .site-desktop-nav-link[data-active="true"] {
+  background: color-mix(in srgb, var(--brand-gold) 18%, transparent);
+  color: var(--brand-gold);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-gold) 55%, transparent);
+}
+
+[data-campaign="black-friday"] .site-desktop-nav-dot,
+[data-campaign="black-friday"] .site-mobile-tab-dot {
+  border-radius: 0;
+  background: var(--campaign-crimson);
+}
+
+[data-campaign="black-friday"] .site-header-book-pill {
+  border-color: var(--brand-gold);
+  background: color-mix(in srgb, var(--brand-gold) 14%, #0a0a0a);
+  color: var(--brand-gold);
+  font-weight: 800;
+}
+
+[data-campaign="black-friday"] .site-header-book-pill:hover {
+  border-color: var(--highlight-hover);
+  background: var(--highlight);
+  color: var(--highlight-foreground);
+}
+
+[data-campaign="black-friday"] .site-mobile-dock {
+  border-color: color-mix(in srgb, var(--brand-gold) 40%, transparent);
+  background: rgba(10, 10, 10, 0.94);
+}
+
+[data-campaign="black-friday"] .site-mobile-tab-featured {
+  background: var(--highlight);
+  color: var(--highlight-foreground);
+  font-weight: 800;
+  box-shadow: none;
+}
+
+[data-campaign="black-friday"] .site-mobile-tab-featured[data-active="true"] {
+  background: var(--highlight-hover);
+  color: var(--highlight-foreground);
+  box-shadow: inset 0 0 0 1px #060606;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .site-header-floating,
   .site-header-floating::before,

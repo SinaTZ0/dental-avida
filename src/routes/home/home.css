@@ -276,16 +276,16 @@
     var(--hero-surface);
 }
 
-/* Reversible Black Friday hero atmosphere & clearance for the top announcement ribbon. */
+/* Reversible Black Friday Voltage Ticker atmosphere, sharp geometry & clearance for the top announcement ribbon. */
 [data-campaign="black-friday"] .home-hero {
   background:
     radial-gradient(
-      ellipse 46% 62% at 14% 20%,
-      color-mix(in srgb, var(--campaign-crimson) 24%, transparent),
-      transparent 64%
+      ellipse 44% 58% at 14% 22%,
+      color-mix(in srgb, var(--campaign-crimson) 14%, transparent),
+      transparent 62%
     ),
     radial-gradient(
-      ellipse 52% 68% at 86% 18%,
+      ellipse 56% 70% at 86% 16%,
       color-mix(in srgb, var(--brand-gold) 18%, transparent),
       transparent 66%
     ),
@@ -294,6 +294,43 @@
 
 [data-campaign="black-friday"] .home-hero-copy {
   padding-block-start: 9.25rem;
+}
+
+[data-campaign="black-friday"] .home-tag-chip,
+[data-campaign="black-friday"] .home-photo-plate-wrap,
+[data-campaign="black-friday"] .home-photo-plate,
+[data-campaign="black-friday"] .home-services-concierge,
+[data-campaign="black-friday"] .home-services-stack,
+[data-campaign="black-friday"] .home-glass-pane,
+[data-campaign="black-friday"] .home-glass-smoked {
+  border-radius: 2px;
+}
+
+[data-campaign="black-friday"] .home-kicker::before,
+[data-campaign="black-friday"] .home-kicker-dark::before {
+  border-radius: 0;
+  block-size: 2px;
+  background: var(--brand-gold);
+}
+
+[data-campaign="black-friday"] .home-glow-dot,
+[data-campaign="black-friday"] .home-hero-meta-sep {
+  border-radius: 0;
+}
+
+[data-campaign="black-friday"] .home-hero-river {
+  --home-river-fill: #12110a;
+  --home-river-tint: #242009;
+}
+
+[data-campaign="black-friday"] .home-hero-river-crest {
+  stroke: color-mix(in srgb, var(--brand-gold) 65%, transparent);
+}
+
+[data-campaign="black-friday"] .home-dock-wrap {
+  --highlights-top: #12110a;
+  --highlights-mid: #0b0b08;
+  --highlights-bottom: #060606;
 }
 
 .home-hero-inner {

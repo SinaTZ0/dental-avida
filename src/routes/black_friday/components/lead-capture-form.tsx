@@ -244,7 +244,7 @@ export function LeadCaptureForm() {
         </Field>
 
         <div className="pt-2">
-          <Button type="submit" variant="crimson" size="lg" disabled={submit.isPending} className="w-full sm:w-auto">
+          <Button type="submit" variant="highlight" size="lg" disabled={submit.isPending} className="w-full sm:w-auto">
             {submit.isPending ? (
               <Spinner data-icon="inline-start" />
             ) : (
