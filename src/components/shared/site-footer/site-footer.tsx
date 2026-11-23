@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ClockIcon, MapPinIcon, PhoneIcon } from "lucide-react";
+import { ClockIcon, MapPinIcon, PhoneIcon, SmartphoneIcon } from "lucide-react";
 
 import { AvidaBrandEmblem, AvidaSmile } from "#/components/shared/avida-smile/avida-smile";
 import { SiteLink } from "#/components/shared/site-link/site-link";
@@ -21,8 +21,8 @@ const footerLinkClass =
   "inline-flex min-h-target min-w-target items-center rounded-sm underline decoration-transparent underline-offset-4 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-surface-foreground";
 
 function ClinicContact() {
-  const { location, phone, hours } = clinicDetails;
-  const hasAnyDetails = Boolean(location || phone || hours);
+  const { location, phone, mobile, hours } = clinicDetails;
+  const hasAnyDetails = Boolean(location || phone || mobile || hours);
 
   const details = [
     {
@@ -38,10 +38,31 @@ function ClinicContact() {
     {
       label: m.site_contact_phone,
       icon: PhoneIcon,
-      value: phone && (
-        <SiteLink href={`tel:${phone.number}`} className={`${footerLinkClass} text-brand-surface-foreground`}>
-          <bdi dir="ltr">{phone.label()}</bdi>
-        </SiteLink>
+      value: (phone || mobile) && (
+        <div className="flex flex-col items-start">
+          {mobile && (
+            <SiteLink
+              href={`tel:${mobile.number}`}
+              className={`${footerLinkClass} gap-1.5 text-brand-surface-foreground`}
+            >
+              <SmartphoneIcon aria-hidden className="size-4 shrink-0 text-brand-surface-gold" />
+              <bdi dir="ltr" className="tabular-nums">
+                {mobile.label()}
+              </bdi>
+            </SiteLink>
+          )}
+          {phone && (
+            <SiteLink
+              href={`tel:${phone.number}`}
+              className={`${footerLinkClass} gap-1.5 text-brand-surface-foreground`}
+            >
+              <PhoneIcon aria-hidden className="size-4 shrink-0 text-brand-surface-gold" />
+              <bdi dir="ltr" className="tabular-nums">
+                {phone.label()}
+              </bdi>
+            </SiteLink>
+          )}
+        </div>
       ),
     },
     { label: m.site_contact_hours, icon: ClockIcon, value: hours?.() },

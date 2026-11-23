@@ -1,0 +1,135 @@
+{
+  "admin-overview-kpis": {
+    "width": 1366,
+    "height": 441,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 332,
+        "y": 89,
+        "width": 193,
+        "height": 44
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "x": 107,
+        "y": 89,
+        "width": 213,
+        "height": 44
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 206,
+        "width": 1152,
+        "height": 123
+      },
+      {
+        "n": 4,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 694,
+        "y": 369,
+        "width": 565,
+        "height": 52
+      }
+    ]
+  },
+  "leads-filters": {
+    "width": 1366,
+    "height": 90,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 689,
+        "y": 22,
+        "width": 570,
+        "height": 44
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 398,
+        "y": 22,
+        "width": 279,
+        "height": 46
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 22,
+        "width": 279,
+        "height": 46
+      }
+    ]
+  },
+  "leads-row-workflow": {
+    "width": 1366,
+    "height": 154,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 1151,
+        "y": 72,
+        "width": 108,
+        "height": 26
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 691,
+        "y": 38,
+        "width": 276,
+        "height": 118
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "x": 499,
+        "y": 38,
+        "width": 176,
+        "height": 46
+      },
+      {
+        "n": 4,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 185,
+        "y": 38,
+        "width": 306,
+        "height": 44
+      },
+      {
+        "n": 5,
+        "style": "box",
+        "inset": false,
+        "x": 107,
+        "y": 38,
+        "width": 70,
+        "height": 46
+      }
+    ]
+  }
+}

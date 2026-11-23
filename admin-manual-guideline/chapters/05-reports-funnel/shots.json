@@ -1,0 +1,88 @@
+{
+  "report-funnel": {
+    "width": 1366,
+    "height": 267,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 105,
+        "width": 1152,
+        "height": 59
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "x": 183,
+        "y": 237,
+        "width": 12,
+        "height": 30
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "x": 107,
+        "y": 241,
+        "width": 64,
+        "height": 22
+      }
+    ]
+  },
+  "report-readiness": {
+    "width": 1366,
+    "height": 425,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 97,
+        "width": 1152,
+        "height": 55
+      }
+    ]
+  },
+  "report-daily-breakdowns": {
+    "width": 1366,
+    "height": 454,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 20,
+        "width": 1152,
+        "height": 30
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 703,
+        "y": 334,
+        "width": 556,
+        "height": 30
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 334,
+        "width": 556,
+        "height": 30
+      }
+    ]
+  }
+}

@@ -17,24 +17,32 @@ export const homeSections = {
 
 /*===== Clinic Details =====*/
 
+type ClinicPhone = { number: string; label: () => string };
+
 type ClinicDetails = {
   location: { address: () => string; shortAddress: () => string; mapUrl?: string } | null;
-  phone: { number: string; label: () => string } | null;
+  phone: ClinicPhone | null;
+  mobile: ClinicPhone | null;
   hours: (() => string) | null;
   bookingUrl: string | null;
   reviews: { url?: string; rating: { score: number; count: number } } | null;
 };
 
-/** Published clinic details (ready-to-edit Tehran flagship details for Avida Dental). */
+/** Published clinic details for Avida Dental (Gorgan, Edalat 11). */
 export const clinicDetails: ClinicDetails = {
   location: {
     address: m.site_clinic_address,
     shortAddress: m.site_clinic_short_address,
-    mapUrl: "https://maps.google.com/?q=35.7644,51.4184",
+    mapUrl:
+      "https://www.google.com/maps/search/?api=1&query=%DA%AF%D8%B1%DA%AF%D8%A7%D9%86+%D8%B9%D8%AF%D8%A7%D9%84%D8%AA+11+%DA%A9%D9%84%DB%8C%D9%86%DB%8C%DA%A9+%D8%A2%D9%88%DB%8C%D8%AF%D8%A7",
   },
   phone: {
-    number: "+982122048610",
+    number: "+981732356800",
     label: m.site_clinic_phone_label,
+  },
+  mobile: {
+    number: "+989114845030",
+    label: m.site_clinic_mobile_label,
   },
   hours: m.site_clinic_hours,
   bookingUrl: null,

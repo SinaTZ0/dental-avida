@@ -1,0 +1,143 @@
+{
+  "ads-summary-form": {
+    "width": 1366,
+    "height": 276,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 90,
+        "width": 1152,
+        "height": 99
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "x": 107,
+        "y": 22,
+        "width": 281,
+        "height": 44
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 788,
+        "y": 314,
+        "width": 471,
+        "height": 44
+      },
+      {
+        "n": 4,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 496,
+        "y": 314,
+        "width": 276,
+        "height": 44
+      },
+      {
+        "n": 5,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 983,
+        "y": 408,
+        "width": 276,
+        "height": 44
+      },
+      {
+        "n": 6,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 691,
+        "y": 408,
+        "width": 276,
+        "height": 44
+      },
+      {
+        "n": 7,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 107,
+        "y": 408,
+        "width": 276,
+        "height": 46
+      },
+      {
+        "n": 8,
+        "style": "box",
+        "inset": false,
+        "x": 107,
+        "y": 501,
+        "width": 276,
+        "height": 44
+      }
+    ]
+  },
+  "ads-channels-table": {
+    "width": 1366,
+    "height": 645,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 1081,
+        "y": 187,
+        "width": 178,
+        "height": 45
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "x": 207,
+        "y": 147,
+        "width": 155,
+        "height": 44
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "x": 157,
+        "y": 147,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "n": 4,
+        "style": "box",
+        "inset": false,
+        "x": 374,
+        "y": 89,
+        "width": 112,
+        "height": 160
+      }
+    ]
+  },
+  "ads-banner-kit": {
+    "width": 1366,
+    "height": 470,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 1136,
+        "y": 296,
+        "width": 123,
+        "height": 44
+      }
+    ]
+  }
+}

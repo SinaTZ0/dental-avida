@@ -56,6 +56,7 @@ export const routes = rootRoute("__root.tsx", [
 
   /*===== Server Routes =====*/
   // No component: each answers HTTP requests itself (`server.handlers`).
+  route("/go/ad/$code", "go_ad_code/go-ad-code.ts"),
   route("/admin/campaign/export", "admin_campaign_export/admin-campaign-export.ts"),
   route("/review/enter", "review_enter/review-enter.ts"),
   route("/review/exit", "review_exit/review-exit.ts"),

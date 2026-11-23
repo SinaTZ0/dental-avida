@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowLeftIcon, ClockIcon, ExternalLinkIcon, MapPinIcon, PhoneIcon } from "lucide-react";
+import { ArrowLeftIcon, ClockIcon, ExternalLinkIcon, MapPinIcon, PhoneIcon, SmartphoneIcon } from "lucide-react";
 
 import { buttonVariants } from "#/components/primitive/button/button.styles";
 import { AvidaSmile } from "#/components/shared/avida-smile/avida-smile";
@@ -14,7 +14,7 @@ import { HomeReviews } from "#/routes/home/components/home-reviews";
 const appointmentButton = buttonVariants({ variant: "consultation", size: "hero" });
 
 function AppointmentActions() {
-  const { bookingUrl, phone, location, hours } = clinicDetails;
+  const { bookingUrl, phone, mobile, location, hours } = clinicDetails;
 
   const clinicMeta = (hours || location) && (
     <dl className="home-appointment-meta text-body-sm text-brand-surface-muted">
@@ -48,19 +48,33 @@ function AppointmentActions() {
     );
   }
 
-  if (phone) {
+  if (phone || mobile) {
+    const primary = mobile ?? phone!;
+    const secondary = mobile && phone ? phone : null;
     return (
       <>
         <p className="text-body text-brand-surface-muted">{m.home_appointment_phone_description()}</p>
         {clinicMeta}
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <SiteLink href={`tel:${phone.number}`} className={appointmentButton}>
-            <PhoneIcon data-icon="inline-start" aria-hidden />
+          <SiteLink href={`tel:${primary.number}`} className={appointmentButton}>
+            {mobile ? (
+              <SmartphoneIcon data-icon="inline-start" aria-hidden />
+            ) : (
+              <PhoneIcon data-icon="inline-start" aria-hidden />
+            )}
             <span>{m.home_appointment_call()}</span>
             <bdi dir="ltr" className="tabular-nums">
-              {phone.label()}
+              {primary.label()}
             </bdi>
           </SiteLink>
+          {secondary && (
+            <SiteLink href={`tel:${secondary.number}`} className="home-text-link home-text-link-dark">
+              <PhoneIcon aria-hidden className="size-4" />
+              <bdi dir="ltr" className="tabular-nums">
+                {secondary.label()}
+              </bdi>
+            </SiteLink>
+          )}
           {location?.mapUrl && (
             <SiteLink href={location.mapUrl} className="home-text-link home-text-link-dark">
               {m.site_contact_directions()}

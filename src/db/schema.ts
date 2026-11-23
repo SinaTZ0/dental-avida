@@ -207,6 +207,10 @@ export const campaignSetting = pgTable("campaign_setting", {
   decrementIntervalMinutes: integer("decrement_interval_minutes").notNull().default(335),
   /** Optional consultation-team email that receives an immediate alert job when a new lead arrives. */
   notifyEmail: text("notify_email").notNull().default(""),
+  /** Optional HTTPS webhook URL for forwarding captured leads to an external CRM/PRM (Section 5 #9). */
+  crmWebhookUrl: text("crm_webhook_url").notNull().default(""),
+  /** Optional HMAC-SHA256 signing secret sent in `X-Avida-Signature` when forwarding leads to CRM/PRM. */
+  crmWebhookSecret: text("crm_webhook_secret").notNull().default(""),
   updatedAt: timestamptz("updated_at").notNull().defaultNow(),
 });
 
@@ -223,6 +227,8 @@ export const campaignDiscount = pgTable(
     title: text("title").notNull(),
     cashPercent: integer("cash_percent").notNull(),
     installmentPercent: integer("installment_percent").notNull(),
+    /** Optional base price in Toman so admins can edit both percentages and amounts (Section 5 #4). */
+    basePriceToman: integer("base_price_toman"),
     sortOrder: integer("sort_order").notNull().default(0),
   },
   (table) => [uniqueIndex("campaign_discount_slug_code_idx").on(table.campaignSlug, table.code)],
@@ -247,9 +253,13 @@ export const campaignLead = pgTable(
     utmMedium: text("utm_medium").notNull().default(""),
     utmCampaign: text("utm_campaign").notNull().default(""),
     referrer: text("referrer").notNull().default(""),
-    /** `new` | `contacted` | `confirmed` | `unreachable` | `cancelled`. */
+    /** `new` | `contacted` | `referred` | `confirmed` | `unreachable` | `cancelled`. */
     status: text("status").notNull().default("new"),
     notes: text("notes").notNull().default(""),
+    /** CRM/PRM webhook delivery state: `none` | `pending` | `synced` | `failed`. */
+    crmSyncStatus: text("crm_sync_status").notNull().default("none"),
+    crmSyncedAt: timestamptz("crm_synced_at"),
+    crmLastError: text("crm_last_error").notNull().default(""),
     createdAt: timestamptz("created_at").notNull().defaultNow(),
     updatedAt: timestamptz("updated_at").notNull().defaultNow(),
   },
@@ -260,6 +270,39 @@ export const campaignLead = pgTable(
   ],
 );
 
+export const campaignAdChannel = pgTable(
+  "campaign_ad_channel",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    campaignSlug: text("campaign_slug")
+      .notNull()
+      .references(() => campaignSetting.slug, { onDelete: "cascade" }),
+    /** URL-safe tracking code used in `/go/ad/$code` and `utm_source`. */
+    code: text("code").notNull(),
+    /** Display name of the local/provincial site or ad platform. */
+    name: text("name").notNull(),
+    /** `local_site` | `provincial_portal` | `ad_network` | `social` | `search` | `other`. */
+    platformType: text("platform_type").notNull().default("local_site"),
+    /** `banner` | `cpc` | `story` | `advertorial` | `other`. */
+    placement: text("placement").notNull().default("banner"),
+    /** Planned budget in Toman presented for management approval (Section 4 #4). */
+    budgetToman: integer("budget_toman").notNull().default(0),
+    /** Actual spend in Toman used to compute Cost Per Lead (CPL). */
+    spentToman: integer("spent_toman").notNull().default(0),
+    /** Human-readable run schedule (e.g. `۱ تا ۱۲ آذر ۱۴۰۵`). */
+    scheduleText: text("schedule_text").notNull().default(""),
+    /** Management approval & lifecycle state: `draft` | `pending_approval` | `approved` | `active` | `paused` | `completed`. */
+    approvalStatus: text("approval_status").notNull().default("pending_approval"),
+    notes: text("notes").notNull().default(""),
+    createdAt: timestamptz("created_at").notNull().defaultNow(),
+    updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("campaign_ad_channel_slug_code_idx").on(table.campaignSlug, table.code),
+    index("campaign_ad_channel_slug_created_idx").on(table.campaignSlug, table.createdAt),
+  ],
+);
+
 export const campaignEvent = pgTable(
   "campaign_event",
   {
@@ -267,7 +310,7 @@ export const campaignEvent = pgTable(
     campaignSlug: text("campaign_slug")
       .notNull()
       .references(() => campaignSetting.slug, { onDelete: "cascade" }),
-    /** `landing_view` | `banner_click` | `popup_click`. */
+    /** `landing_view` | `banner_click` | `popup_click` | `ad_click`. */
     kind: text("kind").notNull(),
     source: text("source").notNull().default("direct"),
     createdAt: timestamptz("created_at").notNull().defaultNow(),

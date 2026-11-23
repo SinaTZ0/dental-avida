@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  computeCostPerLead,
+  computeDiscountedPrice,
   computeRemainingCapacity,
+  isSafeWebhookUrl,
+  isValidAdChannelCode,
   isValidIranPhone,
+  normalizeAdChannelCode,
   normalizeIranPhone,
   resolveCampaignStatus,
 } from "#/orpc/campaign/constants";
@@ -100,5 +105,29 @@ describe("campaign capacity and lifecycle", () => {
       "active",
     );
     expect(resolveCampaignStatus({ enabled: true, nowMs: end + 1000, startsAtMs: start, endsAtMs: end })).toBe("ended");
+  });
+});
+
+describe("campaign ads, pricing, CPL, and webhook safety", () => {
+  it("normalizes ad channel codes, computes discounted Toman prices and CPL", () => {
+    expect(normalizeAdChannelCode("  Isfahan News 01  ")).toBe("isfahan-news-01");
+    expect(isValidAdChannelCode(normalizeAdChannelCode("Isfahan News 01"))).toBe(true);
+    expect(isValidAdChannelCode("a")).toBe(false);
+
+    expect(computeDiscountedPrice({ basePriceToman: 20_000_000, percent: 25 })).toBe(15_000_000);
+    expect(computeCostPerLead({ spentToman: 12_000_000, count: 4 })).toBe(3_000_000);
+    expect(computeCostPerLead({ spentToman: 12_000_000, count: 0 })).toBeNull();
+    expect(computeCostPerLead({ spentToman: 0, count: 5 })).toBeNull();
+  });
+
+  it("blocks non-HTTPS and private/loopback CRM webhook URLs (SSRF boundary)", () => {
+    expect(isSafeWebhookUrl("https://crm.avidadental.ir/webhooks/leads")).toBe(true);
+    expect(isSafeWebhookUrl("http://crm.avidadental.ir/webhooks/leads")).toBe(false);
+    expect(isSafeWebhookUrl("https://127.0.0.1/hook")).toBe(false);
+    expect(isSafeWebhookUrl("https://169.254.169.254/latest/meta-data")).toBe(false);
+    expect(isSafeWebhookUrl("https://10.0.0.5/internal")).toBe(false);
+    expect(isSafeWebhookUrl("https://192.168.1.10/crm")).toBe(false);
+    expect(isSafeWebhookUrl("https://localhost/crm")).toBe(false);
+    expect(isSafeWebhookUrl("https://user:pass@crm.avidadental.ir/hook")).toBe(false);
   });
 });

@@ -1,0 +1,129 @@
+{
+  "header-sign-in": {
+    "width": 1366,
+    "height": 135,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 244,
+        "y": 61,
+        "width": 44,
+        "height": 44
+      }
+    ]
+  },
+  "sign-in-form": {
+    "width": 1366,
+    "height": 608,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 683,
+        "y": 150,
+        "width": 184,
+        "height": 44
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 495,
+        "y": 257,
+        "width": 376,
+        "height": 44
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 495,
+        "y": 348,
+        "width": 376,
+        "height": 44
+      },
+      {
+        "n": 4,
+        "style": "box",
+        "inset": false,
+        "x": 495,
+        "y": 412,
+        "width": 376,
+        "height": 44
+      },
+      {
+        "n": 5,
+        "style": "dotted",
+        "inset": false,
+        "x": 499,
+        "y": 150,
+        "width": 184,
+        "height": 44
+      },
+      {
+        "n": 6,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 495,
+        "y": 476,
+        "width": 376,
+        "height": 44
+      }
+    ]
+  },
+  "sign-in-wrong": {
+    "width": 1366,
+    "height": 690,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "at": "end",
+        "x": 495,
+        "y": 230,
+        "width": 376,
+        "height": 62
+      }
+    ]
+  },
+  "account-menu": {
+    "width": 272,
+    "height": 262,
+    "marks": [
+      {
+        "n": 1,
+        "style": "box",
+        "inset": false,
+        "x": 24,
+        "y": 24,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "n": 2,
+        "style": "box",
+        "inset": true,
+        "x": 28,
+        "y": 146,
+        "width": 216,
+        "height": 44
+      },
+      {
+        "n": 3,
+        "style": "box",
+        "inset": true,
+        "x": 28,
+        "y": 190,
+        "width": 216,
+        "height": 44
+      }
+    ]
+  }
+}

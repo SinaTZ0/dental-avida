@@ -155,6 +155,45 @@ function BlackFridayPage() {
       {/*===== Discounts Table (Step 2.2) =====*/}
       <DiscountLedger discounts={campaign.discounts} />
 
+      {/*===== Campaign Terms & Conditions Band (Step 4.3) =====*/}
+      <section aria-labelledby="bf-terms-title" className="border-t border-border">
+        <div className="mx-auto max-w-site px-4 py-12 sm:px-6 md:py-16">
+          <div className="mb-8 space-y-2">
+            <p className="bf-kicker">{m.campaign_terms_kicker()}</p>
+            <h2 id="bf-terms-title" className="text-h1 font-black text-foreground">
+              {m.campaign_terms_title()}
+            </h2>
+          </div>
+
+          <dl className="grid divide-y divide-border border-y border-border md:grid-cols-2 md:divide-y-0">
+            <div className="space-y-2 py-5 md:border-e md:border-b md:border-border md:pe-8">
+              <dt className="text-body font-extrabold text-brand-gold">{m.campaign_terms_item_window_title()}</dt>
+              <dd className="text-body-sm text-muted-foreground">{m.campaign_terms_item_window_body()}</dd>
+            </div>
+            <div className="space-y-2 py-5 md:border-b md:border-border md:ps-8">
+              <dt className="text-body font-extrabold text-brand-gold">{m.campaign_terms_item_booking_title()}</dt>
+              <dd className="text-body-sm text-muted-foreground">{m.campaign_terms_item_booking_body()}</dd>
+            </div>
+            <div className="space-y-2 py-5 md:border-e md:border-border md:pe-8">
+              <dt className="text-body font-extrabold text-brand-gold">{m.campaign_terms_item_payment_title()}</dt>
+              <dd className="text-body-sm text-muted-foreground">{m.campaign_terms_item_payment_body()}</dd>
+            </div>
+            <div className="space-y-2 py-5 md:ps-8">
+              <dt className="text-body font-extrabold text-brand-gold">{m.campaign_terms_item_privacy_title()}</dt>
+              <dd className="text-body-sm text-muted-foreground">
+                {m.campaign_terms_item_privacy_body()}{" "}
+                <Link
+                  to="/privacy"
+                  className="font-semibold text-brand-text underline decoration-brand-gold/60 underline-offset-4 hover:text-foreground"
+                >
+                  {m.campaign_form_consent_link()}
+                </Link>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
       {/*===== Lead Capture Form Band (Step 2.3 & 2.4) =====*/}
       <section id="campaign-lead-form" aria-labelledby="bf-form-title" className="bf-lead-band scroll-mt-24">
         <div className="mx-auto max-w-site px-4 py-14 sm:px-6 md:py-20">

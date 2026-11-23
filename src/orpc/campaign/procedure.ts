@@ -10,6 +10,18 @@ import { m } from "#/paraglide/messages";
 
 const LEAD_SUBMIT_LIMIT: RateLimitPolicy = { name: "campaign-lead", limit: 15, windowMs: 60_000 };
 const EVENT_TRACK_LIMIT: RateLimitPolicy = { name: "campaign-event", limit: 90, windowMs: 60_000 };
+const CRM_TEST_LIMIT: RateLimitPolicy = { name: "campaign-crm-test", limit: 10, windowMs: 60_000 };
+
+/*===== Error Helpers =====*/
+
+function crmWebhookMessage(reason: "not_configured" | "unsafe_url" | "network" | "http_error", statusCode?: number) {
+  if (reason === "not_configured") return m.admin_campaign_crm_error_not_configured();
+  if (reason === "unsafe_url") return m.campaign_error_invalid_webhook_url();
+  if (reason === "http_error" && statusCode !== undefined) {
+    return m.admin_campaign_crm_error_http({ status: statusCode });
+  }
+  return m.admin_campaign_crm_error_network();
+}
 
 /*===== Public Procedures =====*/
 
@@ -90,4 +102,73 @@ export const updateSettingsProcedure = effectProcedure(base.campaign.updateSetti
       return yield* campaign.updateSettings(input);
     }),
   errors: {},
+});
+
+export const saveAdChannelProcedure = effectProcedure(base.campaign.saveAdChannel, {
+  access: ["admin"],
+  run: ({ input }) =>
+    Effect.gen(function* () {
+      const campaign = yield* CampaignService;
+      return yield* campaign.saveAdChannel(input);
+    }),
+  errors: {
+    DuplicateAdChannelCode: ({ errors }) =>
+      errors.CONFLICT({
+        data: {
+          errors: [m.admin_campaign_ads_error_duplicate_code()],
+          fields: { code: m.admin_campaign_ads_error_duplicate_code() },
+        },
+      }),
+    AdChannelNotFound: ({ errors }) =>
+      errors.NOT_FOUND({
+        data: { errors: [m.admin_campaign_ads_error_not_found()], fields: {} },
+      }),
+  },
+});
+
+export const deleteAdChannelProcedure = effectProcedure(base.campaign.deleteAdChannel, {
+  access: ["admin"],
+  run: ({ input: { id } }) =>
+    Effect.gen(function* () {
+      const campaign = yield* CampaignService;
+      yield* campaign.deleteAdChannel(id);
+    }),
+  errors: {
+    AdChannelNotFound: ({ errors }) =>
+      errors.NOT_FOUND({
+        data: { errors: [m.admin_campaign_ads_error_not_found()], fields: {} },
+      }),
+  },
+});
+
+export const testCrmWebhookProcedure = effectProcedure(base.campaign.testCrmWebhook, {
+  access: ["admin"],
+  rateLimit: CRM_TEST_LIMIT,
+  run: () => CampaignService.use((campaign) => campaign.testCrmWebhook),
+  errors: {
+    CrmWebhookFailed: ({ error, errors }) =>
+      errors.BAD_REQUEST({
+        data: { errors: [crmWebhookMessage(error.reason, error.statusCode)], fields: {} },
+      }),
+  },
+});
+
+export const retryLeadCrmSyncProcedure = effectProcedure(base.campaign.retryLeadCrmSync, {
+  access: ["admin"],
+  rateLimit: CRM_TEST_LIMIT,
+  run: ({ input: { id } }) =>
+    Effect.gen(function* () {
+      const campaign = yield* CampaignService;
+      return yield* campaign.retryLeadCrmSync(id);
+    }),
+  errors: {
+    CampaignLeadNotFound: ({ errors }) =>
+      errors.NOT_FOUND({
+        data: { errors: [m.campaign_error_lead_not_found()], fields: {} },
+      }),
+    CrmWebhookFailed: ({ error, errors }) =>
+      errors.BAD_REQUEST({
+        data: { errors: [crmWebhookMessage(error.reason, error.statusCode)], fields: {} },
+      }),
+  },
 });

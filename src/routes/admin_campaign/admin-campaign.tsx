@@ -8,6 +8,7 @@ import { formatNumber } from "#/lib/locale";
 import { pageMeta } from "#/lib/seo";
 import { orpc } from "#/orpc/client";
 import { m } from "#/paraglide/messages";
+import { AdChannelsPanel } from "#/routes/admin_campaign/components/ad-channels-panel";
 import { CampaignSettingsForm } from "#/routes/admin_campaign/components/campaign-settings-form";
 import { DailyReport } from "#/routes/admin_campaign/components/daily-report";
 import { LeadsLedger } from "#/routes/admin_campaign/components/leads-ledger";
@@ -17,7 +18,11 @@ import { adminCampaignSearchSchema, type AdminCampaignSearch } from "#/routes/ad
 
 export const Route = createFileRoute("/_site-layout/_admin-layout/admin/campaign")({
   validateSearch: adminCampaignSearchSchema,
-  loader: ({ context }) => context.queryClient.ensureQueryData(orpc.campaign.adminOverview.queryOptions()),
+  loader: ({ context }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData(orpc.campaign.adminOverview.queryOptions()),
+      context.queryClient.ensureQueryData(orpc.site.origin.queryOptions()),
+    ]),
   head: (args) =>
     pageMeta({
       args,
@@ -31,6 +36,7 @@ export const Route = createFileRoute("/_site-layout/_admin-layout/admin/campaign
 
 function AdminCampaignPage() {
   const { data: overview } = useSuspenseQuery(orpc.campaign.adminOverview.queryOptions());
+  const { data: originData } = useSuspenseQuery(orpc.site.origin.queryOptions());
   const search = Route.useSearch();
   const tab = search.tab ?? "leads";
   const status = search.status ?? "all";
@@ -54,15 +60,18 @@ function AdminCampaignPage() {
   const exportHref =
     exportParams.size > 0 ? `/admin/campaign/export?${exportParams.toString()}` : "/admin/campaign/export";
 
+  const totalClicks = overview.totals.adClicks + overview.totals.bannerClicks + overview.totals.popupClicks;
   const kpis = [
     { label: m.admin_campaign_kpi_total(), value: formatNumber(overview.totals.totalLeads) },
+    { label: m.admin_campaign_kpi_valid(), value: formatNumber(overview.totals.validLeads) },
     { label: m.admin_campaign_kpi_confirmed(), value: formatNumber(overview.totals.confirmedLeads) },
-    { label: m.admin_campaign_kpi_today(), value: formatNumber(overview.totals.todayLeads) },
     { label: m.admin_campaign_kpi_remaining(), value: formatNumber(overview.remainingCapacity) },
     { label: m.admin_campaign_kpi_views(), value: formatNumber(overview.totals.landingViews) },
+    { label: m.admin_campaign_kpi_clicks(), value: formatNumber(totalClicks) },
     {
-      label: m.admin_campaign_kpi_clicks(),
-      value: formatNumber(overview.totals.bannerClicks + overview.totals.popupClicks),
+      label: m.admin_campaign_kpi_cpl(),
+      value:
+        overview.totals.overallCostPerLeadToman !== null ? formatNumber(overview.totals.overallCostPerLeadToman) : "—",
     },
   ] as const;
 
@@ -89,11 +98,11 @@ function AdminCampaignPage() {
       </header>
 
       {/*===== Integrated KPI Strip =====*/}
-      <dl className="grid grid-cols-2 divide-y divide-border border-b border-border pb-6 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x lg:divide-y-0">
+      <dl className="grid grid-cols-2 divide-y divide-border border-b border-border pb-6 sm:grid-cols-4 lg:grid-cols-7 lg:divide-x lg:divide-y-0">
         {kpis.map((item) => (
-          <div key={item.label} className="space-y-1 px-3 py-3 first:ps-0">
+          <div key={item.label} className="min-w-0 space-y-1 px-3 py-3 first:ps-0">
             <dt className="text-caption text-muted-foreground">{item.label}</dt>
-            <dd className="text-stat text-foreground">{item.value}</dd>
+            <dd className="text-h2 font-extrabold text-foreground tabular-nums">{item.value}</dd>
           </div>
         ))}
       </dl>
@@ -107,6 +116,7 @@ function AdminCampaignPage() {
       >
         <TabsList>
           <TabsTrigger value="leads">{m.admin_campaign_tab_leads()}</TabsTrigger>
+          <TabsTrigger value="ads">{m.admin_campaign_tab_ads()}</TabsTrigger>
           <TabsTrigger value="report">{m.admin_campaign_tab_report()}</TabsTrigger>
           <TabsTrigger value="settings">{m.admin_campaign_tab_settings()}</TabsTrigger>
         </TabsList>
@@ -114,11 +124,16 @@ function AdminCampaignPage() {
         <TabsContent value="leads" className="mt-6">
           <LeadsLedger
             leads={overview.leads}
+            crmEnabled={overview.readiness.crmWebhookEnabled}
             statusFilter={status}
             treatmentFilter={treatment}
             query={search.q ?? ""}
             onFilterChange={updateSearch}
           />
+        </TabsContent>
+
+        <TabsContent value="ads" className="mt-6">
+          <AdChannelsPanel overview={overview} siteOrigin={originData.origin} />
         </TabsContent>
 
         <TabsContent value="report" className="mt-6">

@@ -2,7 +2,15 @@ import { Schema, SchemaTransformation } from "effect";
 
 import { PersianText } from "#/lib/schema";
 import {
+  AD_APPROVAL_STATUSES,
+  AD_NAME_MAX_LENGTH,
+  AD_NOTES_MAX_LENGTH,
+  AD_PLACEMENTS,
+  AD_PLATFORM_TYPES,
+  AD_SCHEDULE_MAX_LENGTH,
   CAPACITY_MODES,
+  CRM_WEBHOOK_SECRET_MAX_LENGTH,
+  CRM_WEBHOOK_URL_MAX_LENGTH,
   DISCOUNT_CODES,
   DISCOUNT_TITLE_MAX_LENGTH,
   LEAD_NAME_MAX_LENGTH,
@@ -12,9 +20,14 @@ import {
   LEAD_STATUSES,
   LEAD_TREATMENTS,
   LEAD_UTM_MAX_LENGTH,
+  MAX_AD_BUDGET_TOMAN,
+  MAX_BASE_PRICE_TOMAN,
   MAX_CAMPAIGN_CAPACITY,
   MAX_DECREMENT_INTERVAL_MINUTES,
   MAX_DISCOUNT_PERCENT,
+  isSafeWebhookUrl,
+  isValidAdChannelCode,
+  normalizeAdChannelCode,
   normalizeIranPhone,
 } from "#/orpc/campaign/constants";
 import { m } from "#/paraglide/messages";
@@ -28,6 +41,13 @@ const NormalizedPhone = Schema.String.pipe(
   Schema.decodeTo(
     Schema.String,
     SchemaTransformation.transform({ decode: normalizeIranPhone, encode: (value: string) => value }),
+  ),
+);
+
+const NormalizedAdCode = Schema.String.pipe(
+  Schema.decodeTo(
+    Schema.String,
+    SchemaTransformation.transform({ decode: normalizeAdChannelCode, encode: (value: string) => value }),
   ),
 );
 
@@ -93,6 +113,16 @@ const DiscountItemFields = Schema.Struct({
   installmentPercent: Schema.Int.check(
     Schema.isBetween({ minimum: 0, maximum: MAX_DISCOUNT_PERCENT }, { text: () => m.campaign_error_invalid_percent() }),
   ),
+  basePriceToman: Schema.optional(
+    Schema.NullOr(
+      Schema.Int.check(
+        Schema.isBetween(
+          { minimum: 0, maximum: MAX_BASE_PRICE_TOMAN },
+          { text: () => m.campaign_error_invalid_price() },
+        ),
+      ),
+    ),
+  ),
 });
 
 export const UpdateSettingsFields = Schema.Struct({
@@ -128,6 +158,16 @@ export const UpdateSettingsFields = Schema.Struct({
       }),
     ),
   ),
+  crmWebhookUrl: Schema.optional(
+    TrimmedString.check(
+      Schema.isMaxLength(CRM_WEBHOOK_URL_MAX_LENGTH),
+      Schema.makeFilter((value) => value === "" || isSafeWebhookUrl(value), {
+        text: () => m.campaign_error_invalid_webhook_url(),
+      }),
+    ),
+  ),
+  crmWebhookSecret: Schema.optional(TrimmedString.check(Schema.isMaxLength(CRM_WEBHOOK_SECRET_MAX_LENGTH))),
+  clearCrmWebhookSecret: Schema.optional(Schema.Boolean),
   discounts: Schema.Array(DiscountItemFields),
 }).check(
   Schema.makeFilter((value) => Date.parse(value.endsAt) > Date.parse(value.startsAt), {
@@ -136,3 +176,35 @@ export const UpdateSettingsFields = Schema.Struct({
 );
 
 export type UpdateSettingsFields = typeof UpdateSettingsFields.Type;
+
+/*===== Admin Ad Channel =====*/
+
+export const SaveAdChannelFields = Schema.Struct({
+  id: Schema.optional(Schema.String),
+  code: NormalizedAdCode.check(
+    Schema.makeFilter(isValidAdChannelCode, { text: () => m.campaign_error_invalid_ad_code() }),
+  ),
+  name: PersianText.check(
+    Schema.isMinLength(2, { text: () => m.campaign_error_name_required() }),
+    Schema.isMaxLength(AD_NAME_MAX_LENGTH),
+  ),
+  platformType: Schema.Literals(AD_PLATFORM_TYPES),
+  placement: Schema.Literals(AD_PLACEMENTS),
+  budgetToman: Schema.Int.check(
+    Schema.isBetween(
+      { minimum: 0, maximum: MAX_AD_BUDGET_TOMAN },
+      { text: () => m.campaign_error_invalid_ad_budget() },
+    ),
+  ),
+  spentToman: Schema.Int.check(
+    Schema.isBetween(
+      { minimum: 0, maximum: MAX_AD_BUDGET_TOMAN },
+      { text: () => m.campaign_error_invalid_ad_budget() },
+    ),
+  ),
+  scheduleText: Schema.optional(PersianText.check(Schema.isMaxLength(AD_SCHEDULE_MAX_LENGTH))),
+  approvalStatus: Schema.Literals(AD_APPROVAL_STATUSES),
+  notes: Schema.optional(PersianText.check(Schema.isMaxLength(AD_NOTES_MAX_LENGTH))),
+});
+
+export type SaveAdChannelFields = typeof SaveAdChannelFields.Type;

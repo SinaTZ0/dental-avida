@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CheckCircle2Icon } from "lucide-react";
+import { CheckCircle2Icon, PlugZapIcon } from "lucide-react";
 import { type FormEvent, useId, useState } from "react";
 
 import { Alert, AlertDescription } from "#/components/primitive/alert/alert";
 import { Button } from "#/components/primitive/button/button";
+import { Checkbox } from "#/components/primitive/checkbox/checkbox";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "#/components/primitive/field/field";
 import { Input } from "#/components/primitive/input/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "#/components/primitive/select/select";
@@ -12,7 +13,7 @@ import { Switch } from "#/components/primitive/switch/switch";
 import { FormAlert } from "#/components/shared/form-alert/form-alert";
 import { describeApiFailure } from "#/lib/api-error";
 import { toLatinDigits } from "#/lib/digits";
-import { APP_TIME_ZONE } from "#/lib/locale";
+import { APP_TIME_ZONE, formatNumber } from "#/lib/locale";
 import { CAPACITY_MODES, type CapacityMode, type DiscountCode } from "#/orpc/campaign/constants";
 import type { AdminCampaignOverview } from "#/orpc/campaign/contract";
 import { client, orpc } from "#/orpc/client";
@@ -49,11 +50,12 @@ type EditableDiscount = {
   title: string;
   cashPercent: string;
   installmentPercent: string;
+  basePriceToman: string;
 };
 
 /**
- * Live editor for campaign dates, capacity rules, reversible Black Friday theme toggle, notification email, and
- * discount table percentages (Section 5 #4 & #5).
+ * Live editor for campaign dates, capacity rules, reversible Black Friday theme toggle, notification email, CRM/PRM
+ * webhook integration, and discount percentages + base Toman amounts (Section 5 #4, #5 & #9).
  */
 export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOverview }) {
   const id = useId();
@@ -67,12 +69,16 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
   const [capacityMode, setCapacityMode] = useState<CapacityMode>(overview.settings.capacityMode);
   const [intervalMinutes, setIntervalMinutes] = useState(String(overview.settings.decrementIntervalMinutes));
   const [notifyEmail, setNotifyEmail] = useState(overview.settings.notifyEmail);
+  const [crmWebhookUrl, setCrmWebhookUrl] = useState(overview.settings.crmWebhookUrl);
+  const [crmWebhookSecret, setCrmWebhookSecret] = useState("");
+  const [clearCrmWebhookSecret, setClearCrmWebhookSecret] = useState(false);
   const [discounts, setDiscounts] = useState<EditableDiscount[]>(() =>
     overview.discounts.map((item) => ({
       code: item.code,
       title: item.title,
       cashPercent: String(item.cashPercent),
       installmentPercent: String(item.installmentPercent),
+      basePriceToman: item.basePriceToman ? String(item.basePriceToman) : "",
     })),
   );
   const [savedOk, setSavedOk] = useState(false);
@@ -88,15 +94,24 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
         capacityMode,
         decrementIntervalMinutes: Number(toLatinDigits(intervalMinutes)),
         notifyEmail: notifyEmail.trim(),
-        discounts: discounts.map((row) => ({
-          code: row.code,
-          title: row.title,
-          cashPercent: Number(toLatinDigits(row.cashPercent)),
-          installmentPercent: Number(toLatinDigits(row.installmentPercent)),
-        })),
+        crmWebhookUrl: crmWebhookUrl.trim(),
+        crmWebhookSecret: crmWebhookSecret.trim() || undefined,
+        clearCrmWebhookSecret,
+        discounts: discounts.map((row) => {
+          const cleanPrice = toLatinDigits(row.basePriceToman).trim();
+          return {
+            code: row.code,
+            title: row.title,
+            cashPercent: Number(toLatinDigits(row.cashPercent)),
+            installmentPercent: Number(toLatinDigits(row.installmentPercent)),
+            basePriceToman: cleanPrice ? Number(cleanPrice) : null,
+          };
+        }),
       }),
     onSuccess: async () => {
       setSavedOk(true);
+      setCrmWebhookSecret("");
+      setClearCrmWebhookSecret(false);
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: orpc.campaign.adminOverview.key() }),
         queryClient.invalidateQueries({ queryKey: orpc.campaign.public.key() }),
@@ -104,8 +119,15 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
     },
   });
 
+  const testCrm = useMutation({
+    mutationFn: () => client.campaign.testCrmWebhook(),
+  });
+
   const failure = save.error
     ? describeApiFailure({ error: save.error, fallback: m.admin_campaign_settings_save_failed() })
+    : null;
+  const crmTestError = testCrm.error
+    ? describeApiFailure({ error: testCrm.error, fallback: m.admin_campaign_crm_error_network() })
     : null;
 
   const handleSubmit = (event: FormEvent) => {
@@ -249,7 +271,92 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
         </FieldGroup>
       </section>
 
-      {/*------ Editable Discounts Ledger ------*/}
+      {/*------ CRM / PRM Webhook Integration (Section 5 #9) ------*/}
+      <section className="space-y-5">
+        <div className="space-y-1 border-b border-border pb-3">
+          <h2 className="text-h3 text-foreground">{m.admin_campaign_crm_section_title()}</h2>
+          <p className="text-body-sm text-muted-foreground">{m.admin_campaign_crm_section_hint()}</p>
+        </div>
+
+        <FieldGroup>
+          <div className="grid gap-5 md:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor={`${id}-crm-url`}>{m.admin_campaign_crm_url_label()}</FieldLabel>
+              <Input
+                id={`${id}-crm-url`}
+                type="url"
+                dir="ltr"
+                placeholder={m.admin_campaign_crm_url_placeholder()}
+                value={crmWebhookUrl}
+                onChange={(event) => setCrmWebhookUrl(event.target.value)}
+              />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor={`${id}-crm-secret`}>{m.admin_campaign_crm_secret_label()}</FieldLabel>
+              <Input
+                id={`${id}-crm-secret`}
+                type="password"
+                dir="ltr"
+                autoComplete="new-password"
+                placeholder={m.admin_campaign_crm_secret_placeholder()}
+                value={crmWebhookSecret}
+                onChange={(event) => {
+                  setCrmWebhookSecret(event.target.value);
+                  if (event.target.value) setClearCrmWebhookSecret(false);
+                }}
+              />
+              {overview.settings.crmWebhookSecretConfigured && (
+                <FieldDescription>{m.admin_campaign_crm_secret_configured()}</FieldDescription>
+              )}
+            </Field>
+          </div>
+
+          {overview.settings.crmWebhookSecretConfigured && (
+            <div className="flex items-center gap-2.5">
+              <Checkbox
+                id={`${id}-crm-clear`}
+                checked={clearCrmWebhookSecret}
+                onCheckedChange={(checked) => setClearCrmWebhookSecret(Boolean(checked))}
+              />
+              <label htmlFor={`${id}-crm-clear`} className="cursor-pointer text-body-sm text-muted-foreground">
+                {m.admin_campaign_crm_secret_clear()}
+              </label>
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              disabled={testCrm.isPending || !overview.settings.crmWebhookUrl}
+              onClick={() => testCrm.mutate()}
+            >
+              {testCrm.isPending ? (
+                <Spinner data-icon="inline-start" />
+              ) : (
+                <PlugZapIcon aria-hidden data-icon="inline-start" />
+              )}
+              <span>{m.admin_campaign_crm_test_button()}</span>
+            </Button>
+          </div>
+
+          {testCrm.data && (
+            <Alert variant="success">
+              <CheckCircle2Icon aria-hidden />
+              <AlertDescription>
+                {m.admin_campaign_crm_test_ok({
+                  status: formatNumber(testCrm.data.statusCode),
+                  ms: formatNumber(testCrm.data.latencyMs),
+                })}
+              </AlertDescription>
+            </Alert>
+          )}
+          {crmTestError?.message && <FormAlert message={crmTestError.message} />}
+        </FieldGroup>
+      </section>
+
+      {/*------ Editable Discounts & Base Prices Ledger (Section 5 #4) ------*/}
       <section className="space-y-5">
         <h2 className="border-b border-border pb-3 text-h3 text-foreground">
           {m.admin_campaign_settings_discounts_title()}
@@ -258,7 +365,7 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
         <div className="divide-y divide-border border-b border-border">
           {discounts.map((row, index) => (
             <div key={row.code} className="grid gap-4 py-4 md:grid-cols-12 md:items-end">
-              <div className="md:col-span-6">
+              <div className="md:col-span-4">
                 <Field>
                   <FieldLabel htmlFor={`${id}-disc-title-${row.code}`}>
                     {m.admin_campaign_settings_discount_title()}
@@ -270,7 +377,7 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
                   />
                 </Field>
               </div>
-              <div className="md:col-span-3">
+              <div className="md:col-span-2">
                 <Field>
                   <FieldLabel htmlFor={`${id}-disc-cash-${row.code}`}>
                     {m.admin_campaign_settings_discount_cash()}
@@ -284,7 +391,7 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
                   />
                 </Field>
               </div>
-              <div className="md:col-span-3">
+              <div className="md:col-span-2">
                 <Field>
                   <FieldLabel htmlFor={`${id}-disc-inst-${row.code}`}>
                     {m.admin_campaign_settings_discount_installment()}
@@ -295,6 +402,21 @@ export function CampaignSettingsForm({ overview }: { overview: AdminCampaignOver
                     inputMode="numeric"
                     value={row.installmentPercent}
                     onChange={(event) => updateDiscount(index, { installmentPercent: event.target.value })}
+                  />
+                </Field>
+              </div>
+              <div className="md:col-span-4">
+                <Field>
+                  <FieldLabel htmlFor={`${id}-disc-price-${row.code}`}>
+                    {m.admin_campaign_settings_discount_base_price()}
+                  </FieldLabel>
+                  <Input
+                    id={`${id}-disc-price-${row.code}`}
+                    dir="ltr"
+                    inputMode="numeric"
+                    placeholder="—"
+                    value={row.basePriceToman}
+                    onChange={(event) => updateDiscount(index, { basePriceToman: event.target.value })}
                   />
                 </Field>
               </div>

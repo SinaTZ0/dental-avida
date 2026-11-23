@@ -337,7 +337,7 @@ const questions = [
 ] as const;
 
 export function HomeQuestions() {
-  const { phone } = clinicDetails;
+  const { phone, mobile } = clinicDetails;
 
   return (
     <section
@@ -356,14 +356,27 @@ export function HomeQuestions() {
           <div className="home-faq-companion home-glass-smoked max-w-xs">
             <p className="text-h4 text-brand-surface-foreground">{m.home_faq_companion_title()}</p>
             <p className="mt-1.5 text-body-sm text-brand-surface-muted">{m.home_faq_companion_body()}</p>
-            {phone ? (
-              <SiteLink href={`tel:${phone.number}`} className="home-text-link home-text-link-dark mt-2.5">
-                <PhoneIcon className="size-4" aria-hidden />
-                <span>{m.home_appointment_call()}</span>
-                <bdi dir="ltr" className="tabular-nums">
-                  {phone.label()}
-                </bdi>
-              </SiteLink>
+            {phone || mobile ? (
+              <div className="mt-2.5 flex flex-col items-start gap-1">
+                {mobile && (
+                  <SiteLink href={`tel:${mobile.number}`} className="home-text-link home-text-link-dark">
+                    <PhoneIcon className="size-4" aria-hidden />
+                    <span>{m.home_appointment_call()}</span>
+                    <bdi dir="ltr" className="tabular-nums">
+                      {mobile.label()}
+                    </bdi>
+                  </SiteLink>
+                )}
+                {phone && (
+                  <SiteLink href={`tel:${phone.number}`} className="home-text-link home-text-link-dark">
+                    <PhoneIcon className="size-4" aria-hidden />
+                    {!mobile && <span>{m.home_appointment_call()}</span>}
+                    <bdi dir="ltr" className="tabular-nums">
+                      {phone.label()}
+                    </bdi>
+                  </SiteLink>
+                )}
+              </div>
             ) : (
               <a href={`#${homeSections.appointments}`} className="home-text-link home-text-link-dark mt-2.5">
                 {m.home_appointment_plan()}

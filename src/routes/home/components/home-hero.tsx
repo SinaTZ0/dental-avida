@@ -120,7 +120,7 @@ function NormalHeroContent({
 
   const appointmentLabel = clinicDetails.bookingUrl
     ? m.home_appointment_online
-    : clinicDetails.phone
+    : clinicDetails.phone || clinicDetails.mobile
       ? m.home_appointment_phone
       : m.home_appointment_plan;
 
@@ -160,20 +160,36 @@ function NormalHeroContent({
               <ArrowLeftIcon aria-hidden className="size-4 ltr:rotate-180" />
             </a>
           </div>
-          {clinicDetails.phone && (
+          {(clinicDetails.phone || clinicDetails.mobile) && (
             <div className="home-hero-meta text-body-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
                 <ClockIcon aria-hidden className="size-4 text-brand-gold" />
                 {m.home_hero_hours_short()}
               </span>
-              <span className="home-hero-meta-sep" aria-hidden />
-              <SiteLink href={`tel:${clinicDetails.phone.number}`} className="home-hero-phone">
-                <PhoneIcon aria-hidden className="size-4 text-brand-text" />
-                <span>{m.home_hero_phone_prefix()}</span>
-                <bdi dir="ltr" className="font-bold text-foreground tabular-nums">
-                  {clinicDetails.phone.label()}
-                </bdi>
-              </SiteLink>
+              {clinicDetails.mobile && (
+                <>
+                  <span className="home-hero-meta-sep" aria-hidden />
+                  <SiteLink href={`tel:${clinicDetails.mobile.number}`} className="home-hero-phone">
+                    <PhoneIcon aria-hidden className="size-4 text-brand-text" />
+                    <span>{m.home_hero_phone_prefix()}</span>
+                    <bdi dir="ltr" className="font-bold text-foreground tabular-nums">
+                      {clinicDetails.mobile.label()}
+                    </bdi>
+                  </SiteLink>
+                </>
+              )}
+              {clinicDetails.phone && (
+                <>
+                  <span className="home-hero-meta-sep" aria-hidden />
+                  <SiteLink href={`tel:${clinicDetails.phone.number}`} className="home-hero-phone">
+                    {!clinicDetails.mobile && <PhoneIcon aria-hidden className="size-4 text-brand-text" />}
+                    {!clinicDetails.mobile && <span>{m.home_hero_phone_prefix()}</span>}
+                    <bdi dir="ltr" className="font-bold text-foreground tabular-nums">
+                      {clinicDetails.phone.label()}
+                    </bdi>
+                  </SiteLink>
+                </>
+              )}
             </div>
           )}
         </div>

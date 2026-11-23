@@ -21,3 +21,6 @@ skills/
 # Copied design references (docs/frontend/reference/, docs/customize-template.md), kept as they were exported.
 docs/frontend/reference/
 /target/
+# The admin manual's pages and chapter markdown format are built verbatim by admin-manual-guideline/tools/build.mjs.
+admin-manual-guideline/manual/*.html
+admin-manual-guideline/chapters/*/content.md

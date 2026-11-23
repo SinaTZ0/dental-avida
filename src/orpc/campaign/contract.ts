@@ -3,9 +3,13 @@ import { Schema } from "effect";
 
 import { standardSchema } from "#/lib/schema";
 import {
+  AD_APPROVAL_STATUSES,
+  AD_PLACEMENTS,
+  AD_PLATFORM_TYPES,
   CAMPAIGN_EVENT_KINDS,
   CAMPAIGN_STATUSES,
   CAPACITY_MODES,
+  CRM_SYNC_STATUSES,
   DISCOUNT_CODES,
   LEAD_STATUSES,
   LEAD_TREATMENTS,
@@ -20,6 +24,7 @@ export const CampaignDiscountSchema = Schema.Struct({
   title: Schema.String,
   cashPercent: Schema.Int,
   installmentPercent: Schema.Int,
+  basePriceToman: Schema.NullOr(Schema.Int),
   sortOrder: Schema.Int,
 });
 
@@ -83,6 +88,9 @@ export const CampaignLeadSchema = Schema.Struct({
   referrer: Schema.String,
   status: Schema.Literals(LEAD_STATUSES),
   notes: Schema.String,
+  crmSyncStatus: Schema.Literals(CRM_SYNC_STATUSES),
+  crmSyncedAt: Schema.NullOr(Schema.Date),
+  crmLastError: Schema.String,
   createdAt: Schema.Date,
   updatedAt: Schema.Date,
 });
@@ -99,10 +107,38 @@ export const CampaignSettingsSchema = Schema.Struct({
   capacityMode: Schema.Literals(CAPACITY_MODES),
   decrementIntervalMinutes: Schema.Int,
   notifyEmail: Schema.String,
+  crmWebhookUrl: Schema.String,
+  /** True when a signing secret is stored; the secret value itself is never sent back to the browser. */
+  crmWebhookSecretConfigured: Schema.Boolean,
   updatedAt: Schema.Date,
 });
 
 export type CampaignSettings = typeof CampaignSettingsSchema.Type;
+
+export const CampaignAdChannelSchema = Schema.Struct({
+  id: Schema.String,
+  code: Schema.String,
+  name: Schema.String,
+  platformType: Schema.Literals(AD_PLATFORM_TYPES),
+  placement: Schema.Literals(AD_PLACEMENTS),
+  budgetToman: Schema.Int,
+  spentToman: Schema.Int,
+  scheduleText: Schema.String,
+  approvalStatus: Schema.Literals(AD_APPROVAL_STATUSES),
+  notes: Schema.String,
+  /** Live performance metrics computed from `campaign_event` and `campaign_lead`. */
+  adClicks: Schema.Int,
+  landingViews: Schema.Int,
+  totalLeads: Schema.Int,
+  validLeads: Schema.Int,
+  confirmedLeads: Schema.Int,
+  costPerLeadToman: Schema.NullOr(Schema.Int),
+  costPerValidLeadToman: Schema.NullOr(Schema.Int),
+  createdAt: Schema.Date,
+  updatedAt: Schema.Date,
+});
+
+export type CampaignAdChannel = typeof CampaignAdChannelSchema.Type;
 
 export const DailyLeadStatSchema = Schema.Struct({
   /** Jalali day label formatted in Asia/Tehran, e.g. `۱۴۰۵/۰۹/۰۲`. */
@@ -110,6 +146,8 @@ export const DailyLeadStatSchema = Schema.Struct({
   /** ISO day key in Asia/Tehran (`YYYY-MM-DD`) for stable sorting. */
   isoDay: Schema.String,
   total: Schema.Int,
+  valid: Schema.Int,
+  referred: Schema.Int,
   confirmed: Schema.Int,
 });
 
@@ -118,6 +156,29 @@ export const BreakdownStatSchema = Schema.Struct({
   count: Schema.Int,
 });
 
+export const ConversionFunnelSchema = Schema.Struct({
+  adAndBannerClicks: Schema.Int,
+  landingViews: Schema.Int,
+  totalLeads: Schema.Int,
+  validLeads: Schema.Int,
+  contactedOrBeyond: Schema.Int,
+  referredOrBeyond: Schema.Int,
+  confirmedLeads: Schema.Int,
+});
+
+export type ConversionFunnel = typeof ConversionFunnelSchema.Type;
+
+export const CampaignReadinessSchema = Schema.Struct({
+  campaignActive: Schema.Boolean,
+  discountsConfigured: Schema.Boolean,
+  advisorDeliveryConfigured: Schema.Boolean,
+  hasApprovedAdChannel: Schema.Boolean,
+  hasTrackedTraffic: Schema.Boolean,
+  crmWebhookEnabled: Schema.Boolean,
+});
+
+export type CampaignReadiness = typeof CampaignReadinessSchema.Type;
+
 export const AdminCampaignOverviewSchema = Schema.Struct({
   settings: CampaignSettingsSchema,
   status: Schema.Literals(CAMPAIGN_STATUSES),
@@ -125,14 +186,24 @@ export const AdminCampaignOverviewSchema = Schema.Struct({
   remainingCapacity: Schema.Int,
   discounts: Schema.Array(CampaignDiscountSchema),
   leads: Schema.Array(CampaignLeadSchema),
+  adChannels: Schema.Array(CampaignAdChannelSchema),
   totals: Schema.Struct({
     totalLeads: Schema.Int,
+    validLeads: Schema.Int,
+    referredLeads: Schema.Int,
     confirmedLeads: Schema.Int,
     todayLeads: Schema.Int,
     landingViews: Schema.Int,
     bannerClicks: Schema.Int,
     popupClicks: Schema.Int,
+    adClicks: Schema.Int,
+    totalAdBudgetToman: Schema.Int,
+    totalAdSpentToman: Schema.Int,
+    overallCostPerLeadToman: Schema.NullOr(Schema.Int),
+    overallCostPerValidLeadToman: Schema.NullOr(Schema.Int),
   }),
+  funnel: ConversionFunnelSchema,
+  readiness: CampaignReadinessSchema,
   dailyReport: Schema.Array(DailyLeadStatSchema),
   bySource: Schema.Array(BreakdownStatSchema),
   byTreatment: Schema.Array(BreakdownStatSchema),
@@ -156,15 +227,47 @@ const UpdateSettingsInput = Schema.Struct({
   capacityMode: Schema.String,
   decrementIntervalMinutes: Schema.Finite,
   notifyEmail: Schema.optional(Schema.String),
+  crmWebhookUrl: Schema.optional(Schema.String),
+  crmWebhookSecret: Schema.optional(Schema.String),
+  clearCrmWebhookSecret: Schema.optional(Schema.Boolean),
   discounts: Schema.Array(
     Schema.Struct({
       code: Schema.String,
       title: Schema.String,
       cashPercent: Schema.Finite,
       installmentPercent: Schema.Finite,
+      basePriceToman: Schema.optional(Schema.NullOr(Schema.Finite)),
     }),
   ),
 });
+
+const SaveAdChannelInput = Schema.Struct({
+  id: Schema.optional(Schema.String),
+  code: Schema.String,
+  name: Schema.String,
+  platformType: Schema.String,
+  placement: Schema.String,
+  budgetToman: Schema.Finite,
+  spentToman: Schema.Finite,
+  scheduleText: Schema.optional(Schema.String),
+  approvalStatus: Schema.String,
+  notes: Schema.optional(Schema.String),
+});
+
+const DeleteAdChannelInput = Schema.Struct({
+  id: Schema.String,
+});
+
+const RetryLeadCrmInput = Schema.Struct({
+  id: Schema.String,
+});
+
+const TestCrmWebhookOutput = Schema.Struct({
+  statusCode: Schema.Int,
+  latencyMs: Schema.Int,
+});
+
+export type TestCrmWebhookResult = typeof TestCrmWebhookOutput.Type;
 
 /*===== Errors =====*/
 
@@ -174,7 +277,16 @@ const submitLeadErrors = {
 };
 
 const notFoundErrors = {
-  NOT_FOUND: { message: "Campaign lead not found.", data: errorDataSchema },
+  NOT_FOUND: { message: "Record not found.", data: errorDataSchema },
+};
+
+const adChannelErrors = {
+  CONFLICT: { message: "Ad channel code already exists.", data: errorDataSchema },
+  NOT_FOUND: { message: "Ad channel not found.", data: errorDataSchema },
+};
+
+const crmWebhookErrors = {
+  BAD_REQUEST: { message: "CRM webhook test failed.", data: errorDataSchema },
 };
 
 /*===== Procedures =====*/
@@ -205,6 +317,25 @@ export const updateSettingsContract = oc
   .input(standardSchema(UpdateSettingsInput))
   .output(standardSchema(PublicCampaignSchema));
 
+export const saveAdChannelContract = oc
+  .errors({ ...commonErrors, ...authErrors, ...roleErrors, ...adChannelErrors })
+  .input(standardSchema(SaveAdChannelInput))
+  .output(standardSchema(CampaignAdChannelSchema));
+
+export const deleteAdChannelContract = oc
+  .errors({ ...commonErrors, ...authErrors, ...roleErrors, ...notFoundErrors })
+  .input(standardSchema(DeleteAdChannelInput))
+  .output(standardSchema(Schema.Void));
+
+export const testCrmWebhookContract = oc
+  .errors({ ...commonErrors, ...authErrors, ...roleErrors, ...crmWebhookErrors })
+  .output(standardSchema(TestCrmWebhookOutput));
+
+export const retryLeadCrmSyncContract = oc
+  .errors({ ...commonErrors, ...authErrors, ...roleErrors, ...notFoundErrors, ...crmWebhookErrors })
+  .input(standardSchema(RetryLeadCrmInput))
+  .output(standardSchema(CampaignLeadSchema));
+
 export const campaignContract = {
   public: publicCampaignContract,
   submitLead: submitLeadContract,
@@ -212,4 +343,8 @@ export const campaignContract = {
   adminOverview: adminOverviewContract,
   updateLead: updateLeadContract,
   updateSettings: updateSettingsContract,
+  saveAdChannel: saveAdChannelContract,
+  deleteAdChannel: deleteAdChannelContract,
+  testCrmWebhook: testCrmWebhookContract,
+  retryLeadCrmSync: retryLeadCrmSyncContract,
 };

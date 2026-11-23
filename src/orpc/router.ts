@@ -1,7 +1,11 @@
 import {
   adminOverviewProcedure,
+  deleteAdChannelProcedure,
   publicCampaignProcedure,
+  retryLeadCrmSyncProcedure,
+  saveAdChannelProcedure,
   submitLeadProcedure,
+  testCrmWebhookProcedure,
   trackEventProcedure,
   updateLeadProcedure,
   updateSettingsProcedure,
@@ -37,6 +41,10 @@ export const router = implementer.router({
     adminOverview: adminOverviewProcedure,
     updateLead: updateLeadProcedure,
     updateSettings: updateSettingsProcedure,
+    saveAdChannel: saveAdChannelProcedure,
+    deleteAdChannel: deleteAdChannelProcedure,
+    testCrmWebhook: testCrmWebhookProcedure,
+    retryLeadCrmSync: retryLeadCrmSyncProcedure,
   },
   captcha: {
     createChallenge: createCaptchaChallengeProcedure,

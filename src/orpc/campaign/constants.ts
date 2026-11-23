@@ -20,7 +20,8 @@ export const DEFAULT_DECREMENT_INTERVAL_MINUTES = 335;
 export const CAPACITY_MODES = ["scheduled", "confirmed", "hybrid"] as const;
 export type CapacityMode = (typeof CAPACITY_MODES)[number];
 
-export const LEAD_STATUSES = ["new", "contacted", "confirmed", "unreachable", "cancelled"] as const;
+/** Full Section 6 pipeline: new → contacted → referred (reception) → confirmed (final booking) + terminal states. */
+export const LEAD_STATUSES = ["new", "contacted", "referred", "confirmed", "unreachable", "cancelled"] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
 export const LEAD_TREATMENTS = ["implant_fixture", "implant_with_crown", "laminate", "both_consultation"] as const;
@@ -29,11 +30,30 @@ export type LeadTreatment = (typeof LEAD_TREATMENTS)[number];
 export const DISCOUNT_CODES = ["implant_fixture", "implant_with_crown", "laminate"] as const;
 export type DiscountCode = (typeof DISCOUNT_CODES)[number];
 
-export const CAMPAIGN_EVENT_KINDS = ["landing_view", "banner_click", "popup_click"] as const;
+export const CAMPAIGN_EVENT_KINDS = ["landing_view", "banner_click", "popup_click", "ad_click"] as const;
 export type CampaignEventKind = (typeof CAMPAIGN_EVENT_KINDS)[number];
 
 export const CAMPAIGN_STATUSES = ["upcoming", "active", "ended", "disabled"] as const;
 export type CampaignStatus = (typeof CAMPAIGN_STATUSES)[number];
+
+export const AD_PLATFORM_TYPES = [
+  "local_site",
+  "provincial_portal",
+  "ad_network",
+  "social",
+  "search",
+  "other",
+] as const;
+export type AdPlatformType = (typeof AD_PLATFORM_TYPES)[number];
+
+export const AD_PLACEMENTS = ["banner", "cpc", "story", "advertorial", "other"] as const;
+export type AdPlacement = (typeof AD_PLACEMENTS)[number];
+
+export const AD_APPROVAL_STATUSES = ["draft", "pending_approval", "approved", "active", "paused", "completed"] as const;
+export type AdApprovalStatus = (typeof AD_APPROVAL_STATUSES)[number];
+
+export const CRM_SYNC_STATUSES = ["none", "pending", "synced", "failed"] as const;
+export type CrmSyncStatus = (typeof CRM_SYNC_STATUSES)[number];
 
 /*===== Limits =====*/
 
@@ -46,6 +66,14 @@ export const DISCOUNT_TITLE_MAX_LENGTH = 120;
 export const MAX_CAMPAIGN_CAPACITY = 5000;
 export const MAX_DECREMENT_INTERVAL_MINUTES = 10_080;
 export const MAX_DISCOUNT_PERCENT = 90;
+export const MAX_BASE_PRICE_TOMAN = 500_000_000;
+export const MAX_AD_BUDGET_TOMAN = 2_000_000_000;
+export const AD_CODE_MAX_LENGTH = 60;
+export const AD_NAME_MAX_LENGTH = 140;
+export const AD_SCHEDULE_MAX_LENGTH = 140;
+export const AD_NOTES_MAX_LENGTH = 600;
+export const CRM_WEBHOOK_URL_MAX_LENGTH = 500;
+export const CRM_WEBHOOK_SECRET_MAX_LENGTH = 200;
 
 /*===== Default Discounts =====*/
 
@@ -168,4 +196,81 @@ export function computeRemainingCapacity({
   }
 
   return Math.max(0, totalCapacity - taken);
+}
+
+/*===== Ad Code, Pricing, CPL & Webhook Helpers =====*/
+
+const AD_CODE_CLEAN = /[^a-z0-9_-]+/g;
+const AD_CODE_PATTERN = /^[a-z0-9][a-z0-9_-]{1,59}$/;
+
+/** Normalizes an ad channel tracking code to lowercase ASCII letters, digits, hyphens, and underscores. */
+export function normalizeAdChannelCode(raw: string): string {
+  return toLatinDigits(raw)
+    .trim()
+    .toLowerCase()
+    .replace(AD_CODE_CLEAN, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Whether a normalized ad channel code is safe for `/go/ad/$code` URLs and UTM attribution. */
+export function isValidAdChannelCode(code: string): boolean {
+  return AD_CODE_PATTERN.test(code);
+}
+
+/** Computes a rounded discounted price in Toman from a base price and discount percentage. */
+export function computeDiscountedPrice({
+  basePriceToman,
+  percent,
+}: {
+  basePriceToman: number;
+  percent: number;
+}): number {
+  const clampedPercent = Math.min(100, Math.max(0, percent));
+  return Math.max(0, Math.round((basePriceToman * (100 - clampedPercent)) / 100));
+}
+
+/** Computes rounded Cost Per Lead (CPL) in Toman, or `null` when spend is 0 or no leads exist yet. */
+export function computeCostPerLead({ spentToman, count }: { spentToman: number; count: number }): number | null {
+  if (spentToman <= 0 || count <= 0) return null;
+  return Math.round(spentToman / count);
+}
+
+/** Whether a lead counts as a valid (non-cancelled, non-unreachable) lead in campaign effectiveness reports. */
+export function isValidLeadStatus(status: LeadStatus): boolean {
+  return status !== "cancelled" && status !== "unreachable";
+}
+
+const PRIVATE_HOST_PATTERNS = [
+  /^localhost$/i,
+  /^127\./,
+  /^10\./,
+  /^0\./,
+  /^169\.254\./,
+  /^192\.168\./,
+  /^172\.(1[6-9]|2\d|3[0-1])\./,
+  /^::1$/,
+  /^\[::1\]$/,
+  /^fc|^fd|^fe80:/i,
+  /\.local$/i,
+  /\.internal$/i,
+  /\.localhost$/i,
+];
+
+/**
+ * Validates that a CRM/PRM webhook URL uses HTTPS and points to a public host (blocks loopback, link-local, and
+ * RFC1918 private addresses to prevent SSRF from the admin settings form).
+ */
+export function isSafeWebhookUrl(raw: string): boolean {
+  const trimmed = raw.trim();
+  if (!trimmed) return false;
+  try {
+    const parsed = new URL(trimmed);
+    if (parsed.protocol !== "https:") return false;
+    if (parsed.username || parsed.password) return false;
+    const host = parsed.hostname.toLowerCase();
+    if (!host || !host.includes(".")) return false;
+    return !PRIVATE_HOST_PATTERNS.some((pattern) => pattern.test(host));
+  } catch {
+    return false;
+  }
 }

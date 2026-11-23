@@ -5,7 +5,7 @@ import { LEAD_STATUSES, LEAD_TREATMENTS } from "#/orpc/campaign/constants";
 
 /*===== Admin Campaign Search Params =====*/
 
-const ADMIN_TABS = ["leads", "report", "settings"] as const;
+const ADMIN_TABS = ["leads", "ads", "report", "settings"] as const;
 const STATUS_FILTERS = ["all", ...LEAD_STATUSES] as const;
 const TREATMENT_FILTERS = ["all", ...LEAD_TREATMENTS] as const;
 

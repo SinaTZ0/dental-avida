@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CheckIcon, PhoneIcon, SearchIcon } from "lucide-react";
+import { CheckIcon, PhoneIcon, RefreshCwIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 
 import { Badge } from "#/components/primitive/badge/badge";
@@ -16,6 +16,8 @@ import type { CampaignLead } from "#/orpc/campaign/contract";
 import { client, orpc } from "#/orpc/client";
 import { m } from "#/paraglide/messages";
 import {
+  crmSyncBadgeVariant,
+  crmSyncLabel,
   leadStatusBadgeVariant,
   leadStatusLabel,
   leadTreatmentLabel,
@@ -24,7 +26,7 @@ import {
 
 /*===== Lead Row =====*/
 
-function LeadRow({ index, lead }: { index: number; lead: CampaignLead }) {
+function LeadRow({ index, lead, crmEnabled }: { index: number; lead: CampaignLead; crmEnabled: boolean }) {
   const queryClient = useQueryClient();
   const [status, setStatus] = useState<LeadStatus>(lead.status);
   const [notes, setNotes] = useState(lead.notes);
@@ -43,11 +45,21 @@ function LeadRow({ index, lead }: { index: number; lead: CampaignLead }) {
     },
   });
 
+  const retryCrm = useMutation({
+    mutationFn: () => client.campaign.retryLeadCrmSync({ id: lead.id }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: orpc.campaign.adminOverview.key() });
+    },
+  });
+
   const failure = update.error
     ? describeApiFailure({ error: update.error, fallback: m.admin_campaign_lead_save_failed() })
-    : null;
+    : retryCrm.error
+      ? describeApiFailure({ error: retryCrm.error, fallback: m.admin_campaign_crm_retry_failed() })
+      : null;
 
   const isDirty = status !== lead.status || notes !== lead.notes;
+  const crmLabel = crmSyncLabel(lead.crmSyncStatus);
 
   return (
     <div className="grid gap-4 border-b border-border py-5 lg:grid-cols-12 lg:items-start">
@@ -70,10 +82,39 @@ function LeadRow({ index, lead }: { index: number; lead: CampaignLead }) {
         </p>
       </div>
 
-      {/*------ Treatment & Source ------*/}
+      {/*------ Treatment, Source & CRM Sync ------*/}
       <div className="flex flex-wrap items-center gap-2 lg:col-span-3 lg:flex-col lg:items-start">
         <Badge variant="outline">{leadTreatmentLabel(lead.treatment)}</Badge>
         <Badge variant={leadStatusBadgeVariant(lead.status)}>{leadStatusLabel(lead.status)}</Badge>
+        {crmLabel && (
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Badge variant={crmSyncBadgeVariant(lead.crmSyncStatus)}>{crmLabel}</Badge>
+            {crmEnabled && (lead.crmSyncStatus === "failed" || lead.crmSyncStatus === "none") && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="xs"
+                disabled={retryCrm.isPending}
+                onClick={() => retryCrm.mutate()}
+              >
+                <RefreshCwIcon aria-hidden data-icon="inline-start" />
+                <span>{m.admin_campaign_crm_retry()}</span>
+              </Button>
+            )}
+          </div>
+        )}
+        {!crmLabel && crmEnabled && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="xs"
+            disabled={retryCrm.isPending}
+            onClick={() => retryCrm.mutate()}
+          >
+            <RefreshCwIcon aria-hidden data-icon="inline-start" />
+            <span>{m.admin_campaign_crm_retry()}</span>
+          </Button>
+        )}
         <span className="text-caption text-muted-foreground">{sourceLabel(lead.source)}</span>
       </div>
 
@@ -135,12 +176,14 @@ function LeadRow({ index, lead }: { index: number; lead: CampaignLead }) {
 
 export function LeadsLedger({
   leads,
+  crmEnabled,
   statusFilter,
   treatmentFilter,
   query,
   onFilterChange,
 }: {
   leads: readonly CampaignLead[];
+  crmEnabled: boolean;
   statusFilter: "all" | LeadStatus;
   treatmentFilter: "all" | LeadTreatment;
   query: string;
@@ -227,7 +270,7 @@ export function LeadsLedger({
       ) : (
         <div className="border-t border-border">
           {filtered.map((lead, idx) => (
-            <LeadRow key={lead.id} index={idx + 1} lead={lead} />
+            <LeadRow key={lead.id} index={idx + 1} lead={lead} crmEnabled={crmEnabled} />
           ))}
         </div>
       )}
