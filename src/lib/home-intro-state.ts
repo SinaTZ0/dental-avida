@@ -3,6 +3,7 @@
 // arrivals, while any prior visit or client-side navigation from another route skips it.
 
 let homeIntroConsumed = false;
+const completionListeners = new Set<() => void>();
 
 export function canPlayHomeIntro() {
   return !homeIntroConsumed;
@@ -10,4 +11,19 @@ export function canPlayHomeIntro() {
 
 export function markHomeIntroConsumed() {
   homeIntroConsumed = true;
+}
+
+/** Notify subscribers that the full-screen carved smile load intro has completed normally. */
+export function notifyHomeIntroCompleted() {
+  for (const listener of completionListeners) {
+    listener();
+  }
+}
+
+/** Subscribe to normal completion of the homepage load intro. Returns an unsubscribe function. */
+export function onHomeIntroCompleted(listener: () => void) {
+  completionListeners.add(listener);
+  return () => {
+    completionListeners.delete(listener);
+  };
 }

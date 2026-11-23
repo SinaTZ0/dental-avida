@@ -5,7 +5,7 @@ import {
   AVIDA_SMILE_STAR_PATH,
   AVIDA_SMILE_VIEWBOX,
 } from "#/components/shared/avida-smile/avida-smile";
-import { canPlayHomeIntro, markHomeIntroConsumed } from "#/lib/home-intro-state";
+import { canPlayHomeIntro, markHomeIntroConsumed, notifyHomeIntroCompleted } from "#/lib/home-intro-state";
 import { getLocale, getTextDirection } from "#/paraglide/runtime";
 
 /*===== Intro Geometry & Timing =====*/
@@ -217,6 +217,7 @@ export function HomeSmileIntro() {
       if (elapsed >= TOTAL_DURATION_MS) {
         restoreHeroSmile();
         markHomeIntroConsumed();
+        notifyHomeIntroCompleted();
         setActive(false);
         return false;
       }

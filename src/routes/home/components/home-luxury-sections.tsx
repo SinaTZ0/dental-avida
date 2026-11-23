@@ -35,19 +35,31 @@ const highlights = [
 
 export function HomeHighlights() {
   return (
-    <section aria-label={m.home_highlights_label()} className="home-dock-wrap home-shell">
-      {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
-      <ol className="home-dock home-glass-smoked" role="list">
-        {highlights.map(({ id, title, body }, index) => (
-          <li key={id} className="home-dock-cell">
-            <span className="home-discipline-num text-caption tabular-nums" aria-hidden>
-              {formatNumber(index + 1).padStart(2, "۰")}
-            </span>
-            <h2 className="mt-2 text-h4 text-brand-surface-foreground">{title()}</h2>
-            <p className="mt-1 text-body-sm text-brand-surface-muted">{body()}</p>
-          </li>
-        ))}
-      </ol>
+    <section aria-labelledby="home-highlights-title" className="home-dock-wrap">
+      <div className="home-dock-layout home-shell">
+        <div className="home-dock-intro">
+          <p className="home-kicker home-kicker-dark">{m.home_highlights_label()}</p>
+          <h2 id="home-highlights-title" className="home-dock-heading text-brand-surface-foreground">
+            {m.home_highlights_title()}
+          </h2>
+          <p className="home-dock-lead">{m.home_highlights_intro()}</p>
+        </div>
+
+        {/* oxlint-disable-next-line jsx-a11y/no-redundant-roles -- WebKit can drop list semantics when markers are hidden. */}
+        <ol className="home-dock" role="list">
+          {highlights.map(({ id, title, body }, index) => (
+            <li key={id} className="home-dock-cell">
+              <span className="home-dock-num tabular-nums" aria-hidden>
+                {formatNumber(index + 1).padStart(2, "۰")}
+              </span>
+              <div className="home-dock-copy">
+                <h3 className="home-dock-title text-brand-surface-foreground">{title()}</h3>
+                <p className="home-dock-body">{body()}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }
