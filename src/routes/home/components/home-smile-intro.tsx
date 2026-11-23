@@ -5,6 +5,7 @@ import {
   AVIDA_SMILE_STAR_PATH,
   AVIDA_SMILE_VIEWBOX,
 } from "#/components/shared/avida-smile/avida-smile";
+import { useEffectiveCampaign } from "#/components/shared/campaign/use-effective-campaign";
 import { canPlayHomeIntro, markHomeIntroConsumed, notifyHomeIntroCompleted } from "#/lib/home-intro-state";
 import { getLocale, getTextDirection } from "#/paraglide/runtime";
 
@@ -68,10 +69,12 @@ function easeInVeilFade(t: number) {
  */
 export function HomeSmileIntro() {
   const maskId = useId();
+  const { effectiveCampaign } = useEffectiveCampaign();
+  const campaignHeroActive = effectiveCampaign.themeActive && effectiveCampaign.status === "active";
   const isLtrInitial = getTextDirection(getLocale()) === "ltr";
-  // On SSR and initial hydration `canPlayHomeIntro()` is always true; after internal navigation it is false so the
-  // overlay never mounts when returning to `/`.
-  const [active, setActive] = useState(canPlayHomeIntro);
+  // Skip the carved-smile veil while the Black Friday hero carousel opens on campaign slides (the smile lives on the
+  // last slide). On normal clinic loads, `canPlayHomeIntro()` starts active with zero flash.
+  const [active, setActive] = useState(() => !campaignHeroActive && canPlayHomeIntro());
 
   const overlayRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -93,6 +96,7 @@ export function HomeSmileIntro() {
     };
 
     if (
+      campaignHeroActive ||
       !canPlayHomeIntro() ||
       window.matchMedia(REDUCED_MOTION_QUERY).matches ||
       // Skip when landing on a hash anchor or restored mid-page scroll where the hero mark isn't in view.
@@ -121,7 +125,9 @@ export function HomeSmileIntro() {
       initialRect.width <= 0 ||
       initialRect.height <= 0 ||
       initialRect.bottom < 0 ||
-      initialRect.top > window.innerHeight
+      initialRect.top > window.innerHeight ||
+      initialRect.right <= 0 ||
+      initialRect.left >= window.innerWidth
     ) {
       scheduleDismiss();
       return () => window.cancelAnimationFrame(rafId);
@@ -247,7 +253,7 @@ export function HomeSmileIntro() {
       window.cancelAnimationFrame(rafId);
       restoreHeroSmile();
     };
-  }, [active]);
+  }, [active, campaignHeroActive]);
 
   if (!active) return null;
 

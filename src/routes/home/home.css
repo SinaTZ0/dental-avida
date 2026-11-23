@@ -296,6 +296,171 @@
   padding-block-start: 9.25rem;
 }
 
+/*------ Black Friday Hero Carousel & Offer Slides ------*/
+
+.home-hero-carousel .home-hero-inner {
+  min-block-size: clamp(39.5rem, 52vw, 48rem);
+}
+
+.home-hero-carousel .home-hero-copy {
+  padding-block: 8.75rem 9.75rem;
+}
+
+.home-hero-bf-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: left center;
+  opacity: 0.96;
+  pointer-events: none;
+}
+
+.home-hero-bf-scrim {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    var(--hero-surface) 0%,
+    color-mix(in srgb, var(--hero-surface) 95%, transparent) 38%,
+    color-mix(in srgb, var(--hero-surface) 46%, transparent) 60%,
+    color-mix(in srgb, var(--hero-surface) 6%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
+:dir(ltr) .home-hero-bf-art {
+  object-position: right center;
+  transform: scaleX(-1);
+}
+
+:dir(ltr) .home-hero-bf-scrim {
+  background: linear-gradient(
+    to right,
+    var(--hero-surface) 0%,
+    color-mix(in srgb, var(--hero-surface) 95%, transparent) 38%,
+    color-mix(in srgb, var(--hero-surface) 46%, transparent) 60%,
+    color-mix(in srgb, var(--hero-surface) 6%, transparent) 100%
+  );
+}
+
+.home-hero-offer-metrics {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.5rem;
+  padding-block: 0.95rem;
+  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 30%, var(--border));
+}
+
+.home-hero-carousel-dock {
+  position: absolute;
+  z-index: 12;
+  inset-inline: 0;
+  inset-block-end: clamp(3.4rem, 4.4vw, 4.4rem);
+}
+
+.home-hero-carousel-bar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-gold) 36%, var(--border));
+  border-block-end: 1px solid color-mix(in srgb, var(--border) 75%, transparent);
+  background: color-mix(in srgb, var(--hero-surface) 84%, transparent);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  padding-inline: 0.75rem;
+  padding-block: 0.35rem;
+}
+
+.home-hero-carousel-tabs {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.home-hero-carousel-tab {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  min-block-size: 2.75rem;
+  min-inline-size: 0;
+  align-items: center;
+  gap: 0.45rem;
+  padding-inline: 0.85rem;
+  color: var(--muted-foreground);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.home-hero-carousel-tab + .home-hero-carousel-tab {
+  border-inline-start: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
+
+.home-hero-carousel-tab::before {
+  position: absolute;
+  inset-block-start: -0.35rem;
+  inset-inline: 0;
+  block-size: 2px;
+  background: transparent;
+  content: "";
+  transition: background-color 150ms ease;
+}
+
+.home-hero-carousel-tab:hover {
+  color: var(--foreground);
+}
+
+.home-hero-carousel-tab[data-active="true"] {
+  background: color-mix(in srgb, var(--brand-gold) 10%, transparent);
+  color: var(--foreground);
+}
+
+.home-hero-carousel-tab[data-active="true"]::before {
+  background: var(--brand-gold);
+}
+
+.home-hero-carousel-tab:focus-visible,
+.home-hero-carousel-pip:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.home-hero-carousel-tab-num {
+  flex: none;
+  color: var(--brand-gold);
+  font-weight: 900;
+}
+
+.home-hero-carousel-tab-accent {
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--brand-gold);
+  font-weight: 800;
+}
+
+.home-hero-carousel-pip {
+  flex: 1;
+  block-size: 0.25rem;
+  min-block-size: 0.25rem;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--foreground) 22%, transparent);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.home-hero-carousel-pip[data-active="true"] {
+  background: var(--brand-gold);
+}
+
 [data-campaign="black-friday"] .home-tag-chip,
 [data-campaign="black-friday"] .home-photo-plate-wrap,
 [data-campaign="black-friday"] .home-photo-plate,
@@ -548,6 +713,39 @@
     object-position: center 22%;
     mask-image: none;
     transform: none;
+  }
+
+  .home-hero-carousel .home-hero-slide {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-hero-carousel .home-hero-inner {
+    min-block-size: auto;
+  }
+
+  .home-hero-carousel .home-hero-copy {
+    padding-block: 10.25rem 1.5rem;
+  }
+
+  .home-hero-bf-art {
+    position: static;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 10;
+    object-position: left center;
+    transform: none;
+  }
+
+  .home-hero-bf-scrim {
+    display: none;
+  }
+
+  .home-hero-carousel-dock {
+    position: relative;
+    inset-block-end: auto;
+    padding-block: 0.75rem 3.5rem;
+    background: var(--hero-surface);
   }
 
   .home-hero-river {

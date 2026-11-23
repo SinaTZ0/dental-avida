@@ -17,6 +17,8 @@ type CarouselProps = {
   opts?: Parameters<typeof useEmblaCarousel>[0];
   plugins?: Parameters<typeof useEmblaCarousel>[1];
   orientation?: "horizontal" | "vertical";
+  /** Removes the default inter-slide gutter for full-bleed hero slides. */
+  bleed?: boolean;
   setApi?: (api: CarouselApi) => void;
 };
 
@@ -43,6 +45,7 @@ export function useCarousel() {
 
 export function Carousel({
   orientation = "horizontal",
+  bleed = false,
   opts,
   setApi,
   plugins,
@@ -93,7 +96,7 @@ export function Carousel({
 
   return (
     <CarouselContext.Provider
-      value={{ carouselRef, api, opts, orientation, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}
+      value={{ carouselRef, api, opts, orientation, bleed, scrollPrev, scrollNext, canScrollPrev, canScrollNext }}
     >
       <section
         onKeyDownCapture={handleKeyDown}
@@ -112,8 +115,15 @@ export function Carousel({
 /*===== Slides =====*/
 
 export function CarouselContent({ className, ...props }: ComponentProps<"div">) {
-  const { carouselRef, orientation } = useCarousel();
-  const axisStyles = orientation === "horizontal" ? twCarousel.horizontalTrack : twCarousel.verticalTrack;
+  const { carouselRef, orientation, bleed } = useCarousel();
+  const axisStyles =
+    orientation === "horizontal"
+      ? bleed
+        ? twCarousel.horizontalBleedTrack
+        : twCarousel.horizontalTrack
+      : bleed
+        ? twCarousel.verticalBleedTrack
+        : twCarousel.verticalTrack;
 
   return (
     <div ref={carouselRef} className={joinStyles(twCarousel.viewport)} data-slot="carousel-content">
@@ -123,8 +133,8 @@ export function CarouselContent({ className, ...props }: ComponentProps<"div">) 
 }
 
 export function CarouselItem({ className, ...props }: ComponentProps<"div">) {
-  const { orientation } = useCarousel();
-  const axisStyles = orientation === "horizontal" ? twCarousel.horizontalItem : twCarousel.verticalItem;
+  const { orientation, bleed } = useCarousel();
+  const axisStyles = bleed ? null : orientation === "horizontal" ? twCarousel.horizontalItem : twCarousel.verticalItem;
 
   return (
     <div
@@ -132,7 +142,7 @@ export function CarouselItem({ className, ...props }: ComponentProps<"div">) {
       role="group"
       aria-roledescription={m.common_carousel_slide()}
       data-slot="carousel-item"
-      className={cn(joinStyles(twCarousel.item), joinStyles(axisStyles), className)}
+      className={cn(joinStyles(twCarousel.item), axisStyles && joinStyles(axisStyles), className)}
       {...props}
     />
   );
