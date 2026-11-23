@@ -20,7 +20,16 @@ import {
 
 /*===== Select =====*/
 
-const Select = SelectPrimitive.Root;
+/**
+ * Defaults to `modal={false}` (paired with `alignItemWithTrigger={false}` on `SelectContent`) so opening a select
+ * never locks document scroll or causes horizontal/sticky layout shift when scrollbars hide.
+ */
+function Select<Value, Multiple extends boolean | undefined = false>({
+  modal = false,
+  ...props
+}: SelectPrimitive.Root.Props<Value, Multiple>) {
+  return <SelectPrimitive.Root modal={modal} {...props} />;
+}
 
 export type SelectTriggerProps = SelectPrimitive.Trigger.Props & VariantProps<typeof selectTriggerVariants>;
 export type SelectContentProps = SelectPrimitive.Popup.Props &
@@ -50,7 +59,7 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 
 /**
  * Renders the portal, positioner, and popup together.
- * By default the popup is aligned over the trigger so the selected item sits on top of it, like a native select.
+ * Anchors below the trigger by default (`alignItemWithTrigger={false}`) so Base UI does not lock document scroll.
  */
 function SelectContent({
   className,
@@ -59,7 +68,7 @@ function SelectContent({
   sideOffset = 4,
   align = "center",
   alignOffset = 0,
-  alignItemWithTrigger = true,
+  alignItemWithTrigger = false,
   ...props
 }: SelectContentProps) {
   return (
