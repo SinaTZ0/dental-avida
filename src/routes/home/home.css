@@ -276,6 +276,26 @@
     var(--hero-surface);
 }
 
+/* Reversible Black Friday hero atmosphere & clearance for the top announcement ribbon. */
+[data-campaign="black-friday"] .home-hero {
+  background:
+    radial-gradient(
+      ellipse 46% 62% at 14% 20%,
+      color-mix(in srgb, var(--campaign-crimson) 24%, transparent),
+      transparent 64%
+    ),
+    radial-gradient(
+      ellipse 52% 68% at 86% 18%,
+      color-mix(in srgb, var(--brand-gold) 18%, transparent),
+      transparent 66%
+    ),
+    var(--hero-surface);
+}
+
+[data-campaign="black-friday"] .home-hero-copy {
+  padding-block-start: 9.25rem;
+}
+
 .home-hero-inner {
   min-block-size: clamp(35rem, 48vw, 44rem);
 }
@@ -359,12 +379,27 @@
   color: var(--brand-gold);
 }
 
+.dark .home-hero-smile [data-smile-cavity] {
+  fill: color-mix(in srgb, var(--background) 80%, black);
+}
+
+.dark .home-hero-smile [data-smile-dividers] {
+  stroke: var(--background);
+  stroke-opacity: 0.32;
+  stroke-width: 0.95;
+}
+
+.dark .home-hero-smile [data-smile-rim] {
+  stroke-opacity: 0.92;
+}
+
 .dark .home-hero-smile [data-smile-star] {
   fill: var(--brand-surface-foreground);
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--brand-surface-gold) 65%, transparent));
 }
 
 .dark .home-hero-smile [data-smile-rays] {
-  stroke: var(--brand-surface-foreground);
+  stroke: var(--brand-surface-gold);
 }
 
 .home-hero-photo {

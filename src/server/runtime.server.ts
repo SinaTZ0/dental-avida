@@ -1,6 +1,8 @@
 import { Layer, ManagedRuntime } from "effect";
 import type { Effect } from "effect";
 
+import { CampaignRepo } from "#/orpc/campaign/repository";
+import { CampaignService } from "#/orpc/campaign/service";
 import { MediaRepo } from "#/orpc/media/repository";
 import { MediaService } from "#/orpc/media/service";
 import { NoteRepo } from "#/orpc/note/repository";
@@ -41,9 +43,14 @@ type OutsideServices = {
 const ObservabilityLive = RequestSpansLive.pipe(Layer.provideMerge(ExportLive), Layer.provideMerge(LoggerLive));
 
 /** The features' repositories and services. A service may use another feature's service (`note` uses `media`). */
-const FeaturesLive = Layer.mergeAll(NoteService.layer, ReviewService.layer, SessionService.layer).pipe(
+const FeaturesLive = Layer.mergeAll(
+  CampaignService.layer,
+  NoteService.layer,
+  ReviewService.layer,
+  SessionService.layer,
+).pipe(
   Layer.provideMerge(MediaService.layer),
-  Layer.provideMerge(Layer.mergeAll(NoteRepo.layer, ReviewRepo.layer, MediaRepo.layer)),
+  Layer.provideMerge(Layer.mergeAll(CampaignRepo.layer, NoteRepo.layer, ReviewRepo.layer, MediaRepo.layer)),
 );
 
 /**

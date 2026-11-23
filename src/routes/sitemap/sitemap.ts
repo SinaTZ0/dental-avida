@@ -10,7 +10,7 @@ type SitemapEntry = { path: string; lastModified?: Date };
 
 // Every public page meant for search results, by its plain path (no locale prefix). Pages with
 // `pageMeta({ index: false })` stay out.
-const STATIC_ENTRIES: SitemapEntry[] = [{ path: "/" }];
+const STATIC_ENTRIES: SitemapEntry[] = [{ path: "/" }, { path: "/black-friday" }, { path: "/privacy" }];
 
 /*===== sitemap.xml =====*/
 /**

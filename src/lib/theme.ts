@@ -15,7 +15,7 @@ const CHANGE_EVENT = "app:theme-change";
  * Runs before the page paints, so neither theme flashes. The server can't know the system
  * preference, so this has to happen in the browser. Mirrors `resolveTheme` and `applyTheme`.
  */
-export const THEME_INIT_SCRIPT = `(function(){try{var s=localStorage.getItem(${JSON.stringify(STORAGE_KEY)});var d=s==="dark"||(s!=="light"&&matchMedia(${JSON.stringify(DARK_QUERY)}).matches);var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()`;
+export const THEME_INIT_SCRIPT = `(function(){try{var r=document.documentElement;if(r.dataset.campaign==="black-friday"){r.classList.add("dark");r.style.colorScheme="dark";return}var s=localStorage.getItem(${JSON.stringify(STORAGE_KEY)});var d=s==="dark"||(s!=="light"&&matchMedia(${JSON.stringify(DARK_QUERY)}).matches);r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light"}catch(e){}})()`;
 
 /*===== Helpers =====*/
 function readSavedTheme(): Theme | null {
@@ -57,6 +57,22 @@ export function setTheme(theme: Theme) {
 }
 
 /**
+ * Syncs the reversible Black Friday campaign theme attribute on `<html>`. While active, forces `.dark` without
+ * overwriting the user's saved `localStorage` preference; once inactive, restores the saved or system theme.
+ */
+export function syncCampaignTheme(active: boolean) {
+  const root = document.documentElement;
+  if (active) {
+    root.dataset.campaign = "black-friday";
+    applyTheme("dark");
+  } else {
+    delete root.dataset.campaign;
+    applyTheme(resolveTheme());
+  }
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}
+
+/**
  * Subscribes to theme changes: the toggle, a system change (only while no choice is saved), and
  * a choice made in another tab. Shaped for `useSyncExternalStore`.
  */
@@ -64,11 +80,13 @@ export function subscribeToTheme(onChange: () => void): () => void {
   const media = matchMedia(DARK_QUERY);
 
   const handleSystemChange = () => {
+    if (document.documentElement.dataset.campaign === "black-friday") return;
     if (readSavedTheme()) return;
     applyTheme(resolveTheme());
     onChange();
   };
   const handleStorage = (event: StorageEvent) => {
+    if (document.documentElement.dataset.campaign === "black-friday") return;
     if (event.key !== STORAGE_KEY) return;
     applyTheme(resolveTheme());
     onChange();

@@ -1,0 +1,116 @@
+/*===== Black Friday & Mother's Day Dedicated Page =====*/
+
+.bf-hero {
+  position: relative;
+  overflow: hidden;
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 30%, var(--border));
+  background:
+    radial-gradient(
+      ellipse 48% 66% at 15% 24%,
+      color-mix(in srgb, var(--campaign-crimson) 26%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 52% 62% at 86% 18%,
+      color-mix(in srgb, var(--brand-gold) 18%, transparent),
+      transparent 66%
+    ),
+    var(--hero-surface);
+}
+
+.bf-hero-art {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: left center;
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+.bf-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--background) 92%, transparent) 0%,
+    color-mix(in srgb, var(--background) 78%, transparent) 48%,
+    color-mix(in srgb, var(--background) 38%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
+.bf-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--brand-surface-gold);
+  font-size: var(--text-kicker);
+  font-weight: 700;
+}
+
+.bf-kicker::before {
+  inline-size: 1.75rem;
+  block-size: 2px;
+  border-radius: 999px;
+  background: linear-gradient(to left, var(--campaign-crimson), var(--brand-gold));
+  content: "";
+}
+
+/*===== Ruled Editorial Discount Ledger =====*/
+
+.bf-ledger {
+  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 35%, var(--border));
+}
+
+.bf-ledger-row {
+  border-block-start: 1px solid var(--border);
+  transition: background-color 150ms ease;
+}
+
+.bf-ledger-row:hover {
+  background: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.bf-percent-cash {
+  color: var(--campaign-crimson-foreground);
+  background: var(--campaign-crimson);
+  font-variant-numeric: tabular-nums;
+}
+
+.bf-percent-installment {
+  color: var(--brand-surface-gold);
+  background: color-mix(in srgb, var(--brand-gold) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 38%, transparent);
+  font-variant-numeric: tabular-nums;
+}
+
+/*===== Lead Band =====*/
+
+.bf-lead-band {
+  border-block-start: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
+  background:
+    radial-gradient(
+      ellipse 45% 58% at 90% 10%,
+      color-mix(in srgb, var(--campaign-crimson) 14%, transparent),
+      transparent 65%
+    ),
+    color-mix(in srgb, var(--secondary) 55%, var(--background));
+}
+
+.bf-honeypot {
+  position: absolute;
+  inset-inline-start: -9999px;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bf-ledger-row {
+    transition: none;
+  }
+}

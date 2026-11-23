@@ -76,7 +76,7 @@ function ClinicContact() {
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ campaignActive = false }: { campaignActive?: boolean }) {
   return (
     <footer className="border-t border-brand-surface-gold/30 bg-brand-surface text-brand-surface-foreground">
       <div className="mx-auto max-w-site-wide px-4 pt-10 pb-6 sm:px-6 sm:pt-14 sm:pb-7">
@@ -99,6 +99,16 @@ export function SiteFooter() {
         <div className="flex flex-col gap-3 border-t border-brand-surface-muted/25 pt-4 md:flex-row md:items-center md:justify-between">
           <nav aria-label={m.nav_footer()}>
             <ul className="flex flex-wrap gap-x-5 gap-y-1">
+              {campaignActive && (
+                <li>
+                  <Link
+                    to="/black-friday"
+                    className={`${footerLinkClass} text-nav font-semibold text-brand-surface-gold`}
+                  >
+                    {m.nav_campaign()}
+                  </Link>
+                </li>
+              )}
               {footerSections.map(([hash, label]) => (
                 <li key={hash}>
                   <Link to="/" hash={hash} className={`${footerLinkClass} text-nav`}>
@@ -106,6 +116,11 @@ export function SiteFooter() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link to="/privacy" className={`${footerLinkClass} text-nav`}>
+                  {m.nav_privacy()}
+                </Link>
+              </li>
             </ul>
           </nav>
           <p className="text-caption text-brand-surface-muted">{m.site_footer_copyright()}</p>

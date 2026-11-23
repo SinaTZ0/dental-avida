@@ -25,7 +25,7 @@ const twVariant = defineStyles({
     hover: "[a]:hover:bg-accent/70",
   },
   gold: {
-    appearance: "bg-gold text-gold-foreground",
+    appearance: "text-gold-foreground bg-gold",
     hover: "[a]:hover:bg-gold-hover",
   },
   secondary: {
@@ -40,6 +40,12 @@ const twVariant = defineStyles({
   warning: { appearance: "bg-warning-surface text-warning" },
   info: { appearance: "bg-info-surface text-info" },
   destructive: { appearance: "bg-destructive-surface text-destructive" },
+  crimson: {
+    appearance: "border-campaign-crimson/40 bg-campaign-crimson-surface text-campaign-crimson-foreground",
+  },
+  "crimson-solid": {
+    appearance: "bg-campaign-crimson text-campaign-crimson-foreground",
+  },
 });
 
 /*===== Class Composition =====*/

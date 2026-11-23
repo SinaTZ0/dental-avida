@@ -549,5 +549,251 @@
   ],
   "review_error_pathname_invalid": "مسیر صفحه باید با / شروع شود.",
   "review_error_box_too_small": "کادر انتخاب‌شده خیلی کوچک است. کادر بزرگ‌تری بکشید.",
-  "review_error_not_found": "این بازخورد پیدا نشد."
+  "review_error_not_found": "این بازخورد پیدا نشد.",
+  "nav_campaign": "جشنواره بلک فرایدی",
+  "nav_admin_campaign": "مدیریت کمپین",
+  "nav_privacy": "حریم خصوصی",
+  "campaign_ribbon_badge": "جشنواره بلک فرایدی و روز مادر",
+  "campaign_ribbon_offer": [
+    {
+      "declarations": [
+        "input percent",
+        "input remaining",
+        "local percentText = percent: number",
+        "local remainingText = remaining: number"
+      ],
+      "match": {
+        "": "تا {percentText}٪ تخفیف • فقط {remainingText} نفر باقی‌مانده"
+      }
+    }
+  ],
+  "campaign_ribbon_offer_compact": [
+    {
+      "declarations": ["input percent", "local percentText = percent: number"],
+      "match": {
+        "": "تا {percentText}٪ تخفیف ویژه"
+      }
+    }
+  ],
+  "campaign_ribbon_cta": "مشاهده تخفیفات",
+  "campaign_countdown_days": "روز",
+  "campaign_countdown_hours": "ساعت",
+  "campaign_countdown_minutes": "دقیقه",
+  "campaign_countdown_seconds": "ثانیه",
+  "campaign_countdown_until": "مهلت ثبت‌نام تا پایان ۱۲ آذر ۱۴۰۵",
+  "campaign_ended_message": "مهلت ثبت‌نام در جشنواره به پایان رسیده است",
+  "campaign_upcoming_message": "جشنواره ویژه به‌زودی آغاز می‌شود",
+  "campaign_sold_out_message": "ظرفیت ویژهٔ این جشنواره تکمیل شده است",
+  "campaign_modal_kicker": "فرصت محدود • ۱ تا ۱۲ آذر ۱۴۰۵",
+  "campaign_modal_title": "جشنواره ویژه بلک فرایدی و روز مادر",
+  "campaign_modal_capacity_headline": [
+    {
+      "declarations": [
+        "input total",
+        "input maxPercent",
+        "local totalText = total: number",
+        "local maxPercentText = maxPercent: number"
+      ],
+      "match": {
+        "": "ظرفیت ویژه جشنواره: فقط {totalText} نفر تا {maxPercentText}٪ تخفیف"
+      }
+    }
+  ],
+  "campaign_modal_remaining": [
+    {
+      "declarations": [
+        "input remaining",
+        "input total",
+        "local remainingText = remaining: number",
+        "local totalText = total: number"
+      ],
+      "match": {
+        "": "ظرفیت باقی‌مانده: {remainingText} نفر از {totalText} نفر"
+      }
+    }
+  ],
+  "campaign_modal_body": "درمان‌های تخصصی ایمپلنت دیجیتال و لمینیت سرامیکی با شرایط ویژهٔ نقدی و اقساطی در کلینیک آویدا. به دلیل محدودیت ظرفیت، اولویت تماس با ثبت‌نام‌های زودتر است.",
+  "campaign_modal_cta": "مشاهده تخفیفات و دریافت مشاوره",
+  "campaign_modal_dismiss": "فعلاً نه، ادامهٔ بازدید از سایت",
+  "campaign_page_meta_title": "جشنواره تخفیفات بلک فرایدی و روز مادر",
+  "campaign_page_meta_description": "تخفیفات استثنایی بلک فرایدی و روز مادر کلینیک تخصصی دندان‌پزشکی آویدا برای ایمپلنت و لمینیت با ظرفیت محدود ۵۱ نفر.",
+  "campaign_page_kicker": "جشنواره ۱ تا ۱۲ آذر ۱۴۰۵ • کلینیک تخصصی آویدا",
+  "campaign_page_title": "تخفیفات استثنایی بلک فرایدی و روز مادر",
+  "campaign_page_intro": "فرصتی محدود برای استفاده از خدمات زیبایی و درمانی. درمان لمینیت و ایمپلنت با تخفیفات ویژه. برای اطلاع از شرایط جشنواره و دریافت مشاوره اختصاصی، اطلاعات تماس خود را ثبت کنید.",
+  "campaign_page_capacity_label": "وضعیت ظرفیت جشنواره",
+  "campaign_page_spots_left": [
+    {
+      "declarations": ["input remaining", "local remainingText = remaining: number"],
+      "match": {
+        "": "{remainingText} نفر ظرفیت باقی‌مانده"
+      }
+    }
+  ],
+  "campaign_page_up_to_discount": [
+    {
+      "declarations": ["input percent", "local percentText = percent: number"],
+      "match": {
+        "": "تا {percentText}٪ تخفیف ویژه"
+      }
+    }
+  ],
+  "campaign_page_jump_form": "ثبت شماره تماس و مشاوره رایگان",
+  "campaign_table_kicker": "فهرست تخفیفات جشنواره",
+  "campaign_table_title": "جدول تخفیفات نقدی و اقساطی",
+  "campaign_table_note": "تخفیف‌های زیر ویژهٔ متقاضیان تأییدشده در بازهٔ جشنواره و تا تکمیل ظرفیت محدود ۵۱ نفر است.",
+  "campaign_table_col_treatment": "نام درمان",
+  "campaign_table_col_cash": "درصد تخفیفات نقدی",
+  "campaign_table_col_installment": "درصد تخفیفات اقساطی",
+  "campaign_percent_value": [
+    {
+      "declarations": ["input percent", "local percentText = percent: number"],
+      "match": {
+        "": "{percentText}٪"
+      }
+    }
+  ],
+  "campaign_form_kicker": "ثبت درخواست سریع",
+  "campaign_form_title": "برای دریافت مشاوره رایگان و اطلاع از شرایط تخفیفات نقدی و اقساط، شماره تماس خود را ثبت کنید.",
+  "campaign_form_name_label": "نام و نام خانوادگی",
+  "campaign_form_name_placeholder": "مثلاً سارا احمدی",
+  "campaign_form_phone_label": "شماره تماس",
+  "campaign_form_phone_placeholder": "09123456789",
+  "campaign_form_treatment_label": "درمان موردنظر",
+  "campaign_form_treatment_placeholder": "درمان موردنظر را انتخاب کنید",
+  "campaign_treatment_implant_fixture": "پایه ایمپلنت",
+  "campaign_treatment_implant_with_crown": "پایه ایمپلنت همراه با روکش",
+  "campaign_treatment_laminate": "لمینیت",
+  "campaign_treatment_both_consultation": "هر دو درمان / نیاز به مشاوره",
+  "campaign_form_consent_prefix": "موافقت می‌کنم اطلاعات تماس من جهت ارائهٔ مشاوره و پیگیری شرایط جشنواره توسط کارشناسان کلینیک آویدا ثبت شود و ",
+  "campaign_form_consent_link": "سیاست حریم خصوصی",
+  "campaign_form_consent_suffix": " را مطالعه کرده‌ام.",
+  "campaign_form_submit": "ثبت درخواست و دریافت تماس مشاور",
+  "campaign_form_submitting": "در حال ثبت درخواست...",
+  "campaign_form_submit_failed": "ثبت درخواست انجام نشد. لطفاً دوباره امتحان کنید.",
+  "campaign_form_success_title": "درخواست شما با موفقیت ثبت شد",
+  "campaign_form_success_body": "درخواست شما با موفقیت ثبت شد. کارشناسان مشاوره ما در اولین فرصت برای ارائه توضیحات درباره تخفیفات و شرایط جشنواره با شما تماس خواهند گرفت.",
+  "campaign_form_reservation_disclaimer": "توجه: ثبت فرم به معنای رزرو قطعی ظرفیت نیست؛ رزرو نهایی پس از تماس و تأیید تیم مربوطه انجام می‌شود.",
+  "campaign_form_duplicate_title": "شمارهٔ شما قبلاً ثبت شده است",
+  "campaign_form_duplicate_body": "این شماره تماس پیش‌تر برای جشنواره ثبت شده و در صف تماس کارشناسان مشاوره ما قرار دارد. نیازی به ثبت مجدد نیست.",
+  "campaign_form_back_home": "بازگشت به صفحهٔ اصلی کلینیک",
+  "campaign_ended_body": "مهلت یا ظرفیت این جشنواره به پایان رسیده است. همچنان می‌توانید برای معاینه، مشاوره و رزرو وقت عادی با کلینیک دندان‌پزشکی آویدا در ارتباط باشید.",
+  "campaign_ended_cta": "بازگشت و مشاهدهٔ خدمات کلینیک",
+  "campaign_error_name_required": "نام و نام خانوادگی را وارد کنید.",
+  "campaign_error_name_too_long": [
+    {
+      "declarations": ["input max", "local maxText = max: number"],
+      "match": {
+        "": "نام و نام خانوادگی حداکثر {maxText} حرف است."
+      }
+    }
+  ],
+  "campaign_error_phone_required": "شماره تماس را وارد کنید.",
+  "campaign_error_phone_invalid": "شماره تماس معتبر وارد کنید (مثلاً ۰۹۱۲۳۴۵۶۷۸۹).",
+  "campaign_error_treatment_required": "درمان موردنظر را انتخاب کنید.",
+  "campaign_error_consent_required": "برای ثبت درخواست، تأیید رضایت تماس و حریم خصوصی الزامی است.",
+  "campaign_error_duplicate_phone": "این شماره تماس قبلاً برای جشنواره ثبت شده است و در صف تماس کارشناسان قرار دارد.",
+  "campaign_error_inactive": "مهلت ثبت‌نام در جشنواره به پایان رسیده است.",
+  "campaign_error_notes_too_long": [
+    {
+      "declarations": ["input max", "local maxText = max: number"],
+      "match": {
+        "": "یادداشت مشاور حداکثر {maxText} نویسه است."
+      }
+    }
+  ],
+  "campaign_error_invalid_dates": "تاریخ پایان کمپین باید پس از تاریخ شروع باشد.",
+  "campaign_error_invalid_capacity": "ظرفیت کمپین باید عددی بین ۱ تا ۵۰۰۰ باشد.",
+  "campaign_error_invalid_interval": "بازهٔ کاهش ظرفیت باید عددی بین ۱ تا ۱۰۰۸۰ دقیقه باشد.",
+  "campaign_error_invalid_percent": "درصد تخفیف باید عددی بین ۰ تا ۹۰ باشد.",
+  "campaign_error_invalid_email": "نشانی ایمیل اطلاع‌رسانی معتبر نیست.",
+  "campaign_error_lead_not_found": "این درخواست پیدا نشد.",
+  "privacy_meta_title": "سیاست حریم خصوصی",
+  "privacy_meta_description": "نحوهٔ دریافت، نگهداری امن و استفاده از اطلاعات تماس مراجعه‌کنندگان در کلینیک تخصصی دندان‌پزشکی آویدا.",
+  "privacy_kicker": "محرمانگی و امنیت اطلاعات",
+  "privacy_title": "سیاست حریم خصوصی کلینیک دندان‌پزشکی آویدا",
+  "privacy_intro": "کلینیک تخصصی دندان‌پزشکی آویدا به حریم خصوصی و امنیت اطلاعات تماس شما پایبند است. در این صفحه توضیح می‌دهیم هنگام ثبت درخواست مشاوره یا شرکت در جشنواره‌ها چه اطلاعاتی ذخیره می‌شود و چگونه از آن محافظت می‌کنیم.",
+  "privacy_section_collect_title": "چه اطلاعاتی ثبت می‌شود؟",
+  "privacy_section_collect_body": "در فرم‌های مشاوره و جشنواره تنها اطلاعات ضروری برای تماس با شما شامل نام و نام خانوادگی، شماره تماس، درمان موردنظر و منبع فنی ورود به صفحه ثبت می‌شود.",
+  "privacy_section_use_title": "اطلاعات شما چگونه استفاده می‌شود؟",
+  "privacy_section_use_body": "اطلاعات شما صرفاً برای برقراری تماس توسط کارشناسان مشاوره و پذیرش کلینیک آویدا، توضیح شرایط درمان یا جشنواره و هماهنگی وقت ویزیت استفاده می‌شود و هرگز در اختیار اشخاص یا شرکت‌های ثالث قرار نمی‌گیرد.",
+  "privacy_section_security_title": "ذخیره‌سازی امن و محدودیت دسترسی",
+  "privacy_section_security_body": "شماره تماس و درخواست‌های ثبت‌شده در پایگاه دادهٔ امن کلینیک ذخیره می‌شوند و دسترسی به آن‌ها تنها برای مدیران و کارشناسان مجاز امور مشتریان امکان‌پذیر است.",
+  "privacy_section_rights_title": "درخواست ویرایش یا حذف اطلاعات",
+  "privacy_section_rights_body": "هر زمان مایل به توقف تماس یا حذف اطلاعات تماس خود بودید، کافی است با پذیرش کلینیک آویدا تماس بگیرید تا در کوتاه‌ترین زمان اقدام شود.",
+  "privacy_back_campaign": "بازگشت به صفحهٔ جشنواره",
+  "admin_campaign_meta_title": "پنل مدیریت کمپین بلک فرایدی",
+  "admin_campaign_kicker": "پنل مدیریت کلینیک آویدا",
+  "admin_campaign_title": "مدیریت کمپین بلک فرایدی و روز مادر",
+  "admin_campaign_subtitle": "مشاهده و پیگیری لیدها، گزارش روزانه، خروجی اکسل و تنظیمات زندهٔ ظرفیت، تاریخ و درصد تخفیفات.",
+  "admin_campaign_export_xlsx": "خروجی اکسل (.xlsx)",
+  "admin_campaign_view_public": "مشاهدهٔ صفحهٔ جشنواره",
+  "admin_campaign_tab_leads": "لیدهای ثبت‌شده",
+  "admin_campaign_tab_report": "گزارش روزانه و منابع",
+  "admin_campaign_tab_settings": "تنظیمات و تخفیفات",
+  "admin_campaign_kpi_total": "کل لیدها",
+  "admin_campaign_kpi_confirmed": "لیدهای تأییدشده",
+  "admin_campaign_kpi_today": "لیدهای امروز",
+  "admin_campaign_kpi_remaining": "ظرفیت باقی‌مانده",
+  "admin_campaign_kpi_views": "بازدید صفحهٔ جشنواره",
+  "admin_campaign_kpi_clicks": "کلیک بنر و پاپ‌آپ",
+  "admin_campaign_search_placeholder": "جست‌وجو با نام، شماره تماس یا منبع...",
+  "admin_campaign_filter_all_statuses": "همهٔ وضعیت‌ها",
+  "admin_campaign_filter_all_treatments": "همهٔ درمان‌ها",
+  "admin_campaign_leads_empty": "هنوز هیچ لیدی با این فیلتر ثبت نشده است.",
+  "admin_campaign_col_index": "ردیف",
+  "admin_campaign_col_name": "نام و نام خانوادگی",
+  "admin_campaign_col_phone": "شماره تماس",
+  "admin_campaign_col_treatment": "درمان موردنظر",
+  "admin_campaign_col_created": "تاریخ و ساعت ثبت",
+  "admin_campaign_col_source": "منبع ورود",
+  "admin_campaign_col_status": "وضعیت پیگیری",
+  "admin_campaign_col_notes": "یادداشت مشاور",
+  "admin_campaign_notes_placeholder": "یادداشت پیگیری...",
+  "admin_campaign_save_note": "ذخیره",
+  "admin_campaign_lead_saved": "وضعیت لید ذخیره شد.",
+  "admin_campaign_lead_save_failed": "ذخیرهٔ تغییرات لید انجام نشد.",
+  "admin_campaign_status_new": "جدید",
+  "admin_campaign_status_contacted": "تماس گرفته شد",
+  "admin_campaign_status_confirmed": "تأییدشده",
+  "admin_campaign_status_unreachable": "عدم پاسخ",
+  "admin_campaign_status_cancelled": "انصراف",
+  "admin_campaign_source_direct": "ورود مستقیم",
+  "admin_campaign_report_daily_title": "گزارش روزانهٔ لیدهای ثبت‌شده",
+  "admin_campaign_report_daily_col_date": "تاریخ (شمسی)",
+  "admin_campaign_report_daily_col_total": "تعداد لیدها",
+  "admin_campaign_report_daily_col_confirmed": "تأییدشده",
+  "admin_campaign_report_sources_title": "تفکیک لیدها بر اساس منبع ورود",
+  "admin_campaign_report_treatments_title": "تفکیک لیدها بر اساس درمان",
+  "admin_campaign_report_empty": "هنوز داده‌ای برای نمایش در گزارش ثبت نشده است.",
+  "admin_campaign_settings_section_general": "وضعیت، بازهٔ زمانی و تم کمپین",
+  "admin_campaign_settings_enabled_label": "فعال بودن کمپین و پذیرش درخواست‌ها",
+  "admin_campaign_settings_enabled_hint": "با خاموش کردن این کلید، بنرهای جشنواره و فرم ثبت‌نام غیرفعال می‌شوند.",
+  "admin_campaign_settings_theme_label": "فعال بودن تم بلک فرایدی (نوآر، طلایی و زرشکی)",
+  "admin_campaign_settings_theme_hint": "پس از پایان تاریخ کمپین یا خاموش کردن این کلید، سایت خودکار به تم زمردی اصلی برمی‌گردد.",
+  "admin_campaign_settings_starts_at": "زمان شروع کمپین (وقت تهران)",
+  "admin_campaign_settings_ends_at": "زمان پایان کمپین (وقت تهران)",
+  "admin_campaign_settings_capacity": "ظرفیت کل جشنواره (نفر)",
+  "admin_campaign_settings_capacity_mode": "روش محاسبهٔ ظرفیت باقی‌مانده",
+  "admin_campaign_mode_scheduled": "زمان‌بندی خودکار (کاهش ۱ نفر در هر بازه)",
+  "admin_campaign_mode_confirmed": "فقط بر اساس لیدهای تأییدشده",
+  "admin_campaign_mode_hybrid": "ترکیبی (بیشینهٔ زمان‌بندی و تأییدشده)",
+  "admin_campaign_settings_interval": "بازهٔ کاهش هر ۱ نفر (دقیقه — ۳۳۵ دقیقه = ۵ ساعت و ۳۵ دقیقه)",
+  "admin_campaign_settings_notify_email": "ایمیل اطلاع‌رسانی فوری تیم مشاوره (اختیاری)",
+  "admin_campaign_settings_notify_email_placeholder": "consult@avidadental.ir",
+  "admin_campaign_settings_discounts_title": "ویرایش جدول تخفیفات",
+  "admin_campaign_settings_discount_title": "نام درمان",
+  "admin_campaign_settings_discount_cash": "تخفیف نقدی (٪)",
+  "admin_campaign_settings_discount_installment": "تخفیف اقساطی (٪)",
+  "admin_campaign_settings_save": "ذخیرهٔ تنظیمات کمپین",
+  "admin_campaign_settings_saved": "تنظیمات و تخفیفات کمپین با موفقیت ذخیره شد.",
+  "admin_campaign_settings_save_failed": "ذخیرهٔ تنظیمات کمپین انجام نشد.",
+  "mail_campaign_lead_subject": "لید جدید جشنواره بلک فرایدی: {name}",
+  "mail_campaign_lead_preview": "درخواست مشاورهٔ جدید از {name} برای {treatment}",
+  "mail_campaign_lead_heading": "درخواست جدید در جشنواره بلک فرایدی و روز مادر",
+  "mail_campaign_lead_body": "یک درخواست مشاورهٔ جدید در صفحهٔ جشنواره ثبت شد. مشخصات متقاضی:",
+  "mail_campaign_lead_row_name": "نام و نام خانوادگی: {name}",
+  "mail_campaign_lead_row_phone": "شماره تماس: {phone}",
+  "mail_campaign_lead_row_treatment": "درمان موردنظر: {treatment}",
+  "mail_campaign_lead_row_source": "منبع ورود: {source}",
+  "mail_campaign_lead_action": "مشاهده و پیگیری در پنل مدیریت"
 }

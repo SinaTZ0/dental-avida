@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRouteWithContext, HeadContent, Scripts } from "@tanstack/react-router";
 import type { ErrorComponentProps } from "@tanstack/react-router";
@@ -19,10 +20,15 @@ import appCss from "#/styles.css?url";
 
 /*===== Route =====*/
 export const Route = createRootRouteWithContext<RouterContext>()({
-  // The public origin, for the absolute URLs in every page's head tags (`absoluteUrl` in `src/lib/seo.ts`). It never
-  // changes while the app runs, so client navigations don't fetch it again.
-  loader: ({ context }) => context.queryClient.ensureQueryData(orpc.site.origin.queryOptions({ staleTime: Infinity })),
-  staleTime: Infinity,
+  // The public origin (`absoluteUrl`) and active campaign flag (drives the reversible `data-campaign` theme on `<html>`
+  // on byte 0 with no color flash).
+  loader: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(orpc.site.origin.queryOptions({ staleTime: Infinity })),
+      context.queryClient.ensureQueryData(orpc.campaign.public.queryOptions({ staleTime: 60_000 })),
+    ]);
+  },
+  staleTime: 60_000,
   head: () => ({
     meta: [{ charSet: "utf-8" }, { name: "viewport", content: "width=device-width, initial-scale=1" }],
     links: [{ rel: "stylesheet", href: appCss }],
@@ -37,11 +43,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   // Paraglide resolves the locale in the browser and on the server (docs/frontend/i18n.md).
   const locale = getLocale();
   const direction = getTextDirection(locale);
+  const queryClient = useQueryClient();
+  const campaign = queryClient.getQueryData(orpc.campaign.public.queryKey());
+  const blackFridayTheme = Boolean(campaign?.themeActive);
 
   return (
     // The theme script changes <html>'s class and style before hydration, so React must not
     // treat that as a mismatch.
-    <html lang={locale} dir={direction} suppressHydrationWarning>
+    <html
+      lang={locale}
+      dir={direction}
+      data-campaign={blackFridayTheme ? "black-friday" : undefined}
+      className={blackFridayTheme ? "dark" : undefined}
+      suppressHydrationWarning
+    >
       <head>
         {/* First in <head>: applies the saved or system theme before anything paints. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />

@@ -2,17 +2,25 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { useEffect } from "react";
 
+import { CampaignEntryModal } from "#/components/shared/campaign/campaign-entry-modal";
 import { SiteFooter } from "#/components/shared/site-footer/site-footer";
 import { SiteHeader } from "#/components/shared/site-header/site-header";
+import { captureCampaignAttribution } from "#/lib/campaign-attribution";
 import { setReportedUser } from "#/lib/error-reporting.browser";
 import { markHomeIntroConsumed } from "#/lib/home-intro-state";
+import { syncCampaignTheme } from "#/lib/theme";
 import { orpc } from "#/orpc/client";
 import { m } from "#/paraglide/messages";
 
 /*===== Route =====*/
 export const Route = createFileRoute("/_site-layout")({
-  // The header needs the viewer on every page, so it is loaded before any page renders.
-  beforeLoad: ({ context }) => context.queryClient.ensureQueryData(orpc.session.viewer.queryOptions()),
+  // The header needs the viewer and active campaign state on every page, so both load before any page renders.
+  beforeLoad: async ({ context }) => {
+    await Promise.all([
+      context.queryClient.ensureQueryData(orpc.session.viewer.queryOptions()),
+      context.queryClient.ensureQueryData(orpc.campaign.public.queryOptions({ staleTime: 60_000 })),
+    ]);
+  },
   component: SiteLayout,
 });
 
@@ -21,6 +29,7 @@ export const Route = createFileRoute("/_site-layout")({
 /** The chrome shared by every page: skip link, header, `main` landmark and footer. */
 function SiteLayout() {
   const { data: viewer } = useSuspenseQuery(orpc.session.viewer.queryOptions());
+  const { data: campaign } = useSuspenseQuery(orpc.campaign.public.queryOptions({ staleTime: 60_000 }));
   const userId = viewer?.id ?? null;
   const pathname = useLocation({ select: (location) => location.pathname });
 
@@ -28,6 +37,15 @@ function SiteLayout() {
   // Browser reports carry the signed-in user's ID, like the server's (docs/backend/logging.md → User ID). Sign-in and
   // sign-out invalidate the viewer query, which updates it.
   useEffect(() => setReportedUser(userId), [userId]);
+
+  /*------ Reversible Campaign Theme & Attribution ------*/
+  useEffect(() => {
+    syncCampaignTheme(campaign.themeActive);
+  }, [campaign.themeActive]);
+
+  useEffect(() => {
+    captureCampaignAttribution();
+  }, []);
 
   /*------ Home Intro Eligibility ------*/
   // Once the visitor has been on any inner route, navigating back to `/` skips the initial load intro.
@@ -45,11 +63,12 @@ function SiteLayout() {
       >
         {m.common_skip_to_content()}
       </a>
-      <SiteHeader viewer={viewer} />
+      <SiteHeader viewer={viewer} campaign={campaign} />
       <main id="main" className="flex-1">
         <Outlet />
       </main>
-      <SiteFooter />
+      <SiteFooter campaignActive={campaign.status === "active"} />
+      <CampaignEntryModal campaign={campaign} />
     </div>
   );
 }

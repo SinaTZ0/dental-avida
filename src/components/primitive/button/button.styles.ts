@@ -38,6 +38,10 @@ const twVariant = defineStyles({
     appearance: "bg-highlight text-highlight-foreground",
     hover: "hover:bg-highlight-hover",
   },
+  crimson: {
+    appearance: "bg-campaign-crimson text-campaign-crimson-foreground",
+    hover: "hover:bg-campaign-crimson-hover",
+  },
   outline: {
     appearance: "border-input bg-transparent text-foreground",
     hover: "hover:bg-accent",

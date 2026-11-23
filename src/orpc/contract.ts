@@ -1,3 +1,4 @@
+import { campaignContract } from "#/orpc/campaign/contract";
 import { captchaContract } from "#/orpc/captcha/contract";
 import { mediaContract } from "#/orpc/media/contract";
 import { noteContract } from "#/orpc/note/contract";
@@ -8,6 +9,7 @@ import { siteContract } from "#/orpc/site/contract";
 /*===== API Contract =====*/
 // Source of truth for the API. The browser client is typed from this, never from the router.
 export const contract = {
+  campaign: campaignContract,
   captcha: captchaContract,
   media: mediaContract,
   note: noteContract,

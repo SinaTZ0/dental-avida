@@ -1,5 +1,13 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { CalendarDaysIcon, CpuIcon, LogOutIcon, StethoscopeIcon, UserIcon, UsersIcon } from "lucide-react";
+import {
+  CalendarDaysIcon,
+  CpuIcon,
+  LogOutIcon,
+  SparklesIcon,
+  StethoscopeIcon,
+  UserIcon,
+  UsersIcon,
+} from "lucide-react";
 import { type MouseEvent, useSyncExternalStore } from "react";
 
 import { Button } from "#/components/primitive/button/button";
@@ -14,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "#/components/primitive/dropdown-menu/dropdown-menu";
 import { AvidaBrandEmblem } from "#/components/shared/avida-smile/avida-smile";
+import { CampaignRibbon } from "#/components/shared/campaign/campaign-ribbon";
 import { LocaleSwitcher } from "#/components/shared/locale-switcher/locale-switcher";
 import { useActiveHomeSection } from "#/components/shared/site-header/use-active-home-section";
 import { useDesktopHeaderHidden } from "#/components/shared/site-header/use-desktop-header-hidden";
@@ -22,6 +31,7 @@ import { useLocaleLinks } from "#/hooks/use-locale-links";
 import { useSignOut } from "#/hooks/use-sign-out";
 import { homeSections } from "#/lib/site";
 import { cn } from "#/lib/utils";
+import type { PublicCampaign } from "#/orpc/campaign/contract";
 import type { Viewer } from "#/orpc/session/contract";
 import { m } from "#/paraglide/messages";
 import "#/components/shared/site-header/site-header.css";
@@ -197,6 +207,12 @@ function AccountMenu({ viewer }: { viewer: Viewer }) {
           </DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
+        {viewer.role === "admin" && (
+          <DropdownMenuItem render={<Link to="/admin/campaign" />}>
+            <SparklesIcon />
+            {m.nav_admin_campaign()}
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem disabled={signOut.isPending} onClick={() => signOut.mutate()}>
           <LogOutIcon />
           {m.nav_sign_out()}
@@ -213,7 +229,7 @@ function AccountMenu({ viewer }: { viewer: Viewer }) {
  * frosted-glass bar once scrolled (auto-hiding on downward desktop scroll and reappearing on upward scroll), paired
  * with the floating glass mobile app dock.
  */
-export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
+export function SiteHeader({ viewer, campaign }: { viewer: Viewer | null; campaign: PublicCampaign }) {
   const localeLinks = useLocaleLinks();
   const { hidden: desktopHeaderHidden, scrolled } = useDesktopHeaderHidden();
   const onHome = useLocation({ select: (location) => location.pathname === "/" });
@@ -235,13 +251,16 @@ export function SiteHeader({ viewer }: { viewer: Viewer | null }) {
           desktopHeaderHidden && "md:-translate-y-full",
         )}
       >
+        <CampaignRibbon campaign={campaign} />
+
         <div className="site-header-inner mx-auto flex max-w-site-wide items-center justify-between gap-3 px-4 py-3 sm:px-6 md:py-4">
           <BrandLockup />
 
           <DesktopNav activeSection={activeSection} onHome={onHome} hashScroll={hashScroll} />
 
           <div className="site-header-actions pointer-events-auto flex shrink-0 items-center gap-2">
-            <ThemeToggle variant="glass" size="icon-pill" />
+            {/* Hidden while Black Friday Noir-first campaign theme is active; reappears automatically when it ends. */}
+            {!campaign.themeActive && <ThemeToggle variant="glass" size="icon-pill" />}
             <LocaleSwitcher links={localeLinks} variant="glass" size="pill" />
             {viewer ? (
               <AccountMenu viewer={viewer} />

@@ -1,4 +1,4 @@
-import { boolean, index, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, index, integer, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 
 /*===== Database Schema =====*/
 // Single source of truth for tables, read by Drizzle Kit (`drizzle.config.ts`) and the runtime client (`Db`,
@@ -182,6 +182,97 @@ export const reviewFeedback = pgTable(
     index("review_feedback_path_viewport_idx").on(table.pathname, table.viewport, table.createdAt),
     index("review_feedback_status_idx").on(table.status, table.createdAt),
   ],
+);
+
+/*===== Campaigns (Black Friday & Seasonal) =====*/
+// Settings, editable discount rows, captured leads (deduplicated per campaign + normalized phone), and lightweight
+// funnel events for the clinic's seasonal campaigns (`src/orpc/campaign/`).
+
+export const campaignSetting = pgTable("campaign_setting", {
+  /** Stable identifier, e.g. `black-friday-1405`. */
+  slug: text("slug").primaryKey(),
+  /** Master toggle for the campaign entry experience and lead form. */
+  enabled: boolean("enabled").notNull().default(true),
+  /** Controls the reversible `[data-campaign="black-friday"]` visual theme variant while inside the active window. */
+  themeEnabled: boolean("theme_enabled").notNull().default(true),
+  /** Campaign start instant (`timestamptz`, e.g. 1 Azar 1405 00:00 Asia/Tehran). */
+  startsAt: timestamptz("starts_at").notNull(),
+  /** Campaign end instant (`timestamptz`, e.g. 12 Azar 1405 23:59:59 Asia/Tehran). */
+  endsAt: timestamptz("ends_at").notNull(),
+  /** Total advertised capacity (default 51). */
+  totalCapacity: integer("total_capacity").notNull().default(51),
+  /** `scheduled` | `confirmed` | `hybrid`. Allowed values live in `src/orpc/campaign/constants.ts`. */
+  capacityMode: text("capacity_mode").notNull().default("scheduled"),
+  /** Minutes per 1-spot scheduled decrement (default 335 = 5 hours 35 minutes). */
+  decrementIntervalMinutes: integer("decrement_interval_minutes").notNull().default(335),
+  /** Optional consultation-team email that receives an immediate alert job when a new lead arrives. */
+  notifyEmail: text("notify_email").notNull().default(""),
+  updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+});
+
+export const campaignDiscount = pgTable(
+  "campaign_discount",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    campaignSlug: text("campaign_slug")
+      .notNull()
+      .references(() => campaignSetting.slug, { onDelete: "cascade" }),
+    /** Stable key matching treatment options (`implant_fixture`, `implant_with_crown`, `laminate`). */
+    code: text("code").notNull(),
+    /** Editable Persian display label shown in the public discounts ledger. */
+    title: text("title").notNull(),
+    cashPercent: integer("cash_percent").notNull(),
+    installmentPercent: integer("installment_percent").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+  },
+  (table) => [uniqueIndex("campaign_discount_slug_code_idx").on(table.campaignSlug, table.code)],
+);
+
+export const campaignLead = pgTable(
+  "campaign_lead",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    campaignSlug: text("campaign_slug")
+      .notNull()
+      .references(() => campaignSetting.slug, { onDelete: "cascade" }),
+    fullName: text("full_name").notNull(),
+    phoneRaw: text("phone_raw").notNull(),
+    /** Canonical Latin digits (`09xxxxxxxxx` or landline) used for atomic duplicate prevention. */
+    phoneNormalized: text("phone_normalized").notNull(),
+    /** Allowed values live in `src/orpc/campaign/constants.ts`. */
+    treatment: text("treatment").notNull(),
+    /** Compact attribution label (UTM summary, referrer host, or `direct`). */
+    source: text("source").notNull().default("direct"),
+    utmSource: text("utm_source").notNull().default(""),
+    utmMedium: text("utm_medium").notNull().default(""),
+    utmCampaign: text("utm_campaign").notNull().default(""),
+    referrer: text("referrer").notNull().default(""),
+    /** `new` | `contacted` | `confirmed` | `unreachable` | `cancelled`. */
+    status: text("status").notNull().default("new"),
+    notes: text("notes").notNull().default(""),
+    createdAt: timestamptz("created_at").notNull().defaultNow(),
+    updatedAt: timestamptz("updated_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("campaign_lead_slug_phone_idx").on(table.campaignSlug, table.phoneNormalized),
+    index("campaign_lead_slug_created_idx").on(table.campaignSlug, table.createdAt),
+    index("campaign_lead_slug_status_idx").on(table.campaignSlug, table.status),
+  ],
+);
+
+export const campaignEvent = pgTable(
+  "campaign_event",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    campaignSlug: text("campaign_slug")
+      .notNull()
+      .references(() => campaignSetting.slug, { onDelete: "cascade" }),
+    /** `landing_view` | `banner_click` | `popup_click`. */
+    kind: text("kind").notNull(),
+    source: text("source").notNull().default("direct"),
+    createdAt: timestamptz("created_at").notNull().defaultNow(),
+  },
+  (table) => [index("campaign_event_slug_kind_created_idx").on(table.campaignSlug, table.kind, table.createdAt)],
 );
 
 /*===== Deploy Steps =====*/

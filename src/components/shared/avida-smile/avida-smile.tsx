@@ -200,6 +200,7 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
   const smileLayerRef = useRef<SVGGElement>(null);
   const mouthClipPathRef = useRef<SVGPathElement>(null);
   const mouthCavityRef = useRef<SVGPathElement>(null);
+  const mouthRimRef = useRef<SVGPathElement>(null);
   const lowerArcRef = useRef<SVGPathElement>(null);
   const sheenRef = useRef<SVGRectElement>(null);
 
@@ -231,9 +232,20 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
     const smileLayer = smileLayerRef.current;
     const mouthClipPath = mouthClipPathRef.current;
     const mouthCavity = mouthCavityRef.current;
+    const mouthRim = mouthRimRef.current;
     const lowerArc = lowerArcRef.current;
     const sheen = sheenRef.current;
-    if (!upperArc || !star || !shineRays || !smileLayer || !mouthClipPath || !mouthCavity || !lowerArc || !sheen) {
+    if (
+      !upperArc ||
+      !star ||
+      !shineRays ||
+      !smileLayer ||
+      !mouthClipPath ||
+      !mouthCavity ||
+      !mouthRim ||
+      !lowerArc ||
+      !sheen
+    ) {
       return;
     }
 
@@ -293,6 +305,7 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
       upperArc.setAttribute("d", interpolateFiveCubicPath(UPPER_ARC_REST, UPPER_ARC_OPEN, openProgress));
       mouthClipPath.setAttribute("d", mouthPath);
       mouthCavity.setAttribute("d", mouthPath);
+      mouthRim.setAttribute("d", mouthPath);
       lowerArc.setAttribute("d", interpolateFourCubicPath(LOWER_ARC_CLOSED, LOWER_ARC_OPEN, openProgress));
       // Fade the revealed smile layer cleanly in/out during the very first/last sliver of opening.
       smileLayer.setAttribute("opacity", clamp01(openProgress * 6).toFixed(3));
@@ -349,7 +362,8 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
         if (shineT > 0 && shineT < 1) {
           const rayScale = 0.55 + 0.65 * easeOutCubic(shineT);
           const rayRotate = easeInOutCubic(shineT) * 45;
-          const rayOpacity = Math.sin(shineT * Math.PI) * 0.92;
+          // Hold peak brightness longer so rays stay high-contrast during the burst instead of looking dim.
+          const rayOpacity = clamp01(Math.sin(shineT * Math.PI) * 1.45);
           shineRays.setAttribute("visibility", "visible");
           shineRays.setAttribute(
             "transform",
@@ -400,13 +414,20 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
 
       {interactive && (
         <g ref={smileLayerRef} visibility="hidden" opacity={0}>
-          {/* Deep emerald mouth cavity behind the teeth */}
-          <path ref={mouthCavityRef} d="" className="fill-brand-surface" />
+          {/* Deep mouth cavity behind the teeth */}
+          <path ref={mouthCavityRef} data-smile-cavity d="" className="fill-brand-surface" />
 
           {/* Sculpted porcelain upper teeth clipped smoothly inside the opening smile */}
           <g clipPath={`url(#${mouthClipId})`}>
-            <path d={TEETH_ARCH_PATH} className="fill-brand-surface-foreground" />
-            <g stroke="currentColor" strokeOpacity="0.18" strokeWidth="0.9" strokeLinecap="round">
+            <path d={TEETH_ARCH_PATH} data-smile-teeth className="fill-brand-surface-foreground" />
+            {/* Always stroke dividers with deep surface ink (not `currentColor`) so they stay legible in dark mode. */}
+            <g
+              data-smile-dividers
+              className="stroke-brand-surface"
+              strokeOpacity="0.24"
+              strokeWidth="1"
+              strokeLinecap="round"
+            >
               {TOOTH_DIVIDERS.map((d) => (
                 <path key={d} d={d} />
               ))}
@@ -415,6 +436,18 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
               <rect ref={sheenRef} x="0" y="6" width="24" height="60" className="fill-white" opacity={0} />
             </g>
           </g>
+
+          {/* Subtle dark inner contour separating light gold lips from bright porcelain teeth in dark mode */}
+          <path
+            ref={mouthRimRef}
+            data-smile-rim
+            d=""
+            fill="none"
+            className="stroke-background"
+            strokeWidth="2.4"
+            strokeLinejoin="round"
+            strokeOpacity="0"
+          />
 
           {/* Tapered lower lip framing the opened smile */}
           <path ref={lowerArcRef} d="" fill="currentColor" />
@@ -430,7 +463,7 @@ export function AvidaSmile({ className, accentDot = true, interactive = false, p
           data-smile-rays
           visibility="hidden"
           opacity={0}
-          strokeWidth="1.35"
+          strokeWidth="1.75"
           strokeLinecap="round"
           className={accentDot ? "stroke-brand-gold" : "stroke-current"}
         >

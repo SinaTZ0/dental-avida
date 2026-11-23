@@ -172,6 +172,11 @@
   --color-highlight: var(--highlight);
   --color-highlight-hover: var(--highlight-hover);
   --color-highlight-foreground: var(--highlight-foreground);
+  --color-overlay: var(--overlay);
+  --color-campaign-crimson: var(--campaign-crimson);
+  --color-campaign-crimson-hover: var(--campaign-crimson-hover);
+  --color-campaign-crimson-surface: var(--campaign-crimson-surface);
+  --color-campaign-crimson-foreground: var(--campaign-crimson-foreground);
   --color-success: var(--success);
   --color-success-surface: var(--success-surface);
   --color-warning: var(--warning);
@@ -244,6 +249,11 @@
   --highlight: #0e5a34;
   --highlight-hover: #094426;
   --highlight-foreground: #fff;
+  --overlay: #09130db3;
+  --campaign-crimson: #b81d31;
+  --campaign-crimson-hover: #9a1627;
+  --campaign-crimson-surface: #fcecef;
+  --campaign-crimson-foreground: #fff7f8;
 
   --success: #15803d;
   --success-surface: #e3f5e9;
@@ -317,6 +327,11 @@
   --highlight: #76dba4;
   --highlight-hover: #9ce7be;
   --highlight-foreground: #072113;
+  --overlay: #040705c7;
+  --campaign-crimson: #d62839;
+  --campaign-crimson-hover: #eb3b4d;
+  --campaign-crimson-surface: #2d1117;
+  --campaign-crimson-foreground: #fff5f6;
 
   --success: #86efac;
   --success-surface: #12301d;
@@ -342,6 +357,83 @@
   --sidebar-accent-foreground: #ecf7f0;
   --sidebar-border: #284e3a;
   --sidebar-ring: #7ad9a5;
+}
+
+/*===== Campaign Variant: Black Friday & Mother's Day (Reversible) =====*/
+/* Activated only when `data-campaign="black-friday"` is set on `<html>` during the active campaign window.
+   The original Light and Dark Emerald themes above remain untouched and resume automatically once the campaign ends. */
+
+:root[data-campaign="black-friday"],
+.dark[data-campaign="black-friday"] {
+  --background: #09090c;
+  --foreground: #f6f3ec;
+  --card: #121218;
+  --card-foreground: #f6f3ec;
+  --popover: #14141b;
+  --popover-foreground: #f6f3ec;
+  --primary: #dfb866;
+  --primary-hover: #edd08c;
+  --primary-foreground: #141008;
+  --secondary: #191922;
+  --secondary-foreground: #f6f3ec;
+  --muted: #16161f;
+  --muted-foreground: #b8b1a4;
+  --accent: #221d26;
+  --accent-foreground: #f6f3ec;
+  --destructive: #ef5361;
+  --destructive-surface: #36131a;
+  --border: #2e2934;
+  --input: #5d5364;
+  --ring: #e6c272;
+
+  --brand-text: #ebd08b;
+  --brand-jade: #dfb866;
+  --brand-jade-surface: #241d15;
+  --brand-gold: #e5c16c;
+  --brand-gold-surface: #261f12;
+  --brand-silver: #d4d0c8;
+  --hero-surface: #0b0b10;
+  --hero-line: #493927;
+  --brand-surface: #101016;
+  --brand-surface-foreground: #f7f3eb;
+  --brand-surface-gold: #f0d58c;
+  --brand-surface-muted: #c2bbb0;
+  --brand-surface-line: #3b312a;
+  --consultation-paper: #121218;
+  --consultation-note: #181720;
+  --consultation-deep: #181219;
+  --consultation-teal: #2d1822;
+  --consultation-mint: #dfb866;
+  --consultation-button: #f7f3eb;
+
+  /* Taste / urgency velvet crimson accent balanced with champagne gold */
+  --campaign-crimson: #c81e32;
+  --campaign-crimson-hover: #e02940;
+  --campaign-crimson-surface: #2e1017;
+  --campaign-crimson-foreground: #fff5f6;
+  --highlight: #c81e32;
+  --highlight-hover: #e02940;
+  --highlight-foreground: #fff5f6;
+  --overlay: #040407d9;
+
+  --success: #86efac;
+  --success-surface: #122b1c;
+  --warning: #f5ca6b;
+  --warning-surface: #2d2310;
+  --info: #ebd08b;
+  --info-surface: #241f14;
+
+  --elevation-sm: 0 1px 2px #00000073, 0 6px 16px -6px #00000080;
+  --elevation-md: 0 4px 12px #00000080, 0 22px 44px -18px #000000cc;
+
+  --sidebar: #0e0e14;
+  --sidebar-foreground: #f6f3ec;
+  --sidebar-primary: #dfb866;
+  --sidebar-primary-foreground: #141008;
+  --sidebar-accent: #221d26;
+  --sidebar-accent-foreground: #f6f3ec;
+  --sidebar-border: #2e2934;
+  --sidebar-ring: #e6c272;
 }
 
 /*===== Base =====*/

@@ -1,0 +1,131 @@
+/*===== Top Campaign Ribbon =====*/
+
+.campaign-ribbon {
+  position: relative;
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 35%, transparent);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--campaign-crimson) 26%, var(--brand-surface)) 0%,
+    var(--brand-surface) 48%,
+    color-mix(in srgb, var(--brand-gold) 16%, var(--brand-surface)) 100%
+  );
+  color: var(--brand-surface-foreground);
+}
+
+.campaign-ribbon-dot {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 999px;
+  background: var(--campaign-crimson);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--campaign-crimson) 85%, transparent);
+}
+
+.campaign-ribbon-cta {
+  display: inline-flex;
+  min-block-size: 1.85rem;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--brand-surface-gold) 50%, transparent);
+  background: var(--campaign-crimson);
+  padding-inline: 0.85rem;
+  color: var(--campaign-crimson-foreground);
+  font-size: var(--text-caption);
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.campaign-ribbon-cta:hover {
+  background: var(--campaign-crimson-hover);
+  border-color: var(--brand-surface-gold);
+}
+
+/*===== Countdown =====*/
+
+.campaign-countdown-editorial {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid color-mix(in srgb, var(--brand-gold) 28%, var(--border));
+  background: color-mix(in srgb, var(--secondary) 65%, transparent);
+}
+
+.campaign-countdown-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: 0.85rem;
+  padding-inline: 0.5rem;
+}
+
+.campaign-countdown-cell + .campaign-countdown-cell {
+  border-inline-start: 1px solid color-mix(in srgb, var(--brand-gold) 20%, var(--border));
+}
+
+.campaign-countdown-digits {
+  font-variant-numeric: tabular-nums;
+}
+
+/*===== Native Capacity Progress Bar =====*/
+
+.campaign-progress {
+  display: block;
+  inline-size: 100%;
+  block-size: 0.45rem;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 65%, transparent);
+  appearance: none;
+}
+
+.campaign-progress::-webkit-progress-bar {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--border) 65%, transparent);
+}
+
+.campaign-progress::-webkit-progress-value {
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+}
+
+.campaign-progress::-moz-progress-bar {
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--campaign-crimson) 0%, var(--brand-gold) 100%);
+}
+
+/*===== Entry Modal Editorial Art Header =====*/
+
+.campaign-modal-art-frame {
+  position: relative;
+  block-size: 10.5rem;
+  overflow: hidden;
+  border-block-end: 1px solid color-mix(in srgb, var(--brand-gold) 30%, transparent);
+}
+
+.campaign-modal-art-img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.campaign-modal-art-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--card) 18%, transparent) 0%,
+    color-mix(in srgb, var(--card) 72%, transparent) 68%,
+    var(--card) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaign-ribbon-cta {
+    transition: none;
+  }
+}

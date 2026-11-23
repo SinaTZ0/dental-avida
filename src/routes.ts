@@ -35,6 +35,8 @@ function designStudies(place: StudyPlace) {
 export const routes = rootRoute("__root.tsx", [
   layout("site_layout/site-layout.tsx", [
     index("home/home.tsx"),
+    route("/black-friday", "black_friday/black-friday.tsx"),
+    route("/privacy", "privacy/privacy.tsx"),
     route("/auth", "auth/auth.tsx"),
     route("/forgot-password", "forgot_password/forgot-password.tsx"),
     route("/reset-password", "reset_password/reset-password.tsx"),
@@ -43,6 +45,7 @@ export const routes = rootRoute("__root.tsx", [
       route("/notes", "notes/notes.tsx"),
       route("/notes/$noteId", "notes_noteId/notes-note-id.tsx"),
     ]),
+    layout("admin_layout/admin-layout.tsx", [route("/admin/campaign", "admin_campaign/admin-campaign.tsx")]),
     ...designStudies("site"),
     // Last, and for every address nothing above answers: a 404 inside the site's header and footer.
     route("/$", "not_found/not-found.tsx"),
@@ -53,6 +56,7 @@ export const routes = rootRoute("__root.tsx", [
 
   /*===== Server Routes =====*/
   // No component: each answers HTTP requests itself (`server.handlers`).
+  route("/admin/campaign/export", "admin_campaign_export/admin-campaign-export.ts"),
   route("/review/enter", "review_enter/review-enter.ts"),
   route("/review/exit", "review_exit/review-exit.ts"),
   route("/api/auth/$", "api_auth/api-auth.ts"),
