@@ -5,6 +5,8 @@ import { MediaRepo } from "#/orpc/media/repository";
 import { MediaService } from "#/orpc/media/service";
 import { NoteRepo } from "#/orpc/note/repository";
 import { NoteService } from "#/orpc/note/service";
+import { ReviewRepo } from "#/orpc/review/repository";
+import { ReviewService } from "#/orpc/review/service";
 import { SessionService } from "#/orpc/session/service";
 import { Auth } from "#/server/auth.server";
 import { Captcha } from "#/server/captcha.server";
@@ -39,9 +41,9 @@ type OutsideServices = {
 const ObservabilityLive = RequestSpansLive.pipe(Layer.provideMerge(ExportLive), Layer.provideMerge(LoggerLive));
 
 /** The features' repositories and services. A service may use another feature's service (`note` uses `media`). */
-const FeaturesLive = Layer.mergeAll(NoteService.layer, SessionService.layer).pipe(
+const FeaturesLive = Layer.mergeAll(NoteService.layer, ReviewService.layer, SessionService.layer).pipe(
   Layer.provideMerge(MediaService.layer),
-  Layer.provideMerge(Layer.mergeAll(NoteRepo.layer, MediaRepo.layer)),
+  Layer.provideMerge(Layer.mergeAll(NoteRepo.layer, ReviewRepo.layer, MediaRepo.layer)),
 );
 
 /**

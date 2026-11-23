@@ -485,5 +485,69 @@
   "mail_exists_heading": "شما از قبل حساب دارید",
   "mail_exists_body": "کسی، احتمالاً خود شما، خواست با این ایمیل در {site} حساب تازه بسازد، اما این ایمیل از قبل حساب دارد. با رمز عبور خود وارد شوید؛ اگر آن را فراموش کرده‌اید، با دکمهٔ زیر رمز تازه انتخاب کنید.",
   "mail_exists_action": "انتخاب رمز تازه",
-  "mail_exists_ignore": "اگر این کار شما نبوده، این ایمیل را نادیده بگیرید؛ چیزی در حساب شما تغییر نکرده است."
+  "mail_exists_ignore": "اگر این کار شما نبوده، این ایمیل را نادیده بگیرید؛ چیزی در حساب شما تغییر نکرده است.",
+  "review_meta_title": "استودیوی بازبینی تصویری",
+  "review_meta_description": "ثبت و بررسی بازخورد تصویری روی صفحه‌های وب‌سایت.",
+  "review_unauthorized_title": "دسترسی به حالت بازبینی فعال نیست",
+  "review_unauthorized_details": "برای باز کردن استودیوی بازبینی، از پیوند اختصاصی ارسال‌شده استفاده کنید یا با حساب مدیر وارد شوید.",
+  "review_go_home": "بازگشت به صفحهٔ اصلی",
+  "review_brand_label": "بازبینی تصویری",
+  "review_path_placeholder": "مسیر صفحه، مثلاً /",
+  "review_path_go": "رفتن به مسیر",
+  "review_reload_frame": "بارگذاری دوبارهٔ صفحه",
+  "review_viewport_desktop": "دسکتاپ (۱۴۴۰)",
+  "review_viewport_mobile": "موبایل (۳۹۰)",
+  "review_mode_browse": "مرور صفحه",
+  "review_mode_draw": "ثبت بازخورد",
+  "review_mode_draw_hint": "روی هر بخش از صفحه بکشید تا کادر بازخورد بسازید (کلید میانبر C)",
+  "review_zoom_fit": "تناسب خودکار",
+  "review_zoom_100": "۱۰۰٪",
+  "review_zoom_75": "۷۵٪",
+  "review_boxes_show": "نمایش کادرها",
+  "review_boxes_hide": "مخفی کردن کادرها",
+  "review_exit": "خروج از بازبینی",
+  "review_sidebar_title": "بازخوردهای این صفحه",
+  "review_sidebar_pages_label": "صفحه‌های دارای بازخورد",
+  "review_filter_open": "باز",
+  "review_filter_resolved": "حل‌شده",
+  "review_filter_all": "همه",
+  "review_empty_title": "هنوز بازخوردی روی این صفحه ثبت نشده است",
+  "review_empty_body": "حالت «ثبت بازخورد» را بزنید و روی بخش مورد نظر کادر بکشید.",
+  "review_empty_resolved": "بازخورد حل‌شده‌ای در این نما وجود ندارد.",
+  "review_composer_title": "ثبت بازخورد تازه",
+  "review_composer_comment_label": "توضیح بازخورد",
+  "review_composer_comment_placeholder": "چه تغییری در این بخش لازم است؟",
+  "review_composer_author_label": "نام شما (اختیاری)",
+  "review_composer_author_placeholder": "مثلاً مدیر کلینیک",
+  "review_composer_submit": "ثبت بازخورد",
+  "review_composer_cancel": "انصراف",
+  "review_status_open": "باز",
+  "review_status_resolved": "حل‌شده",
+  "review_action_resolve": "علامت حل‌شده",
+  "review_action_reopen": "بازگشایی",
+  "review_action_delete": "حذف",
+  "review_anonymous_author": "مهمان بازبینی",
+  "review_save_failed": "بازخورد ثبت نشد. دوباره امتحان کنید.",
+  "review_update_failed": "تغییر وضعیت انجام نشد.",
+  "review_delete_failed": "حذف بازخورد انجام نشد.",
+  "review_error_comment_required": "متن بازخورد را وارد کنید.",
+  "review_error_comment_too_long": [
+    {
+      "declarations": ["input max", "local maxText = max: number"],
+      "match": {
+        "": "متن بازخورد حداکثر {maxText} نویسه است."
+      }
+    }
+  ],
+  "review_error_author_too_long": [
+    {
+      "declarations": ["input max", "local maxText = max: number"],
+      "match": {
+        "": "نام حداکثر {maxText} حرف است."
+      }
+    }
+  ],
+  "review_error_pathname_invalid": "مسیر صفحه باید با / شروع شود.",
+  "review_error_box_too_small": "کادر انتخاب‌شده خیلی کوچک است. کادر بزرگ‌تری بکشید.",
+  "review_error_not_found": "این بازخورد پیدا نشد."
 }

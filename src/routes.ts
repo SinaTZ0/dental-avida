@@ -48,9 +48,13 @@ export const routes = rootRoute("__root.tsx", [
     route("/$", "not_found/not-found.tsx"),
   ]),
   ...designStudies("bare"),
+  // Full-viewport visual review studio (outside the site header/footer so the iframe embeds the site cleanly).
+  route("/review", "review/review.tsx"),
 
   /*===== Server Routes =====*/
   // No component: each answers HTTP requests itself (`server.handlers`).
+  route("/review/enter", "review_enter/review-enter.ts"),
+  route("/review/exit", "review_exit/review-exit.ts"),
   route("/api/auth/$", "api_auth/api-auth.ts"),
   route("/rpc/$", "rpc/rpc.ts"),
   route("/healthz", "healthz/healthz.ts"),

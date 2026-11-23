@@ -79,6 +79,7 @@ var Registry = []Setting{
 	{"POSTGRES_PASSWORD", "secret:32", Stack},
 	{"BETTER_AUTH_SECRET", "secret:32:32", Stack},
 	{"ALTCHA_HMAC_KEY", "secret:32:32", Stack},
+	{"REVIEW_TOKEN", "optional", Stack},
 	{"S3_BUCKET_NAME", "default", Stack},
 	{"S3_ACCESS_KEY", "secret:16", Stack},
 	{"S3_SECRET_KEY", "secret:32", Stack},

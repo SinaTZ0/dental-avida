@@ -155,6 +155,35 @@ export const note = pgTable(
   ],
 );
 
+/*===== Review Feedback =====*/
+// Visual feedback boxes left in `/review` on fixed-width viewport presets (`desktop` 1440px, `mobile` 390px).
+
+export const reviewFeedback = pgTable(
+  "review_feedback",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    /** Normalized app pathname, e.g. `/` or `/notes` (no query or hash). */
+    pathname: text("pathname").notNull(),
+    /** Fixed viewport preset (`desktop` | `mobile`). Allowed values live in `src/orpc/review/constants.ts`. */
+    viewport: text("viewport").notNull(),
+    /** Box coordinates in unscaled pixels within the fixed-width artboard. */
+    x: integer("x").notNull(),
+    y: integer("y").notNull(),
+    width: integer("width").notNull(),
+    height: integer("height").notNull(),
+    comment: text("comment").notNull(),
+    authorName: text("author_name").notNull().default(""),
+    /** `open` | `resolved`. */
+    status: text("status").notNull().default("open"),
+    createdAt: timestamptz("created_at").notNull().defaultNow(),
+    resolvedAt: timestamptz("resolved_at"),
+  },
+  (table) => [
+    index("review_feedback_path_viewport_idx").on(table.pathname, table.viewport, table.createdAt),
+    index("review_feedback_status_idx").on(table.status, table.createdAt),
+  ],
+);
+
 /*===== Deploy Steps =====*/
 // The server's record of the deploy steps it ran (`deploy/steps/`, docs/deployment.md → Deploy Steps). Only the deploy
 // tool reads and writes it, through psql; the app never does. It lives in the database so that a restored dump rolls

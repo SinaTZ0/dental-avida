@@ -9,6 +9,13 @@ import {
   noteStatsProcedure,
   updateNoteProcedure,
 } from "#/orpc/note/procedure";
+import {
+  createReviewFeedbackProcedure,
+  deleteReviewFeedbackProcedure,
+  listReviewFeedbackProcedure,
+  reviewAccessProcedure,
+  setReviewStatusProcedure,
+} from "#/orpc/review/procedure";
 import { viewerProcedure } from "#/orpc/session/procedure";
 import { siteOriginProcedure } from "#/orpc/site/procedure";
 
@@ -28,6 +35,13 @@ export const router = implementer.router({
     update: updateNoteProcedure,
     delete: deleteNoteProcedure,
     stats: noteStatsProcedure,
+  },
+  review: {
+    access: reviewAccessProcedure,
+    list: listReviewFeedbackProcedure,
+    create: createReviewFeedbackProcedure,
+    setStatus: setReviewStatusProcedure,
+    delete: deleteReviewFeedbackProcedure,
   },
   session: {
     viewer: viewerProcedure,

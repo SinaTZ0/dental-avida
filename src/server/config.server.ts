@@ -89,6 +89,8 @@ export class AppConfig extends Context.Service<
     readonly authSecret: Redacted.Redacted;
     /** Signs Altcha challenges, so a solution can be verified without storing the challenge. */
     readonly altchaKey: Redacted.Redacted;
+    /** Optional secret for activating the `/review` visual feedback studio via `/review/enter?token=...`. */
+    readonly reviewToken: Option.Option<Redacted.Redacted>;
     /** The S3-compatible bucket uploads live in (SeaweedFS in development; docs/backend/media.md). */
     readonly s3: {
       readonly endpoint: string;
@@ -121,6 +123,7 @@ export class AppConfig extends Context.Service<
       const otlpEndpoint = yield* OptionalString("OTEL_EXPORTER_OTLP_ENDPOINT");
       const otlpHeaders = yield* OptionalString("OTEL_EXPORTER_OTLP_HEADERS");
       const otlpServiceName = yield* OptionalString("OTEL_SERVICE_NAME");
+      const reviewToken = yield* OptionalString("REVIEW_TOKEN");
       return AppConfig.of({
         isDevelopment: nodeEnv === "development",
         databaseUrl: yield* Config.Redacted("DATABASE_URL"),
@@ -137,6 +140,7 @@ export class AppConfig extends Context.Service<
         siteUrl: yield* Config.URL("BETTER_AUTH_URL"),
         authSecret: yield* Secret("BETTER_AUTH_SECRET"),
         altchaKey: yield* Secret("ALTCHA_HMAC_KEY"),
+        reviewToken: Option.map(reviewToken, Redacted.make),
         s3: {
           endpoint: yield* Config.NonEmptyString("S3_ENDPOINT"),
           bucket: yield* Config.NonEmptyString("S3_BUCKET_NAME"),

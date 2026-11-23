@@ -1,6 +1,7 @@
 import { captchaContract } from "#/orpc/captcha/contract";
 import { mediaContract } from "#/orpc/media/contract";
 import { noteContract } from "#/orpc/note/contract";
+import { reviewContract } from "#/orpc/review/contract";
 import { sessionContract } from "#/orpc/session/contract";
 import { siteContract } from "#/orpc/site/contract";
 
@@ -10,6 +11,7 @@ export const contract = {
   captcha: captchaContract,
   media: mediaContract,
   note: noteContract,
+  review: reviewContract,
   session: sessionContract,
   site: siteContract,
 };

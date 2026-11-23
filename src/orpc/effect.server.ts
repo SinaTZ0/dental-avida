@@ -58,7 +58,7 @@ type ErrorCases<E, Errors> = {
  * `access` is required exactly when the Effect requires `CurrentUser`: a public procedure that reads the user doesn't
  * compile, and the error names the missing `access`.
  */
-type AccessOption<R> = [Extract<R, CurrentUser>] extends [never]
+type AccessOption<R> = [Extract<NoInfer<R>, CurrentUser>] extends [never]
   ? { readonly access?: Access }
   : { readonly access: Access };
 
